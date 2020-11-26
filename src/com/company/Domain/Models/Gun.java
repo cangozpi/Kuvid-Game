@@ -21,14 +21,15 @@ public class Gun {
 
     //methods
     //private void shootGun(){} //TODO: implement this method
+
     private void moveGun(DirectionType direction){
-        if(direction.equals(DirectionType.RIGHT)){
+        if(direction.equals(DirectionType.RIGHT)){//TODO: sin cos angle check
             if(position.getXCoordinate() + gunWidth <= Game.gameWindowWidth){ // if can move right
                 position.setXCoordinate(position.getXCoordinate() + Game.L);
             }
         }else if(direction.equals(DirectionType.LEFT)){
-            if(position.getXCoordinate() > 0){ // if can move left
-                position.setXCoordinate(position.getXCoordinate() + Game.L);
+            if(position.getXCoordinate() >= Game.L){ // if can move left
+                position.setXCoordinate(position.getXCoordinate() - Game.L);
             }
         }
      }
