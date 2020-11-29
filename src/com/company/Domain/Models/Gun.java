@@ -3,7 +3,6 @@ package com.company.Domain.Models;
 import com.company.Domain.Models.Projectile.Ammo;
 import com.company.Domain.Utility.Coordinate;
 import com.company.Enums.DirectionType;
-import com.company.UI.Game;
 
 public class Gun {
     //instance variables
@@ -24,7 +23,7 @@ public class Gun {
 
     private void moveGun(DirectionType direction){
         if(direction.equals(DirectionType.RIGHT)){//TODO: sin cos angle check
-            if(position.getXCoordinate() + gunWidth <= Game.gameWindowWidth){ // if can move right
+            if(position.getXCoordinate() + gunWidth <= Game.windowWidth){ // if can move right
                 position.setXCoordinate(position.getXCoordinate() + Game.L);
             }
         }else if(direction.equals(DirectionType.LEFT)){
