@@ -39,7 +39,9 @@ public class GameWindowFactory extends JFrame {
         factoryInstance.setSize(windowWidth, windowHeight);
         factoryInstance.setTitle("Karel Kuvid");
         factoryInstance.setLayout(null);
-        //factoryInstance.getContentPane().setBackground(Color.BLUE);
+
+        //Dark mode for aesthetic purposes
+        factoryInstance.getContentPane().setBackground(Color.DARK_GRAY);
 
         //draw JPanel elements from list
         for(GameObject element: objectList){
@@ -47,7 +49,6 @@ public class GameWindowFactory extends JFrame {
         }
 
         factoryInstance.setVisible(true);
-
 
     }
 

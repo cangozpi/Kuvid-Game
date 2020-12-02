@@ -6,27 +6,34 @@ import com.company.Enums.PowerUpType;
 import com.company.Enums.ReactionBlockerType;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Builder {
 
+    private GoodAlienFactory goodAlien;
+    private BadAlienFactory badAlien;
+    private GameFactory game;
 
-    public void buildGame(int gameWindowHeight, int gameWindowWidth, int difficulty, HashMap<AtomType, Integer> inventoryContents) {
+    public Builder() {
+    }
 
-        // Game instance
+    public void buildGame(int gameWindowHeight, int gameWindowWidth, int difficulty, Map<AtomType, Integer> inventoryContents) {
+        badAlien = BadAlienFactory.getInstance();
+        goodAlien = GoodAlienFactory.getInstance();
         GameFactory game = GameFactory.getInstance();
-        // Setting initial values
         game.setDifficulty(difficulty);
         game.setGameWindowHeight(gameWindowHeight);
         game.setGameWindowWidth(gameWindowWidth);
     }
 
 
-    public void buildGoodAlien(HashMap<MoleculeType, Integer> moleculeAmounts, HashMap<PowerUpType, Integer> powerUpAmounts) {
-
+    public void createGoodAlien(Map<MoleculeType, Integer> moleculeAmount, Map<PowerUpType, Integer> powerUpAmount) {
+        goodAlien.setPowerUpAmount(powerUpAmount);
+        goodAlien.setMoleculeAmount(moleculeAmount);
     }
 
-    public void buildBadAlien(HashMap<ReactionBlockerType, Integer> reactionBlockerAmounts) {
-
+    public void createBadAlien(Map<ReactionBlockerType, Integer> reactionBlockerAmount) {
+        badAlien.setReactionBlockerAmount(reactionBlockerAmount);
     }
 
 
