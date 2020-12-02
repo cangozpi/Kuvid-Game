@@ -4,12 +4,14 @@ import com.company.Domain.Models.Projectile.Ammo;
 import com.company.Domain.Utility.Coordinate;
 import com.company.Enums.DirectionType;
 
+import static com.company.UI.Objects.GameWindowFactory.*;
+
 public class Gun {
     //instance variables
     private Coordinate position; //left top corner of gun
     private int angle; //looking left is 0, most right is 180 deg.
-    private double gunWidth = Game.L / 2;
-    private double gunHeight = Game.L;
+    private double gunWidth = L / 2;
+    private double gunHeight = L;
     private Ammo ammo;
 
     public Gun(Coordinate position, Ammo ammo) {
@@ -23,12 +25,12 @@ public class Gun {
 
     private void moveGun(DirectionType direction){
         if(direction.equals(DirectionType.RIGHT)){//TODO: sin cos angle check
-            if(position.getXCoordinate() + gunWidth <= Game.windowWidth){ // if can move right
-                position.setXCoordinate(position.getXCoordinate() + Game.L);
+            if(position.getXCoordinate() + gunWidth <= windowWidth){ // if can move right
+                position.setXCoordinate(position.getXCoordinate() + L);
             }
         }else if(direction.equals(DirectionType.LEFT)){
-            if(position.getXCoordinate() >= Game.L){ // if can move left
-                position.setXCoordinate(position.getXCoordinate() - Game.L);
+            if(position.getXCoordinate() >= L){ // if can move left
+                position.setXCoordinate(position.getXCoordinate() - L);
             }
         }
      }
