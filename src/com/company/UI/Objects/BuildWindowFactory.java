@@ -90,7 +90,7 @@ public class BuildWindowFactory extends JFrame {
         panelHolder[0][1].add(difficultyLabel);
         panelHolder[1][1].add(difficultySlider);
         panelHolder[2][1].add(moleculeStructureLabel);
-        JCheckBox checkBox = new JCheckBox("TECOO", true);
+        JCheckBox checkBox = new JCheckBox("Linear mode:", true);
         panelHolder[3][1].add(checkBox);
 
         JTextField[] inputs = new JTextField[4];//array holding input JTextFields
