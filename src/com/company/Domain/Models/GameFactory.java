@@ -1,8 +1,11 @@
 package com.company.Domain.Models;
 
+import com.company.Domain.Models.Projectile.Projectile;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class GameFactory {
 
@@ -11,6 +14,7 @@ public class GameFactory {
     private int gameWindowWidth;
     private int difficulty;
     public int L;
+    private List<Projectile> projectileList;
 
 
     private GameFactory(){
@@ -36,6 +40,14 @@ public class GameFactory {
         return difficulty;
     }
 
+    public List<Projectile> getProjectileList() {
+        return projectileList;
+    }
+
+    public void setProjectileList(List<Projectile> projectileList) {
+        this.projectileList = projectileList;
+    }
+
     public void setGameWindowHeight(int gameWindowHeight) {
         this.gameWindowHeight = gameWindowHeight;
     }
@@ -56,6 +68,15 @@ public class GameFactory {
 
 
     }
+
+    public void insertProjectile(Projectile projectile){
+            projectileList.add(projectile);
+    }
+    public void updatePositions(){
+
+
+    }
+
 
 
 
