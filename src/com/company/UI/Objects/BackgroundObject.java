@@ -1,22 +1,33 @@
 package com.company.UI.Objects;
 
-import com.company.UI.Game;
+import com.company.Domain.Utility.Coordinate;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class BackgroundObject extends JPanel {
+public class BackgroundObject extends GameObject{
 
-    public BackgroundObject() {
-        ImageIcon image = new ImageIcon(this.getClass().getResource("Resources/BackgroundImage.png"));
-        ImageIcon scaledImage = new ImageIcon(image.getImage().getScaledInstance((int)Game.gameWindowWidth, (int)Game.gameWindowHeight , Image.SCALE_SMOOTH));
-        JLabel label = new JLabel(scaledImage, JLabel.CENTER);
-        this.add(label);
+
+    public BackgroundObject(Coordinate coordinate, int WIDTH, int HEIGHT, String imageSource) {
+        super(coordinate, WIDTH, HEIGHT, imageSource);
+    }
+
+    @Override
+    public void draw() {
+        ImageIcon gun = new ImageIcon(getClass().getResource("Resources/"+imageSource));
+        Image scaledGun = gun.getImage().getScaledInstance(WIDTH, HEIGHT, java.awt.Image.SCALE_SMOOTH); // scales the image
+        ImageIcon gunIcon = new ImageIcon(scaledGun);
+        JLabel gunLabel = new JLabel(gunIcon);
+        //add to the JFrame
+        this.add(gunLabel);
+        GameWindowFactory.getInstance().getContentPane().add(this); // JFrame.add(JPanel)
+        this.setBounds((int)coordinate.getXCoordinate(), (int)coordinate.getYCoordinate(), WIDTH, HEIGHT);
+        this.setOpaque(false);
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
     }
-
+    
 }
