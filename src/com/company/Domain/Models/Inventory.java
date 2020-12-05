@@ -24,7 +24,11 @@ public class Inventory {
         this.powerUpMap = powerUpMap;
     }
 
-    public int getAtomNumber(AtomType atomType){
+    public int getAtomAmount(AtomType atomType){
+        if(atomMap==null) {
+            System.err.println("Atom Map is not initialized.");
+            return -1;
+        }
         switch (atomType){
             case ALPHA:
                 return atomMap.get(AtomType.ALPHA);
@@ -35,10 +39,14 @@ public class Inventory {
             case SIGMA:
                 return atomMap.get(AtomType.SIGMA);
         }
-        throw new IllegalArgumentException("Atom Type does not exist.");
+        return -1;
     }
 
-    public int getPowerUpNumber(PowerUpType powerUpType){
+    public int getPowerUpAmount(PowerUpType powerUpType){
+        if(powerUpMap==null) {
+            System.err.println("PowerUp Map is not initialized.");
+            return -1;
+        }
         switch (powerUpType){
             case ALPHA:
                 return atomMap.get(AtomType.ALPHA);
@@ -49,9 +57,13 @@ public class Inventory {
             case SIGMA:
                 return atomMap.get(AtomType.SIGMA);
         }
-        throw new IllegalArgumentException("PowerUp Type does not exist.");
+        return -1;
     }
     public void addAtom(AtomType atomType){
+        if(atomMap==null) {
+            System.err.println("Atom Map is not initialized.");
+            return;
+        }
         switch (atomType){
             case ALPHA:
                  atomMap.merge(AtomType.ALPHA,1,Integer::sum);
@@ -64,6 +76,10 @@ public class Inventory {
         }
     }
     public void addAtom(AtomType atomType, int n){
+        if(atomMap==null) {
+            System.err.println("Atom Map is not initialized.");
+            return;
+        }
         switch (atomType){
             case ALPHA:
                 atomMap.merge(AtomType.ALPHA,n,Integer::sum);
@@ -76,6 +92,10 @@ public class Inventory {
         }
     }
     public void addPowerUp(PowerUpType powerUpType){
+        if(powerUpMap==null) {
+            System.err.println("PowerUp Map is not initialized.");
+            return;
+        }
         switch (powerUpType){
             case ALPHA:
                 atomMap.merge(AtomType.ALPHA,1,Integer::sum);
@@ -88,6 +108,10 @@ public class Inventory {
         }
     }
     public void addPowerUp(PowerUpType powerUpType, int n){
+        if(powerUpMap==null) {
+            System.err.println("PowerUp Map is not initialized.");
+            return;
+        }
         switch (powerUpType){
             case ALPHA:
                 atomMap.merge(AtomType.ALPHA,n,Integer::sum);
@@ -100,6 +124,10 @@ public class Inventory {
         }
     }
     public boolean removeAtom(AtomType atomType){
+        if(atomMap==null) {
+            System.err.println("Atom Map is not initialized.");
+            return false;
+        }
         if(atomMap.get(atomType)-1 < 0)return false;
         switch (atomType){
             case ALPHA:
@@ -114,6 +142,10 @@ public class Inventory {
         return true;
     }
     public boolean removeAtom(AtomType atomType, int n){
+        if(atomMap==null) {
+            System.err.println("Atom Map is not initialized.");
+            return false;
+        }
         if(atomMap.get(atomType)-n < 0)return false;
         switch (atomType){
             case ALPHA:
@@ -128,6 +160,10 @@ public class Inventory {
         return true;
     }
     public boolean removePowerUp(AtomType atomType){
+        if(powerUpMap==null) {
+            System.err.println("PowerUp Map is not initialized.");
+            return false;
+        }
         if(atomMap.get(atomType)-1 < 0)return false;
         switch (atomType){
             case ALPHA:

@@ -5,6 +5,6 @@ public enum MoleculeType {
     BETA_1,
     ALPHA_2,
     BETA_2,
-    SIGMA,
-    GAMMA;
+    GAMMA,
+    SIGMA
 }
