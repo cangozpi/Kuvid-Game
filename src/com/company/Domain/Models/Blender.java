@@ -16,7 +16,7 @@ private static Blender blender = null;
     }
     public boolean blendAtoms(AtomType source, AtomType product, int sourceAmount){
 
-        for (AtomType atomType: EnumSet.allOf(AtomType.class)){
+        for (AtomType atomType: AtomType.values()){
            if(atomType == source) break;
            if(atomType == product){
                System.err.println("Cannot blend a higher atom type to produce a lower type.");
@@ -57,10 +57,11 @@ private static Blender blender = null;
                 inventory.removeAtom(source,sourceAmount);
                 inventory.addAtom(product, sourceAmount/2);
         }
-return true;
+        return true;
     }
+
     public boolean breakAtoms(AtomType source, AtomType product, int sourceAmount){
-        for (AtomType atomType: EnumSet.allOf(AtomType.class)){
+        for (AtomType atomType: AtomType.values()){
             if(atomType == source){
                 System.err.println("Cannot break a lower Atom type to produce a higher type.");
                 return  false;

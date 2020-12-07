@@ -14,6 +14,7 @@ import static com.company.UI.Objects.GameWindowFactory.*;
 
 public class Gun {
     //instance variables
+    private static Gun gun = null;
     private Coordinate position; //left top corner of gun
     private int angle; //looking left is 0, most right is 180 deg.
     private double gunWidth = L * 0.5;
@@ -22,8 +23,12 @@ public class Gun {
     private Coordinate rightestPointOfTheGun;
     private Coordinate leftistPointOfTheGUn;
     private boolean loaded;
-
-    public Gun(Coordinate position, Projectile ammo) {
+    private Gun() {}
+    public static Gun getInstance() {
+        if (gun == null) gun = new Gun();
+        return gun;
+    }
+    public void setGun(Coordinate position, Projectile ammo) {
         this.position = position;
         this.angle = 90;
         this.ammo = ammo;
@@ -78,7 +83,7 @@ public class Gun {
 
     }
 
-    private void loadGunWithAtom(AtomType atomType){              // gets ammo type from atom selector
+    public void loadGunWithAtom(AtomType atomType){              // gets ammo type from atom selector
 
         double xCoord = 0;    //TODO: position and angle calculations to line it up with the tip of the gun
         double yCoord = 0;
@@ -89,7 +94,7 @@ public class Gun {
         setAmmo(new Atom(ammoCoord, ammoVelocity, atomType, true));    //TODO: atom factory
         GameFactory.getInstance().insertProjectile(ammo);
     }
-    private void loadGunWithPowerUp(PowerUpType powerUpType){          //powerup version
+    public void loadGunWithPowerUp(PowerUpType powerUpType){          //powerup version
 
         double xCoord = 0;    //TODO: position and angle calculations to line it up with the tip of the gun
         double yCoord = 0;

@@ -159,13 +159,13 @@ public class Inventory {
         }
         return true;
     }
-    public boolean removePowerUp(AtomType atomType){
+    public boolean removePowerUp(PowerUpType powerUpType){
         if(powerUpMap==null) {
             System.err.println("PowerUp Map is not initialized.");
             return false;
         }
-        if(atomMap.get(atomType)-1 < 0)return false;
-        switch (atomType){
+        if(powerUpMap.get(powerUpType)-1 < 0)return false;
+        switch (powerUpType){
             case ALPHA:
                 atomMap.merge(AtomType.ALPHA,-1,Integer::sum);
             case BETA:
