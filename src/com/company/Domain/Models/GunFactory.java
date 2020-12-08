@@ -12,9 +12,9 @@ import com.company.Enums.PowerUpType;
 
 import static com.company.UI.Objects.GameWindowFactory.*;
 
-public class Gun {
+public class GunFactory {
     //instance variables
-    private static Gun gun = null;
+    private static GunFactory gun = null;
     private Coordinate position; //left top corner of gun
     private int angle; //looking left is 0, most right is 180 deg.
     private double gunWidth = L * 0.5;
@@ -23,9 +23,9 @@ public class Gun {
     private Coordinate rightestPointOfTheGun;
     private Coordinate leftistPointOfTheGUn;
     private boolean loaded;
-    private Gun() {}
-    public static Gun getInstance() {
-        if (gun == null) gun = new Gun();
+    private GunFactory() {}
+    public static GunFactory getInstance() {
+        if (gun == null) gun = new GunFactory();
         return gun;
     }
     public void setGun(Coordinate position, Projectile ammo) {
@@ -42,12 +42,11 @@ public class Gun {
         Velocity projectileVelocity = new Velocity(getAngle(), 0);  //TODO: velocity
         ammo.setVelocity(projectileVelocity);
         ammo.setIsAmmo(false);
-
-        GameFactory.getInstance().insertProjectile(ammo);        //TODO: not a new projectile, it should update the old one
+        GameFactory.getInstance().insertProjectile(ammo);
 
     }
 
-    private void moveGun(DirectionType direction){
+    public void moveGun(DirectionType direction){
 
         if(direction.equals(DirectionType.RIGHT)){
             if(rightestPointOfTheGun.getXCoordinate() + gunWidth <= windowWidth){ // if can move right
@@ -68,7 +67,7 @@ public class Gun {
         }
      }
 
-    private void rotateGun(DirectionType direction){
+    public void rotateGun(DirectionType direction){
 
 
         if(direction.equals(DirectionType.CLOCKWISE)){
@@ -92,7 +91,7 @@ public class Gun {
         Coordinate ammoCoord = new Coordinate(xCoord, yCoord);                                                // creates projectile and sends it to game
         Velocity ammoVelocity = new Velocity(ammoAngle, 0);
         setAmmo(new Atom(ammoCoord, ammoVelocity, atomType, true));    //TODO: atom factory
-        GameFactory.getInstance().insertProjectile(ammo);
+        GameFactory.getInstance().setAmmo(ammo);
     }
     public void loadGunWithPowerUp(PowerUpType powerUpType){          //powerup version
 

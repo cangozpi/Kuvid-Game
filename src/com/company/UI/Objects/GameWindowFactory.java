@@ -7,7 +7,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameWindowFactory extends JFrame {
+public class GameWindowFactory extends JFrame implements IGameListener {
 /*
     Main UI Frame, uses Singleton Pattern
  */

@@ -8,14 +8,14 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
 
-public class AtomSelector {
+public class AtomSelectorFactory {
     Inventory inventory = Inventory.getInstance();
-    Gun gun = Gun.getInstance();
-    private static AtomSelector atomSelector = null;
+    GunFactory gun = GunFactory.getInstance();
+    private static AtomSelectorFactory atomSelector = null;
 
-    private AtomSelector() {}
-    public static AtomSelector getInstance() {
-        if (atomSelector == null) atomSelector = new AtomSelector();
+    private AtomSelectorFactory() {}
+    public static AtomSelectorFactory getInstance() {
+        if (atomSelector == null) atomSelector = new AtomSelectorFactory();
         return atomSelector;
     }
     public void selectAtom(){

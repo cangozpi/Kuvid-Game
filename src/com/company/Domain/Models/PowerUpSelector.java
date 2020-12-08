@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class PowerUpSelector {
     Inventory inventory = Inventory.getInstance();
-    Gun gun = Gun.getInstance();
+    GunFactory gun = GunFactory.getInstance();
     private static PowerUpSelector powerupSelector = null;
 
     private PowerUpSelector() {}

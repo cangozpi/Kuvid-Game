@@ -13,6 +13,7 @@ public abstract class Projectile {
         this.isAmmo = isAmmo;
     }
 
+    public void move(){ }
     public boolean isAmmo() { return isAmmo; }
 
     public void setIsAmmo(boolean isAmmo) { this.isAmmo = isAmmo; }
