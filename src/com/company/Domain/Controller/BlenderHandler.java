@@ -4,9 +4,9 @@ import com.company.Domain.Models.Blender;
 import com.company.Enums.AtomType;
 
 public class BlenderHandler {
-    Blender blender = Blender.getInstance();
+    private Blender blender;
     public BlenderHandler(Blender blender) {
-        this.blender = blender;
+        this.blender = Blender.getInstance();
     }
     public void breakAtoms(AtomType source, AtomType product, int sourceAmount){
         blender.breakAtoms(source, product, sourceAmount);

@@ -37,7 +37,7 @@ public class GunFactory {
     }
 
     //methods
-    private void shootGun(){
+    public void shootGun(){
 
         Velocity projectileVelocity = new Velocity(getAngle(), 0);  //TODO: velocity
         ammo.setVelocity(projectileVelocity);

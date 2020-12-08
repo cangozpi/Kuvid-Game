@@ -1,4 +1,5 @@
 package com.company.Domain.Controller;
+import com.company.Domain.Models.AtomSelectorFactory;
 
 public class SelectAtomHandler {
     private AtomSelectorFactory atomSelector;
@@ -10,4 +11,5 @@ public class SelectAtomHandler {
     public void selectAtom() {
         atomSelector.selectAtom();
 
+    }
 }
