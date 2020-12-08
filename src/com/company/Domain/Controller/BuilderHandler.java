@@ -1,6 +1,7 @@
 package com.company.Domain.Controller;
 
 import com.company.Domain.Models.Builder;
+import com.company.Domain.Models.GameFactory;
 import com.company.Enums.AtomType;
 import com.company.Enums.MoleculeType;
 import com.company.Enums.PowerUpType;
