@@ -1,6 +1,9 @@
 package com.company.UI.Objects;
 
+import com.company.Domain.Models.Projectile.Projectile;
 import com.company.Domain.Utility.Coordinate;
+import com.company.UI.Objects.Observer.GameObserver;
+import com.company.UI.Objects.Observer.IGameListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,16 +46,31 @@ public class GameWindowFactory extends JFrame implements IGameListener {
         //Dark mode for aesthetic purposes
         factoryInstance.getContentPane().setBackground(Color.DARK_GRAY);
 
-        //draw JPanel elements from list
-        for(GameObject element: objectList){
-            element.draw();
-        }
+        this.repaint();
 
         factoryInstance.setVisible(true);
 
     }
 
+    public void repaint(){
+        //draw JPanel elements from list
+                for(GameObject element: objectList){
+                    element.draw();
+                }
+                this.repaint();
+    }
+
     public void addToObjectList(GameObject object){
         objectList.add(object);
+    }
+
+    @Override
+    public void positionChanged(List<Projectile> objectList) {
+        //TODO: implement what happens when Observer informs this class that sth has changed
+        for (Projectile projectile : objectList){
+
+           //
+                                                       // create ui object from data in projectile
+        }
     }
 }

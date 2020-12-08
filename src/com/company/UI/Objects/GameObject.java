@@ -1,11 +1,12 @@
 package com.company.UI.Objects;
 
 import com.company.Domain.Utility.Coordinate;
+import com.company.UI.Objects.Observer.IGameListener;
 
 import javax.swing.*;
 import java.awt.*;
 
-public abstract class GameObject extends JPanel implements Drawable{
+public abstract class GameObject extends JPanel implements Drawable {
 
     protected Coordinate coordinate;
     protected int WIDTH;
@@ -18,6 +19,7 @@ public abstract class GameObject extends JPanel implements Drawable{
         this.HEIGHT = HEIGHT;
         this.imageSource = imageSource;
     }
+
 
     @Override
     protected void paintComponent(Graphics g) {

@@ -30,7 +30,8 @@ public class GameFactory extends GameObserver {
 
 
     private GameFactory(){
-
+        super(); //necessary for initializing Observer
+        factory = GameWindowFactory.getInstance();
     }
 
     public static GameFactory getInstance(){
