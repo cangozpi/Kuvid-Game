@@ -9,8 +9,8 @@ public class Atom extends Projectile{
     private AtomType atomType;
     private boolean isAmmo;
 
-    public Atom(Coordinate coordinate, Velocity velocity, AtomType atomType, boolean isAmmo) {
-        super(coordinate, velocity, isAmmo);
+    public Atom(Coordinate coordinate, Velocity velocity, AtomType atomType, boolean isAmmo, int height, int width) {
+        super(coordinate, velocity, isAmmo, height, width);
         this.atomType = atomType;
         this.isAmmo = isAmmo;
     }

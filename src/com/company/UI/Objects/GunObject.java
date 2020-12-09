@@ -16,7 +16,7 @@ public class GunObject extends GameObject {
 
     @Override
     public void draw() {
-        ImageIcon gun = new ImageIcon(getClass().getResource("Resources/"+imageSource));
+        ImageIcon gun = new ImageIcon(getClass().getResource("Assets/"+imageSource));
         Image scaledGun = gun.getImage().getScaledInstance(WIDTH, HEIGHT, java.awt.Image.SCALE_SMOOTH); // scales the image
         ImageIcon gunIcon = new ImageIcon(scaledGun);
         JLabel gunLabel = new JLabel(gunIcon);

@@ -24,6 +24,7 @@ public class Builder {
         game.setDifficulty(difficulty);
         game.setGameWindowHeight(gameWindowHeight);
         game.setGameWindowWidth(gameWindowWidth);
+        game.startGame();
     }
 
 

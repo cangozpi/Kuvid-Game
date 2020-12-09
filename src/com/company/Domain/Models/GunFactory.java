@@ -4,6 +4,7 @@ package com.company.Domain.Models;
 import com.company.Domain.Models.Projectile.Atom;
 import com.company.Domain.Models.Projectile.PowerUp;
 import com.company.Domain.Models.Projectile.Projectile;
+import com.company.Domain.Observer.GunObserver;
 import com.company.Domain.Utility.Coordinate;
 import com.company.Domain.Utility.Velocity;
 import com.company.Enums.AtomType;
@@ -12,7 +13,7 @@ import com.company.Enums.PowerUpType;
 
 import static com.company.UI.Objects.GameWindowFactory.*;
 
-public class GunFactory {
+public class GunFactory extends GunObserver {
     //instance variables
     private static GunFactory gun = null;
     private Coordinate position; //left top corner of gun
@@ -47,12 +48,14 @@ public class GunFactory {
     }
 
     public void moveGun(DirectionType direction){
-
+        //Code can be so complex that there are no obvious bugs or so simple that there are obviously no bugs
         if(direction.equals(DirectionType.RIGHT)){
             if(rightestPointOfTheGun.getXCoordinate() + gunWidth <= windowWidth){ // if can move right
                 position.setXCoordinate(position.getXCoordinate() + L);
                 rightestPointOfTheGun.setXCoordinate(rightestPointOfTheGun.getXCoordinate() + L);
                 leftistPointOfTheGUn.setXCoordinate(rightestPointOfTheGun.getXCoordinate() + L);
+                ammo.setXCoordinate(ammo.getXCoordinate()+ L);
+                GunFactory.super.gunMovedEvent(position, angle, ammo);
             }
         }
 
@@ -62,9 +65,11 @@ public class GunFactory {
                 position.setXCoordinate(position.getXCoordinate() - L);
                 rightestPointOfTheGun.setXCoordinate(rightestPointOfTheGun.getXCoordinate() - L);
                 leftistPointOfTheGUn.setXCoordinate(rightestPointOfTheGun.getXCoordinate() - L);
-
+                ammo.setXCoordinate(ammo.getXCoordinate()-L);
+                GunFactory.super.gunMovedEvent(position, angle, ammo);
             }
         }
+        
      }
 
     public void rotateGun(DirectionType direction){
@@ -73,10 +78,12 @@ public class GunFactory {
         if(direction.equals(DirectionType.CLOCKWISE)){
             if(angle <= 170){ // if can rotate
                 angle += 10;
+                GunFactory.super.gunMovedEvent(position, angle, ammo);
             }
         }else if(direction.equals(DirectionType.ANTICLOCKWISE)){
             if(angle >= 10){ // if can rotate
                 angle -= 10;
+                GunFactory.super.gunMovedEvent(position, angle, ammo);
             }
         }
 
@@ -90,8 +97,9 @@ public class GunFactory {
 
         Coordinate ammoCoord = new Coordinate(xCoord, yCoord);                                                // creates projectile and sends it to game
         Velocity ammoVelocity = new Velocity(ammoAngle, 0);
-        setAmmo(new Atom(ammoCoord, ammoVelocity, atomType, true));    //TODO: atom factory
+        setAmmo(new Atom(ammoCoord, ammoVelocity, atomType, true,L/10,L/10));    //TODO: atom factory
         GameFactory.getInstance().setAmmo(ammo);
+        GunFactory.super.gunMovedEvent(position, angle, ammo);
     }
     public void loadGunWithPowerUp(PowerUpType powerUpType){          //powerup version
 
@@ -101,8 +109,9 @@ public class GunFactory {
 
         Coordinate ammoCoord = new Coordinate(xCoord, yCoord);                                                // creates projectile and sends it to game
         Velocity ammoVelocity = new Velocity(ammoAngle, 0);
-        setAmmo(new PowerUp(ammoCoord, ammoVelocity, powerUpType, true));    //TODO: powerup factory
+        setAmmo(new PowerUp(ammoCoord, ammoVelocity, powerUpType, true,0,0));    //TODO: powerup factory wifth
         GameFactory.getInstance().insertProjectile(ammo);
+        GunFactory.super.gunMovedEvent(position, angle, ammo);
 
     }
 

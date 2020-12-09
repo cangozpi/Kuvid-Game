@@ -7,12 +7,14 @@ import com.company.Enums.ReactionBlockerType;
 public class ReactionBlocker extends Projectile {
     ReactionBlockerType reactionBlockerType;
 
-    public ReactionBlocker(Coordinate coordinate, Velocity velocity, boolean isAmmo, ReactionBlockerType reactionBlockerType) {
-        super(coordinate, velocity, isAmmo);
+    public ReactionBlocker(Coordinate coordinate, Velocity velocity, boolean isAmmo, ReactionBlockerType reactionBlockerType, int height, int width) {
+        super(coordinate, velocity, isAmmo, height, width);
         this.reactionBlockerType = reactionBlockerType;
     }
 
     public ReactionBlockerType getReactionBlockerType() {
         return reactionBlockerType;
     }
+
+
 }

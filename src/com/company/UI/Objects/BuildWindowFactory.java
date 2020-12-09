@@ -33,6 +33,7 @@ public class BuildWindowFactory extends JFrame {
     boolean isLinear;
 
     private BuildWindowFactory(){
+
     }
 
     public static BuildWindowFactory getInstance(){
@@ -118,30 +119,43 @@ public class BuildWindowFactory extends JFrame {
             public void actionPerformed(ActionEvent actionEvent) {
                 BuilderHandler builderHandler = new BuilderHandler(builder);
 
+
                 //extract information from JFrame
                 difficultyLevel = difficultySlider.getValue();
 
                 for(AtomType element : AtomType.values()){
-                    atomAmount.put(element, Integer.parseInt(inputs[0].getText()));
+                    if(isStringInt(inputs[2].getText()))
+                        atomAmount.put(element, Integer.parseInt(inputs[2].getText()));
+                    else
+                        atomAmount.put(element, 100);
                 }
                 for(PowerUpType element : PowerUpType.values()){
-                    powerUpAmount.put(element, Integer.parseInt(inputs[1].getText()));
+                    if(isStringInt(inputs[2].getText()))
+                        powerUpAmount.put(element, Integer.parseInt(inputs[2].getText()));
+                    else
+                        powerUpAmount.put(element, 20);
                 }
                 for(ReactionBlockerType element : ReactionBlockerType.values()){
-                    reactionBlockerAmount.put(element, Integer.parseInt(inputs[2].getText()));
+                    if(isStringInt(inputs[2].getText()))
+                        reactionBlockerAmount.put(element, Integer.parseInt(inputs[2].getText()));
+                    else
+                        reactionBlockerAmount.put(element, 10);
                 }
                 for(MoleculeType element : MoleculeType.values()){
-                    moleculeAmount.put(element, Integer.parseInt(inputs[3].getText()));
+                    if(isStringInt(inputs[3].getText()))
+                        moleculeAmount.put(element, Integer.parseInt(inputs[2].getText()));
+                    else
+                        moleculeAmount.put(element, 100);
                 }
-
                 isLinear = checkBox.isSelected();
+
+
 
                 //pass extracted variables and call controller class
                 builderHandler.buildGame(windowWidth, windowHeight, difficultyLevel, atomAmount, moleculeAmount, powerUpAmount, reactionBlockerAmount);
                 BuildWindowFactory.getInstance().getDefaultCloseOperation();
                 BuildWindowFactory.getInstance().setVisible(false);
                 BuildWindowFactory.getInstance().dispose();
-
 
                 //Game window below -->
                 final GameWindowFactory gamePanel = GameWindowFactory.getInstance();
@@ -150,21 +164,32 @@ public class BuildWindowFactory extends JFrame {
                 //add elements t
                 // o be drawn to the list
                 // Note: It is important to add BackgroundObject Last to draw it at the bottom layer of JFrame
-                GameObject lol = new GunObject(new Coordinate(((GameWindowFactory.getInstance().windowWidth/2) - GameWindowFactory.getInstance().L / 4), GameWindowFactory.getInstance().windowHeight - (1.75) * GameWindowFactory.getInstance().L), (int)(GameWindowFactory.L * 0.5), GameWindowFactory.L, "GunImage.png", 0);
+
+                GameObject lol = new GunObject(new Coordinate(((GameWindowFactory.getInstance().windowWidth/2) - GameWindowFactory.getInstance().L / 4), GameWindowFactory.getInstance().windowHeight - (1.75) * GameWindowFactory.getInstance().L), (int)(GameWindowFactory.L / 2), GameWindowFactory.L, "shooter.png", 0);
                 gamePanel.addToObjectList(lol);
-                GameObject loo = new BackgroundObject(new Coordinate(0, -10), GameWindowFactory.getInstance().windowWidth, GameWindowFactory.getInstance().windowHeight, "BackgroundImage.png");
+                GameObject loo = new BackgroundObject(new Coordinate(0, -10), GameWindowFactory.getInstance().windowWidth, GameWindowFactory.getInstance().windowHeight, "kuvid_bc.png");
                 gamePanel.addToObjectList(loo);
                 //***********************************
 
                 //render Game Frame
                 gamePanel.render();
             }
+
+
+
         });
         //add panel to the frame
         factoryInstance.getContentPane().add(inputPanel);
         factoryInstance.setVisible(true);
     }
-
+    private boolean isStringInt(String s) {
+        try {
+            Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
 
 
 }

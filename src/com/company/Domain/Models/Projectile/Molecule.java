@@ -8,11 +8,15 @@ import com.company.Enums.PowerUpType;
 public class Molecule extends Projectile{
     MoleculeType moleculeType;
 
-    public Molecule(Coordinate coordinate, Velocity velocity, boolean isAmmo, MoleculeType moleculeType) {
-        super(coordinate, velocity, isAmmo);
+    public Molecule(Coordinate coordinate, Velocity velocity, boolean isAmmo, MoleculeType moleculeType, int height, int width) {
+        super(coordinate, velocity, isAmmo, height, width);
         this.moleculeType = moleculeType;
+
+
     }
     public MoleculeType getMoleculeType(){
         return this.moleculeType;
     }
+
+
 }

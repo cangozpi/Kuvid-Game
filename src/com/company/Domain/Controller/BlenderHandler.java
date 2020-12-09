@@ -5,7 +5,7 @@ import com.company.Enums.AtomType;
 
 public class BlenderHandler {
     private Blender blender;
-    public BlenderHandler(Blender blender) {
+    public BlenderHandler() {
         this.blender = Blender.getInstance();
     }
     public void breakAtoms(AtomType source, AtomType product, int sourceAmount){

@@ -4,6 +4,8 @@ import com.company.Domain.Models.Projectile.Molecule;
 import com.company.Domain.Models.Projectile.PowerUp;
 import com.company.Domain.Models.Projectile.Projectile;
 import com.company.Domain.Models.Projectile.ReactionBlocker;
+import com.company.Domain.Observer.IGunListener;
+import com.company.Domain.Utility.Coordinate;
 import com.company.UI.Objects.BuildWindowFactory;
 import com.company.UI.Objects.GameWindowFactory;
 import com.company.UI.Objects.Observer.GameObserver;
@@ -12,7 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class GameFactory extends GameObserver {
+public class GameFactory extends GameObserver implements IGunListener {
     private boolean isRunning;
 
     private static GameFactory instance;
@@ -20,7 +22,9 @@ public class GameFactory extends GameObserver {
     private int gameWindowWidth;
     private int difficulty;
     public int L;
-    private List<Projectile> objectList;
+
+    private Coordinate gunPosition;
+    private int gunAngle;
     private List<Projectile> projectileList;
     private List<PowerUp> powerUpList;
     private List<ReactionBlocker> reactionBlockerList;
@@ -67,50 +71,67 @@ public class GameFactory extends GameObserver {
 
     public void insertProjectile(Projectile projectile){
 
-        objectList.add(projectile);
+
         projectileList.add(projectile);
 
     }
 
     public void insertMolecule(Molecule molecule){
-        objectList.add(molecule);
+
         moleculeList.add(molecule);
     }
 
     public void insertPowerUp(PowerUp powerUp){
-        objectList.add(powerUp);
+
         projectileList.add(powerUp);
     }
 
     public void insertReactionBlocker(ReactionBlocker reactionBlocker){
-        objectList.add(reactionBlocker);
+
         projectileList.add(reactionBlocker);
     }
 
     public void updatePositions(){
-        for (Projectile projectile : objectList) {
-            projectile.move();
+        if (moleculeList != null){
+            for (Projectile projectile : moleculeList) {
+                projectile.move();
+            }
         }
+        if (projectileList != null){
+            for (Projectile projectile : projectileList) {
+                projectile.move();
+            }
+        }
+        if ( reactionBlockerList != null) {
+            for (ReactionBlocker reactionBlocker : reactionBlockerList) {
+                reactionBlocker.move();
+            }
+        }
+        if (powerUpList != null){
+            for (PowerUp powerUp : powerUpList) {
+                powerUp.move();
+            }
+        }   
 
-        for (Projectile projectile : projectileList) {
-            projectile.move();
-        }
-
-        for (ReactionBlocker reactionBlocker : reactionBlockerList) {
-            reactionBlocker.move();
-        }
-
-        for (PowerUp powerUp : powerUpList) {
-            powerUp.move();
-        }
         checkCollisions();
-        GameFactory.super.positionUpdateEvent(objectList);
+
+
+
+
+        GameFactory.super.positionUpdateEvent(moleculeList, projectileList, reactionBlockerList,powerUpList);
     }
 
     public void checkCollisions(){
         // iterates over reaction blocker list
         //
 
+    }
+
+    @Override
+    public void gunMoved(Coordinate coord, int angle, Projectile projectile){
+        setAmmo(ammo);
+        this.gunPosition = coord;
+        this.gunAngle = angle;
     }
 
     //getter setters
