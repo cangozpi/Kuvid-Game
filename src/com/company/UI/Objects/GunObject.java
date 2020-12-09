@@ -5,7 +5,7 @@ import com.company.Domain.Utility.Coordinate;
 import javax.swing.*;
 import java.awt.*;
 
-public class GunObject extends GameObject{
+public class GunObject extends GameObject {
 
     private int angle;
 

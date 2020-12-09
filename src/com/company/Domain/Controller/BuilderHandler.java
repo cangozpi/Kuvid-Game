@@ -1,6 +1,7 @@
 package com.company.Domain.Controller;
 
 import com.company.Domain.Models.Builder;
+import com.company.Domain.Models.GameFactory;
 import com.company.Enums.AtomType;
 import com.company.Enums.MoleculeType;
 import com.company.Enums.PowerUpType;
@@ -10,15 +11,20 @@ import java.util.Map;
 
 public class BuilderHandler {
     private Builder builder;
+    private GameFactory game;
 
     public BuilderHandler(Builder builder) {
         this.builder = builder;
+        this.game = GameFactory.getInstance();
     }
 
     public void buildGame(int gameWindowWidth, int gameWindowHeight, int difficulty, Map<AtomType, Integer> inventoryContents, Map<MoleculeType, Integer> moleculeAmounts, Map<PowerUpType, Integer> powerUpAmounts, Map<ReactionBlockerType, Integer> reactionBlockerAmounts){
         builder.buildGame(gameWindowHeight, gameWindowWidth, difficulty, inventoryContents);
         builder.createGoodAlien(moleculeAmounts, powerUpAmounts);
         builder.createBadAlien(reactionBlockerAmounts);
+
+        //start the Domain GameFactory get that clock gameClock ticking m8
+        game.startGame();
     }
 
 }
