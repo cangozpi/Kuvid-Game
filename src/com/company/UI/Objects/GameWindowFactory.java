@@ -4,10 +4,12 @@ import com.company.Domain.Controller.BlenderHandler;
 import com.company.Domain.Controller.MoveShooterHandler;
 import com.company.Domain.Controller.RotateGunHandler;
 import com.company.Domain.Controller.ShooterHandler;
+import com.company.Domain.Models.GunFactory;
 import com.company.Domain.Models.Projectile.Molecule;
 import com.company.Domain.Models.Projectile.PowerUp;
 import com.company.Domain.Models.Projectile.Projectile;
 import com.company.Domain.Models.Projectile.ReactionBlocker;
+import com.company.Domain.Observer.GunObserver;
 import com.company.Domain.Observer.IGunListener;
 import com.company.Domain.Utility.Coordinate;
 import com.company.Enums.DirectionType;
@@ -16,7 +18,7 @@ import com.company.Enums.PowerUpType;
 import com.company.Enums.ReactionBlockerType;
 import com.company.UI.Objects.Observer.GameObserver;
 import com.company.UI.Objects.Observer.IGameListener;
-import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,10 +26,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameWindowFactory extends JFrame implements IGameListener, KeyListener, ActionListener,IGunListener {
+public class GameWindowFactory extends JFrame implements IGameListener, ActionListener,IGunListener {
 /*
     Main UI Frame, uses Singleton Pattern
  */
@@ -56,6 +59,8 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
     public static GameWindowFactory getInstance(){
         if(factoryInstance == null){
             factoryInstance = new GameWindowFactory();
+
+
         }
         return factoryInstance;
     }
@@ -70,7 +75,12 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
 
         //Dark mode for aesthetic purposes
         factoryInstance.getContentPane().setBackground(Color.DARK_GRAY);
+        KeyListener keyListener = new InputListener();
+        addKeyListener(keyListener);
+        setFocusable(true);
 
+        GunObserver gunListener = GunFactory.getInstance();
+        gunListener.addListener(this);
         draw();
 
         factoryInstance.setVisible(true);
@@ -175,47 +185,8 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
 
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {// Do not implement this
 
-    }
 
-    @Override
-    public void keyPressed(KeyEvent e) {
-        System.out.println(e.getKeyCode());
-        if(e.getKeyCode() == 37){ //Left Arrow
-            leftArrow();
-        }
-
-        if(e.getKeyCode() == 39){ //Right Arrow
-            rightArrow();
-        }
-
-        if(e.getKeyCode() == 38){ //Up Arrow
-            upArrow();
-        }
-
-        if(e.getKeyCode() == 65){ //A
-            rotateLeft();
-        }
-
-        if(e.getKeyCode() == 68){ //D
-            rotateRight();
-        }
-
-        if(e.getKeyCode() == 67){ //C
-            selectAtom();
-        }
-
-        if(e.getKeyCode() == 80){ //P
-            pause();
-        }
-
-        if(e.getKeyCode() == 66){ //B
-            breakOrBlend();
-        }
-
-    }
 
     //ActionPerformed actions below
     public void upArrow(){
@@ -251,10 +222,7 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
     }
 
 
-    @Override
-    public void keyReleased(KeyEvent e) { // Do not implement this
 
-    }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
