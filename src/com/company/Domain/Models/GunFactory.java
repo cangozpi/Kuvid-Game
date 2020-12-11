@@ -78,8 +78,8 @@ public class GunFactory extends GunObserver {
                 GunFactory.super.gunMovedEvent(position, angle, ammo);
             }
         }
-        
-     }
+
+    }
 
     public void rotateGun(DirectionType direction){
 

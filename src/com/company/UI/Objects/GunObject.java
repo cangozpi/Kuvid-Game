@@ -8,7 +8,6 @@ import java.awt.*;
 public class GunObject extends GameObject {
 
     private int angle;
-
     public GunObject(Coordinate coordinate, int WIDTH, int HEIGHT, String imageSource, int angle) {
         super(coordinate, WIDTH, HEIGHT, imageSource);
         this.angle = angle;
@@ -25,6 +24,8 @@ public class GunObject extends GameObject {
         GameWindowFactory.getInstance().getContentPane().add(this); // JFrame.add(JPanel)
         this.setBounds((int)coordinate.getXCoordinate(), (int)coordinate.getYCoordinate(), WIDTH, HEIGHT);
         this.setOpaque(false);
+
+        //this.repaint();
     }
 
     @Override
