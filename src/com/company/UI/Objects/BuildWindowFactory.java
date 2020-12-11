@@ -167,8 +167,8 @@ public class BuildWindowFactory extends JFrame {
 
                 GameObject lol = new GunObject(new Coordinate(((GameWindowFactory.getInstance().windowWidth/2) - GameWindowFactory.getInstance().L / 4), GameWindowFactory.getInstance().windowHeight - (1.75) * GameWindowFactory.getInstance().L), (int)(GameWindowFactory.L / 2), GameWindowFactory.L, "shooter.png", 0);
                 gamePanel.addToObjectList(lol);
-                GameObject loo = new BackgroundObject(new Coordinate(0, -10), GameWindowFactory.getInstance().windowWidth, GameWindowFactory.getInstance().windowHeight, "kuvid_bc.png");
-                gamePanel.addToObjectList(loo);
+                GameObject bgObject = new BackgroundObject(new Coordinate(0, -10), GameWindowFactory.getInstance().windowWidth, GameWindowFactory.getInstance().windowHeight, "kuvid_bc.png");
+                gamePanel.addToObjectList(bgObject);
                 //***********************************
 
                 //render Game Frame

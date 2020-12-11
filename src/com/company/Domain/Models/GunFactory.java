@@ -10,6 +10,7 @@ import com.company.Domain.Utility.Velocity;
 import com.company.Enums.AtomType;
 import com.company.Enums.DirectionType;
 import com.company.Enums.PowerUpType;
+import com.company.UI.Objects.GameWindowFactory;
 
 import static com.company.UI.Objects.GameWindowFactory.*;
 
@@ -26,7 +27,15 @@ public class GunFactory extends GunObserver {
     private boolean loaded;
     private GunFactory() {}
     public static GunFactory getInstance() {
-        if (gun == null) gun = new GunFactory();
+        if (gun == null){
+            gun = new GunFactory();
+            gun.setPosition(new Coordinate(((GameWindowFactory.getInstance().windowWidth/2) - GameWindowFactory.getInstance().L / 4),
+                    GameWindowFactory.getInstance().windowHeight - (1.75) * GameWindowFactory.getInstance().L));
+
+            gun.rightestPointOfTheGun = new Coordinate(gun.getPosition().getXCoordinate() + gun.getGunWidth(), gun.getPosition().getYCoordinate());
+            gun.leftistPointOfTheGUn = gun.getPosition();
+            gun.loadGunWithAtom(AtomType.ALPHA);
+        }
         return gun;
     }
     public void setGun(Coordinate position, Projectile ammo) {
@@ -69,8 +78,8 @@ public class GunFactory extends GunObserver {
                 GunFactory.super.gunMovedEvent(position, angle, ammo);
             }
         }
-        
-     }
+
+    }
 
     public void rotateGun(DirectionType direction){
 
@@ -117,6 +126,23 @@ public class GunFactory extends GunObserver {
 
 
     //getters and setters
+
+    public double getGunWidth() {
+        return gunWidth;
+    }
+
+    public void setGunWidth(double gunWidth) {
+        this.gunWidth = gunWidth;
+    }
+
+    public double getGunHeight() {
+        return gunHeight;
+    }
+
+    public void setGunHeight(double gunHeight) {
+        this.gunHeight = gunHeight;
+    }
+
     public Coordinate getPosition() {
         return position;
     }

@@ -56,11 +56,12 @@ public class GameFactory extends GameObserver implements IGunListener {
     public void gameLoop() {
 
         //16.68ms for 60FPS
-        Timer gameClock =  new Timer(3000, new ActionListener() { // checks for cat icons collusion
+        Timer gameClock =  new Timer(300, new ActionListener() { // checks for cat icons collusion
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                factory.render();//?
+                //factory.draw();
+                //factory.render();//?
                 updatePositions();
 
             }

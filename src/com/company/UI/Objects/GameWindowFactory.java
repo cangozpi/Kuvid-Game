@@ -4,10 +4,12 @@ import com.company.Domain.Controller.BlenderHandler;
 import com.company.Domain.Controller.MoveShooterHandler;
 import com.company.Domain.Controller.RotateGunHandler;
 import com.company.Domain.Controller.ShooterHandler;
+import com.company.Domain.Models.GunFactory;
 import com.company.Domain.Models.Projectile.Molecule;
 import com.company.Domain.Models.Projectile.PowerUp;
 import com.company.Domain.Models.Projectile.Projectile;
 import com.company.Domain.Models.Projectile.ReactionBlocker;
+import com.company.Domain.Observer.GunObserver;
 import com.company.Domain.Observer.IGunListener;
 import com.company.Domain.Utility.Coordinate;
 import com.company.Enums.DirectionType;
@@ -31,7 +33,6 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
 /*
     Main UI Frame, uses Singleton Pattern
  */
-
     public static int windowWidth = 852;
     public static int windowHeight = 480;
     public static int L = windowHeight / 10;
@@ -71,18 +72,30 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
         //Dark mode for aesthetic purposes
         factoryInstance.getContentPane().setBackground(Color.DARK_GRAY);
 
+
+        GunObserver gunObserver = GunFactory.getInstance();
+        gunObserver.addListener(this);
+
         draw();
-
+        this.addKeyListener(this);
         factoryInstance.setVisible(true);
-
     }
 
-    public void draw(){
+    public synchronized void draw(){
+
+        this.getContentPane().removeAll();
+        GameObject bgObject = new BackgroundObject(new Coordinate(0, -10), GameWindowFactory.getInstance().windowWidth, GameWindowFactory.getInstance().windowHeight, "kuvid_bc.png");
+        this.addToObjectList(bgObject);
+
         //draw JPanel elements from list
                 for(GameObject element: objectList){
                     element.draw();
+
                 }
-                this.repaint();
+
+
+            this.revalidate();
+            this.repaint();
     }
 
     public void addToObjectList(GameObject object){
@@ -170,9 +183,10 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
 
     @Override
     public void gunMoved(Coordinate coord, int angle, Projectile projectile){
+        clearObjectList();
         GameObject lol = new GunObject(coord,  (int)(GameWindowFactory.L / 2), GameWindowFactory.L, "shooter.png", angle);
         addToObjectList(lol);
-
+        this.draw();
     }
 
     @Override
@@ -258,6 +272,11 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        System.out.println("AMKKK");
+       
+    }
+
+    @Override
+    public void paintComponents(Graphics graphics) {
+        super.paintComponents(graphics);
     }
 }
