@@ -18,7 +18,7 @@ import com.company.Enums.PowerUpType;
 import com.company.Enums.ReactionBlockerType;
 import com.company.UI.Objects.Observer.GameObserver;
 import com.company.UI.Objects.Observer.IGameListener;
-import com.sun.org.apache.xerces.internal.xs.datatypes.ObjectList;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -197,6 +197,8 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
     @Override
     public void keyPressed(KeyEvent e) {
         System.out.println(e.getKeyCode());
+
+
         if(e.getKeyCode() == 37){ //Left Arrow
             leftArrow();
         }
@@ -223,6 +225,10 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
 
         if(e.getKeyCode() == 80){ //P
             pause();
+        }
+
+        if(e.getKeyCode() == 66){ //B
+            breakOrBlend();
         }
 
         if(e.getKeyCode() == 66){ //B

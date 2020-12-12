@@ -28,8 +28,11 @@ public class GunObject extends GameObject {
         //this.repaint();
     }
 
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
     }
+
 }

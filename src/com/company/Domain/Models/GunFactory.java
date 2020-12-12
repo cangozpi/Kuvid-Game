@@ -26,6 +26,7 @@ public class GunFactory extends GunObserver {
     private Coordinate leftistPointOfTheGUn;
     private boolean loaded;
     private GunFactory() {}
+
     public static GunFactory getInstance() {
         if (gun == null){
             gun = new GunFactory();

@@ -13,10 +13,14 @@ public class Molecule extends Projectile{
         this.moleculeType = moleculeType;
 
 
+
     }
     public MoleculeType getMoleculeType(){
         return this.moleculeType;
     }
 
-
+    @Override
+    public void move() {
+        super.move();
+    }
 }
