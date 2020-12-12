@@ -7,6 +7,7 @@ import com.company.Enums.MoleculeType;
 import com.company.Enums.PowerUpType;
 import com.company.Enums.ReactionBlockerType;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class BuilderHandler {
@@ -18,7 +19,7 @@ public class BuilderHandler {
         this.game = GameFactory.getInstance();
     }
 
-    public void buildGame(int gameWindowWidth, int gameWindowHeight, int difficulty, Map<AtomType, Integer> inventoryContents, Map<MoleculeType, Integer> moleculeAmounts, Map<PowerUpType, Integer> powerUpAmounts, Map<ReactionBlockerType, Integer> reactionBlockerAmounts){
+    public void buildGame(int gameWindowWidth, int gameWindowHeight, int difficulty, HashMap<AtomType, Integer> inventoryContents, Map<MoleculeType, Integer> moleculeAmounts, Map<PowerUpType, Integer> powerUpAmounts, Map<ReactionBlockerType, Integer> reactionBlockerAmounts){
         builder.buildGame(gameWindowHeight, gameWindowWidth, difficulty, inventoryContents);
         builder.createGoodAlien(moleculeAmounts, powerUpAmounts);
         builder.createBadAlien(reactionBlockerAmounts);

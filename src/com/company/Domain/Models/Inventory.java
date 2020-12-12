@@ -67,10 +67,13 @@ public class Inventory {
         switch (atomType){
             case ALPHA:
                  atomMap.merge(AtomType.ALPHA,1,Integer::sum);
+                break;
             case BETA:
                 atomMap.merge(AtomType.BETA,1,Integer::sum);
+                break;
             case GAMMA:
                 atomMap.merge(AtomType.GAMMA,1,Integer::sum);
+                break;
             case SIGMA:
                 atomMap.merge(AtomType.SIGMA,1,Integer::sum);
         }
@@ -83,10 +86,13 @@ public class Inventory {
         switch (atomType){
             case ALPHA:
                 atomMap.merge(AtomType.ALPHA,n,Integer::sum);
+                break;
             case BETA:
                 atomMap.merge(AtomType.BETA,n,Integer::sum);
+                break;
             case GAMMA:
                 atomMap.merge(AtomType.GAMMA,n,Integer::sum);
+                break;
             case SIGMA:
                 atomMap.merge(AtomType.SIGMA,n,Integer::sum);
         }
@@ -99,10 +105,13 @@ public class Inventory {
         switch (powerUpType){
             case ALPHA:
                 atomMap.merge(AtomType.ALPHA,1,Integer::sum);
+                break;
             case BETA:
                 atomMap.merge(AtomType.BETA,1,Integer::sum);
+                break;
             case GAMMA:
                 atomMap.merge(AtomType.GAMMA,1,Integer::sum);
+                break;
             case SIGMA:
                 atomMap.merge(AtomType.SIGMA,1,Integer::sum);
         }
@@ -115,10 +124,13 @@ public class Inventory {
         switch (powerUpType){
             case ALPHA:
                 atomMap.merge(AtomType.ALPHA,n,Integer::sum);
+                break;
             case BETA:
                 atomMap.merge(AtomType.BETA,n,Integer::sum);
+                break;
             case GAMMA:
                 atomMap.merge(AtomType.GAMMA,n,Integer::sum);
+                break;
             case SIGMA:
                 atomMap.merge(AtomType.SIGMA,n,Integer::sum);
         }
@@ -132,10 +144,13 @@ public class Inventory {
         switch (atomType){
             case ALPHA:
                 atomMap.merge(AtomType.ALPHA,-1,Integer::sum);
+                break;
             case BETA:
                 atomMap.merge(AtomType.BETA,-1,Integer::sum);
+                break;
             case GAMMA:
                 atomMap.merge(AtomType.GAMMA,-1,Integer::sum);
+                break;
             case SIGMA:
                 atomMap.merge(AtomType.SIGMA,-1,Integer::sum);
         }
@@ -149,13 +164,16 @@ public class Inventory {
         if(atomMap.get(atomType)-n < 0)return false;
         switch (atomType){
             case ALPHA:
-                atomMap.merge(AtomType.ALPHA,n,Integer::sum);
+                atomMap.merge(AtomType.ALPHA,-n,Integer::sum);
+                break;
             case BETA:
-                atomMap.merge(AtomType.BETA,n,Integer::sum);
+                atomMap.merge(AtomType.BETA,-n,Integer::sum);
+                break;
             case GAMMA:
-                atomMap.merge(AtomType.GAMMA,n,Integer::sum);
+                atomMap.merge(AtomType.GAMMA,-n,Integer::sum);
+                break;
             case SIGMA:
-                atomMap.merge(AtomType.SIGMA,n,Integer::sum);
+                atomMap.merge(AtomType.SIGMA,-n,Integer::sum);
         }
         return true;
     }
@@ -168,10 +186,13 @@ public class Inventory {
         switch (powerUpType){
             case ALPHA:
                 atomMap.merge(AtomType.ALPHA,-1,Integer::sum);
+                break;
             case BETA:
                 atomMap.merge(AtomType.BETA,-1,Integer::sum);
+                break;
             case GAMMA:
                 atomMap.merge(AtomType.GAMMA,-1,Integer::sum);
+                break;
             case SIGMA:
                 atomMap.merge(AtomType.SIGMA,-1,Integer::sum);
         }

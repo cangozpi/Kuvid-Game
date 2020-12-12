@@ -32,26 +32,33 @@ private static Blender blender = null;
                         sourceAmount-=sourceAmount%2;
                         inventory.removeAtom(source,sourceAmount);
                         inventory.addAtom(product, sourceAmount/2);
+                        break;
                     case GAMMA:
                         sourceAmount-=sourceAmount%3;
                         inventory.removeAtom(source,sourceAmount);
                         inventory.addAtom(product, sourceAmount/3);
+                        break;
                     case SIGMA:
                         sourceAmount-=sourceAmount%4;
                         inventory.removeAtom(source,sourceAmount);
                         inventory.addAtom(product, sourceAmount/4);
+                        break;
                 }
+                break;
             case BETA:
                 switch (product){
                     case GAMMA:
                         sourceAmount-=sourceAmount%2;
                         inventory.removeAtom(source,sourceAmount);
                         inventory.addAtom(product, sourceAmount/2);
+                        break;
                     case SIGMA:
                         sourceAmount-=sourceAmount%3;
                         inventory.removeAtom(source,sourceAmount);
                         inventory.addAtom(product, sourceAmount/3);
+                        break;
                 }
+                break;
             case GAMMA:
                 sourceAmount-=sourceAmount%2;
                 inventory.removeAtom(source,sourceAmount);
@@ -68,28 +75,35 @@ private static Blender blender = null;
             }
             if(atomType == product)break;
         }
-
+        int totalSource = inventory.getAtomAmount(source);
+        if(totalSource<sourceAmount) return false;
         switch (source){
             case BETA:
                 inventory.removeAtom(source,sourceAmount);
                 inventory.addAtom(product, sourceAmount*2);
+                break;
             case GAMMA:
                 switch (product){
                     case BETA:
                         inventory.removeAtom(source,sourceAmount);
                         inventory.addAtom(product, sourceAmount*2);
+                        break;
                     case ALPHA:
                         inventory.removeAtom(source,sourceAmount);
                         inventory.addAtom(product, sourceAmount*3);
+                        break;
                 }
+                break;
             case SIGMA:
                 switch (product){
                     case GAMMA:
                         inventory.removeAtom(source,sourceAmount);
                         inventory.addAtom(product, sourceAmount*2);
+                        break;
                     case BETA:
                         inventory.removeAtom(source,sourceAmount);
                         inventory.addAtom(product, sourceAmount*3);
+                        break;
                     case ALPHA:
                         inventory.removeAtom(source,sourceAmount);
                         inventory.addAtom(product, sourceAmount*4);

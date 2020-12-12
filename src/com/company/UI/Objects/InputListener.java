@@ -42,11 +42,6 @@ public class InputListener implements KeyListener {
         if(e.getKeyCode() == 80){ //P
             GameWindowFactory.getInstance().pause();
         }
-
-        if(e.getKeyCode() == 66){ //B
-            GameWindowFactory.getInstance().breakOrBlend();
-        }
-
     }
 
 

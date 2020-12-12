@@ -18,6 +18,7 @@ import com.company.Enums.PowerUpType;
 import com.company.Enums.ReactionBlockerType;
 import com.company.UI.Objects.Observer.GameObserver;
 import com.company.UI.Objects.Observer.IGameListener;
+import com.company.Utils.CenterWindow;
 
 
 import javax.swing.*;
@@ -71,10 +72,13 @@ public class GameWindowFactory extends JFrame implements IGameListener, ActionLi
         factoryInstance.setSize(windowWidth, windowHeight);
         factoryInstance.setTitle("Karel Kuvid");
         factoryInstance.setLayout(null);
+        CenterWindow.centerWindow(this);
 
         //Dark mode for aesthetic purposes
         factoryInstance.getContentPane().setBackground(Color.DARK_GRAY);
         KeyListener keyListener = new InputListener();
+        KeyListener blendListener = new BlenderHandler();
+        addKeyListener(blendListener);
         addKeyListener(keyListener);
         setFocusable(true);
 

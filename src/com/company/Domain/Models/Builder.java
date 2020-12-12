@@ -17,10 +17,11 @@ public class Builder {
     public Builder() {
     }
 
-    public void buildGame(int gameWindowHeight, int gameWindowWidth, int difficulty, Map<AtomType, Integer> inventoryContents) {
+    public void buildGame(int gameWindowHeight, int gameWindowWidth, int difficulty, HashMap<AtomType, Integer> inventoryContents) {
         badAlien = BadAlienFactory.getInstance();
         goodAlien = GoodAlienFactory.getInstance();
         GameFactory game = GameFactory.getInstance();
+        Inventory.getInstance().setAtomMap(inventoryContents);
         game.setDifficulty(difficulty);
         game.setGameWindowHeight(gameWindowHeight);
         game.setGameWindowWidth(gameWindowWidth);
