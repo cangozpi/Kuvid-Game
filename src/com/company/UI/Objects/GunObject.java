@@ -29,7 +29,7 @@ public class GunObject extends GameObject {
     public void rotation(Graphics g){
         System.out.println(Math.toRadians(angle));
         Graphics2D g2d = (Graphics2D) g;
-        g2d.rotate(Math.toRadians(angle-90),WIDTH*3, HEIGHT);
+        g2d.rotate(Math.toRadians(-angle+90),WIDTH*3, HEIGHT);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
     }
