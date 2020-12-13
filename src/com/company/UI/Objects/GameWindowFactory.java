@@ -4,6 +4,7 @@ import com.company.Domain.Controller.BlenderHandler;
 import com.company.Domain.Controller.MoveShooterHandler;
 import com.company.Domain.Controller.RotateGunHandler;
 import com.company.Domain.Controller.ShooterHandler;
+import com.company.Domain.Models.GameFactory;
 import com.company.Domain.Models.GunFactory;
 import com.company.Domain.Models.Projectile.Molecule;
 import com.company.Domain.Models.Projectile.PowerUp;
@@ -237,6 +238,10 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
             breakOrBlend();
         }
 
+        if(e.getKeyCode() == 82){ //R
+            resume();
+        }
+
     }
 
     //ActionPerformed actions below
@@ -268,8 +273,12 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
 
     }
 
-    public void pause(){
+    public void resume(){
+        GameFactory.getInstance().resumeGame();
+    }
 
+    public void pause(){
+        GameFactory.getInstance().pauseGame();
     }
 
 

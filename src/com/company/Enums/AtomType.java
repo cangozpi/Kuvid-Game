@@ -4,5 +4,7 @@ public enum AtomType implements ProjectileType {
     ALPHA,
     BETA,
     GAMMA,
-    SIGMA
+    SIGMA;
+
+
 }

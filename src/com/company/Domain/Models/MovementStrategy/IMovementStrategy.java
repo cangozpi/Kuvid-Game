@@ -6,5 +6,5 @@ import com.company.Domain.Utility.Velocity;
 
 
 public abstract interface IMovementStrategy {
-    public Path newPath(Coordinate position, Velocity velocity, boolean changeDirection);
+    public Path newPath(Path oldPath);
 }

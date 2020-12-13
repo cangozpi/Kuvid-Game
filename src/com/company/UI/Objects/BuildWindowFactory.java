@@ -3,6 +3,7 @@ package com.company.UI.Objects;
 import com.company.Domain.Controller.BuilderHandler;
 import com.company.Domain.Models.Builder;
 import com.company.Domain.Utility.Coordinate;
+import com.company.Domain.Utility.Velocity;
 import com.company.Enums.AtomType;
 import com.company.Enums.MoleculeType;
 import com.company.Enums.PowerUpType;
@@ -118,7 +119,7 @@ public class BuildWindowFactory extends JFrame {
 
                 //extract information from JFrame
                 difficultyLevel = difficultySlider.getValue();
-
+                isLinear = checkBox.isSelected();
                 for(AtomType element : AtomType.values()){
                     if(isStringInt(inputs[0].getText()))
                         atomAmount.put(element, Integer.parseInt(inputs[0].getText()));
@@ -138,12 +139,22 @@ public class BuildWindowFactory extends JFrame {
                         reactionBlockerAmount.put(element, 10);
                 }
                 for(MoleculeType element : MoleculeType.values()){
-                    if(isStringInt(inputs[1].getText()))
-                        moleculeAmount.put(element, Integer.parseInt(inputs[1].getText()));
-                    else
-                        moleculeAmount.put(element, 100);
+                    if(isLinear){
+                        if(!element.equals(MoleculeType.ALPHA_2) && !element.equals(MoleculeType.BETA_2)) {
+                            if (isStringInt(inputs[1].getText()))
+                                moleculeAmount.put(element, Integer.parseInt(inputs[1].getText()));
+                            else
+                                moleculeAmount.put(element, 100);
+                        }
+                    }else{
+                        if(!element.equals(MoleculeType.ALPHA_1) && !element.equals(MoleculeType.BETA_1)) {
+                            if (isStringInt(inputs[1].getText()))
+                                moleculeAmount.put(element, Integer.parseInt(inputs[1].getText()));
+                            else
+                                moleculeAmount.put(element, 100);
+                        }
+                    }
                 }
-                isLinear = checkBox.isSelected();
 
 
 

@@ -31,7 +31,7 @@ public class GameFactory extends GameObserver implements IGunListener {
     private List<Molecule> moleculeList;
     private Projectile ammo;
     private GameWindowFactory factory;
-
+    private Timer gameClock;
 
     private GameFactory(){
         super(); //necessary for initializing Observer
@@ -56,12 +56,11 @@ public class GameFactory extends GameObserver implements IGunListener {
     public void gameLoop() {
 
         //16.68ms for 60FPS
-        Timer gameClock =  new Timer(300, new ActionListener() { // checks for cat icons collusion
+            gameClock =  new Timer(300, new ActionListener() { // checks for cat icons collusion
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //factory.draw();
-                //factory.render();//?
+
                 updatePositions();
 
             }
@@ -70,24 +69,32 @@ public class GameFactory extends GameObserver implements IGunListener {
         gameClock.start();
     }
 
-    public void insertProjectile(Projectile projectile){
+    public void pauseGame(){
+        gameClock.stop();
+    }
+
+    public void resumeGame(){
+        gameClock.start();
+    }
+
+    public void insertProjectile(Projectile projectile){    //projectiles shot by the gun
 
 
         projectileList.add(projectile);
 
     }
 
-    public void insertMolecule(Molecule molecule){
+    public void insertMolecule(Molecule molecule){         //molecules from good alien
 
         moleculeList.add(molecule);
     }
 
-    public void insertPowerUp(PowerUp powerUp){
+    public void insertPowerUp(PowerUp powerUp){           //powerups from good alien
 
         projectileList.add(powerUp);
     }
 
-    public void insertReactionBlocker(ReactionBlocker reactionBlocker){
+    public void insertReactionBlocker(ReactionBlocker reactionBlocker){    //reaction blockers from bad alien
 
         projectileList.add(reactionBlocker);
     }
