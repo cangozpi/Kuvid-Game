@@ -1,7 +1,7 @@
 package com.company.Domain.Models;
 
 
-import com.company.Domain.Models.MovementStrategy.IMovementStrategy;
+
 import com.company.Domain.Utility.Coordinate;
 import com.company.Domain.Utility.Path;
 import com.company.Enums.AtomType;

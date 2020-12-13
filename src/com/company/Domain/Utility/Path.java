@@ -5,11 +5,11 @@ import com.company.Enums.DirectionType;
 public class Path {
 
     private Coordinate coordinate;
-    private DirectionType directionType;
+    private int angle;
 
-    public Path(Coordinate coordinate, DirectionType directionType) {
+    public Path(Coordinate coordinate, int angle) {
         this.coordinate = coordinate;
-        this.directionType = directionType;
+        this.angle = angle;
     }
 
     //getters and setters below
@@ -21,11 +21,11 @@ public class Path {
         this.coordinate = coordinate;
     }
 
-    public DirectionType getDirectionType() {
-        return directionType;
+    public int getDirectionType() {
+        return angle;
     }
 
-    public void setDirectionType(DirectionType directionType) {
-        this.directionType = directionType;
+    public void setDirectionType(int angle) {
+        this.angle = angle;
     }
 }

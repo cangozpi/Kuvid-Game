@@ -72,7 +72,8 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
         CenterWindow.centerWindow(this);
         //Dark mode for aesthetic purposes
         factoryInstance.getContentPane().setBackground(Color.DARK_GRAY);
-
+        KeyListener blendListener = new BlenderHandler();
+        addKeyListener(blendListener);
 
         GunObserver gunObserver = GunFactory.getInstance();
         gunObserver.addListener(this);

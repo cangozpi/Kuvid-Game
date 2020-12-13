@@ -6,8 +6,8 @@ import com.company.Enums.AtomType;
 import java.util.*;
 
 public class Blender {
-Inventory inventory = Inventory.getInstance();
-private static Blender blender = null;
+    Inventory inventory = Inventory.getInstance();
+    private static Blender blender = null;
 
     private Blender() {}
     public static Blender getInstance() {
@@ -17,11 +17,11 @@ private static Blender blender = null;
     public boolean blendAtoms(AtomType source, AtomType product, int sourceAmount){
 
         for (AtomType atomType: AtomType.values()){
-           if(atomType == source) break;
-           if(atomType == product){
-               System.err.println("Cannot blend a higher atom type to produce a lower type.");
-               return false;
-           }
+            if(atomType == source) break;
+            if(atomType == product){
+                System.err.println("Cannot blend a higher atom type to produce a lower type.");
+                return false;
+            }
         }
         int totalSource = inventory.getAtomAmount(source);
         if(totalSource<sourceAmount) return false;
@@ -44,6 +44,7 @@ private static Blender blender = null;
                         inventory.addAtom(product, sourceAmount/4);
                         break;
                 }
+                break;
             case BETA:
                 switch (product){
                     case GAMMA:
@@ -57,11 +58,11 @@ private static Blender blender = null;
                         inventory.addAtom(product, sourceAmount/3);
                         break;
                 }
+                break;
             case GAMMA:
                 sourceAmount-=sourceAmount%2;
                 inventory.removeAtom(source,sourceAmount);
                 inventory.addAtom(product, sourceAmount/2);
-                break;
         }
         return true;
     }
@@ -74,7 +75,8 @@ private static Blender blender = null;
             }
             if(atomType == product)break;
         }
-
+        int totalSource = inventory.getAtomAmount(source);
+        if(totalSource<sourceAmount) return false;
         switch (source){
             case BETA:
                 inventory.removeAtom(source,sourceAmount);
@@ -91,6 +93,7 @@ private static Blender blender = null;
                         inventory.addAtom(product, sourceAmount*3);
                         break;
                 }
+                break;
             case SIGMA:
                 switch (product){
                     case GAMMA:
@@ -104,7 +107,6 @@ private static Blender blender = null;
                     case ALPHA:
                         inventory.removeAtom(source,sourceAmount);
                         inventory.addAtom(product, sourceAmount*4);
-                        break;
                 }
         }
         return true;

@@ -1,6 +1,7 @@
 package com.company.Domain.Models.MovementStrategy;
 
 import com.company.Domain.Utility.Coordinate;
+import com.company.Domain.Utility.Path;
 import com.company.Domain.Utility.Velocity;
 
 import static java.lang.Math.cos;
@@ -9,7 +10,7 @@ import static java.lang.Math.sin;
 public class ZigZagStrategy implements IMovementStrategy{
 
     @Override
-    public Coordinate newPos(Coordinate position, Velocity velocity, boolean changeDirection){
+    public Path newPath(Coordinate position, Velocity velocity, boolean changeDirection){
         double speed = velocity.getSpeed();
         int angle = velocity.getAngle();
         if( changeDirection){
@@ -18,7 +19,7 @@ public class ZigZagStrategy implements IMovementStrategy{
             else
                 angle = 225;
         }
-        return new Coordinate(position.getXCoordinate() + speed * cos(angle),position.getXCoordinate() + speed * sin(angle) );
+        return new Path(null,0);
     }
 
 
