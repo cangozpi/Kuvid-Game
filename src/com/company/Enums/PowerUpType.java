@@ -1,6 +1,6 @@
 package com.company.Enums;
 
-public enum PowerUpType {
+public enum PowerUpType implements ProjectileType {
     ALPHA,
     BETA,
     GAMMA,

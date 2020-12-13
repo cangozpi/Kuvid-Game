@@ -1,6 +1,6 @@
 package com.company.Enums;
 
-public enum MoleculeType {
+public enum MoleculeType implements ProjectileType {
     ALPHA_1,
     BETA_1,
     ALPHA_2,
