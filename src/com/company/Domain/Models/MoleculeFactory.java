@@ -17,7 +17,7 @@ public class MoleculeFactory {
            case ALPHA_1:
                return new Molecule(coordinate, velocity, isAmmo, MoleculeType.ALPHA_1, height, width);
            case ALPHA_2:
-               return new Molecule(coordinate, velocity, isAmmo,   MoleculeType.ALPHA_2, height, width);
+               return new Molecule(coordinate, velocity, isAmmo, MoleculeType.ALPHA_2, height, width);
            case GAMMA:
                return new Molecule(coordinate, velocity, isAmmo, MoleculeType.GAMMA, height, width);
            case BETA_1:

@@ -23,6 +23,7 @@ public class Builder {
         GameFactory game = GameFactory.getInstance();
         Inventory.getInstance().setAtomMap(inventoryContents);
         game.setDifficulty(difficulty);
+        game.setFallSpeed(difficulty);
         game.setGameWindowHeight(gameWindowHeight);
         game.setGameWindowWidth(gameWindowWidth);
         game.startGame();

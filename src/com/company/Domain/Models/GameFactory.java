@@ -30,6 +30,7 @@ public class GameFactory extends GameObserver implements IGunListener {
     private Atom ammoAtom;
     private PowerUp ammoPowerUp;
     private GameWindowFactory factory;
+    private int fallSpeed;
     private Timer gameClock;
 
     private GameFactory(){
@@ -214,6 +215,19 @@ public class GameFactory extends GameObserver implements IGunListener {
     }
 
     public void setDifficulty(int difficulty) { this.difficulty = difficulty; }
+
+    public void setFallSpeed(int difficulty) {
+        if (difficulty == 1)
+            this.fallSpeed = 1;
+        else if(difficulty == 2)
+            this.fallSpeed = 2;
+        else if(difficulty == 3)
+            this.fallSpeed = 4;
+    }
+
+    public int getFallSpeed(){
+        return fallSpeed;
+    }
 
     public int getL() { return L; }
 
