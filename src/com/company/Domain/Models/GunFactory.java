@@ -39,6 +39,7 @@ public class GunFactory extends GunObserver {
             gun.leftistPointOfTheGUn = gun.getPosition();
             gun.loadGunWithAtom(AtomType.ALPHA);
             gun.setInventory();
+
         }
         return gun;
     }
@@ -137,9 +138,9 @@ public class GunFactory extends GunObserver {
 
     public void loadGunWithAtom(AtomType atomType){              // gets ammo type from atom selector
 
-        double xCoord = 0;    //TODO: position and angle calculations to line it up with the tip of the gun
-        double yCoord = 0;
-        int ammoAngle = 0;
+        double xCoord = getPosition().getXCoordinate();    //TODO: position and angle calculations to line it up with the tip of the gun
+        double yCoord = getPosition().getYCoordinate() - L/10;
+        int ammoAngle = getAngle();
         AtomFactory atomFactory = new AtomFactory();
         Coordinate ammoCoord = new Coordinate(xCoord, yCoord);                                                // creates projectile and sends it to game
         Velocity ammoVelocity = new Velocity(ammoAngle, 0);

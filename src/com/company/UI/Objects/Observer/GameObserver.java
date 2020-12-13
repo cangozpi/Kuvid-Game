@@ -1,6 +1,7 @@
 package com.company.UI.Objects.Observer;
 
 import com.company.Domain.Models.Projectile.*;
+import com.company.Domain.Utility.Coordinate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +19,11 @@ public class GameObserver {
         subscribers.add(listener);
     }
 
-    public void positionUpdateEvent(List<Molecule> moleculeList,List<Atom> atomList,  List<PowerUp> shotPowerUpList,  List<ReactionBlocker> reactionBlockerList, List<PowerUp> powerUpList){ // use to fire action performed method of all the subscribers
+    public void positionUpdateEvent(ArrayList<Molecule> moleculeList, ArrayList<Atom> atomList,
+                                    ArrayList<PowerUp> shotPowerUpList, ArrayList<ReactionBlocker> reactionBlockerList,
+                                    ArrayList<PowerUp> powerUpList, Coordinate gunPosition, int gunAngle){ // use to fire action performed method of all the subscribers
         for(IGameListener listener : subscribers){
-            listener.positionChanged(moleculeList, atomList, shotPowerUpList,reactionBlockerList, powerUpList);
+            listener.positionChanged(moleculeList, atomList, shotPowerUpList,reactionBlockerList, powerUpList, gunPosition, gunAngle);
         }
     }
 }

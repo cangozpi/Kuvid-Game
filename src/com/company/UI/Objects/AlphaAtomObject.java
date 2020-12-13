@@ -15,12 +15,12 @@ public class AlphaAtomObject extends GameObject{
 
     @Override
     public void draw() {
-        ImageIcon gun = new ImageIcon(getClass().getResource("Assets/atoms/"+imageSource));
-        Image scaledGun = gun.getImage().getScaledInstance(WIDTH, HEIGHT, java.awt.Image.SCALE_SMOOTH); // scales the image
-        ImageIcon gunIcon = new ImageIcon(scaledGun);
-        JLabel gunLabel = new JLabel(gunIcon);
+        ImageIcon atom = new ImageIcon(getClass().getResource("Assets/atoms/"+imageSource));
+        Image scaledAtom = atom.getImage().getScaledInstance(WIDTH, HEIGHT, java.awt.Image.SCALE_SMOOTH); // scales the image
+        ImageIcon atomIcon = new ImageIcon(scaledAtom);
+        JLabel atomLabel = new JLabel(atomIcon);
         //add to the JFrame
-        this.add(gunLabel);
+        this.add(atomLabel);
         GameWindowFactory.getInstance().getContentPane().add(this); // JFrame.add(JPanel)
         this.setBounds((int)coordinate.getXCoordinate(), (int)coordinate.getYCoordinate(), WIDTH, HEIGHT);
         this.setOpaque(false);

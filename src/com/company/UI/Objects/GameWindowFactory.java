@@ -72,6 +72,9 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
 
         GunObserver gunObserver = GunFactory.getInstance();
         gunObserver.addListener(this);
+        GameObserver gameObserver = GameFactory.getInstance();
+        gameObserver.addListener(this);
+
 
         draw();
         this.addKeyListener(this);
@@ -104,117 +107,128 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
     }
 
     @Override
-    public void positionChanged(List<Molecule> moleculeList, List<Atom> atomList, List<PowerUp> shotpowerUpList, List<ReactionBlocker> reactionBlockerList, List<PowerUp> powerUpList) {
+    public void positionChanged(ArrayList<Molecule> moleculeList, ArrayList<Atom> atomList, ArrayList<PowerUp> shotPowerUpList,
+                                ArrayList<ReactionBlocker> reactionBlockerList, ArrayList<PowerUp> powerUpList, Coordinate gunPosition, int gunAngle) {
         //empty objectList before re-adding GameObjects from zero
         clearObjectList();
 
         //add GameObjects to the objectList
-        for (Molecule molecule : moleculeList) {
-            // create ui object from data in projectile
-            //instantiate object accordingly
+        if(!moleculeList.isEmpty()) {
+            for (Molecule molecule : moleculeList) {
+                // create ui object from data in projectile
+                //instantiate object accordingly
 
-            GameObject currentObject;
-            int width = molecule.getWidth();
-            int height = molecule.getHeight();
+                GameObject currentObject;
+                int width = molecule.getWidth();
+                int height = molecule.getHeight();
 
-            if (molecule.getMoleculeType() == MoleculeType.ALPHA_1) {
-                currentObject = new AlphaOneMoleculeObject(molecule.getCoordinate(), width, height, 0);
-            } else if (molecule.getMoleculeType() == MoleculeType.ALPHA_2) {
-                currentObject = new AlphaTwoMoleculeObject(molecule.getCoordinate(), width, height, 0);
-            } else if (molecule.getMoleculeType() == MoleculeType.BETA_1) {
-                currentObject = new BetaOneMoleculeObject(molecule.getCoordinate(), width, height, 0);
-            } else if (molecule.getMoleculeType() == MoleculeType.BETA_2) {
-                currentObject = new BetaTwoMoleculeObject(molecule.getCoordinate(), width, height, 0);
-            } else if (molecule.getMoleculeType() == MoleculeType.GAMMA) {
-                currentObject = new GammaMoleculeObject(molecule.getCoordinate(), width, height, 0);
-            } else  {
-                currentObject = new SigmaMoleculeObject(molecule.getCoordinate(), width, height, 0);
+                if (molecule.getMoleculeType() == MoleculeType.ALPHA_1) {
+                    currentObject = new AlphaOneMoleculeObject(molecule.getCoordinate(), width, height, 0);
+                } else if (molecule.getMoleculeType() == MoleculeType.ALPHA_2) {
+                    currentObject = new AlphaTwoMoleculeObject(molecule.getCoordinate(), width, height, 0);
+                } else if (molecule.getMoleculeType() == MoleculeType.BETA_1) {
+                    currentObject = new BetaOneMoleculeObject(molecule.getCoordinate(), width, height, 0);
+                } else if (molecule.getMoleculeType() == MoleculeType.BETA_2) {
+                    currentObject = new BetaTwoMoleculeObject(molecule.getCoordinate(), width, height, 0);
+                } else if (molecule.getMoleculeType() == MoleculeType.GAMMA) {
+                    currentObject = new GammaMoleculeObject(molecule.getCoordinate(), width, height, 0);
+                } else {
+                    currentObject = new SigmaMoleculeObject(molecule.getCoordinate(), width, height, 0);
+                }
+
+                addToObjectList(currentObject);
+            }
+        }
+
+
+
+        if(!reactionBlockerList.isEmpty()) {
+            for (ReactionBlocker reactionBlocker : reactionBlockerList) {
+                reactionBlocker.getCoordinate();
+                GameObject currentObject;
+                if (reactionBlocker.getReactionBlockerType() == ReactionBlockerType.ALPHA_B) {
+                    currentObject = new AlphaBlockerObject(reactionBlocker.getCoordinate(), reactionBlocker.getWidth(), reactionBlocker.getHeight(), 0);
+                } else if (reactionBlocker.getReactionBlockerType() == ReactionBlockerType.BETA_B) {
+                    currentObject = new BetaBlockerObject(reactionBlocker.getCoordinate(), reactionBlocker.getWidth(), reactionBlocker.getHeight(), 0);
+                } else if (reactionBlocker.getReactionBlockerType() == ReactionBlockerType.GAMMA_B) {
+                    currentObject = new GammaBlockerObject(reactionBlocker.getCoordinate(), reactionBlocker.getWidth(), reactionBlocker.getHeight(), 0);
+                } else {
+                    currentObject = new SigmaBlockerObject(reactionBlocker.getCoordinate(), reactionBlocker.getWidth(), reactionBlocker.getHeight(), 0);
+                }
+                // create ui object from data in projectile
+                addToObjectList(currentObject);
+            }
+        }
+        if(!powerUpList.isEmpty()) {
+            for (PowerUp powerUp : powerUpList) {
+                Coordinate coordinate = powerUp.getCoordinate();
+
+                // create ui object from data in projectile
+                GameObject currentObject;
+                int width = powerUp.getWidth();
+                int height = powerUp.getHeight();
+
+                if (powerUp.getPowerUpType() == PowerUpType.ALPHA) {
+                    currentObject = new AlphaBlockerObject(coordinate, width, height, 0);
+                } else if (powerUp.getPowerUpType() == PowerUpType.BETA) {
+                    currentObject = new BetaBetaPowerUpObject(coordinate, width, height, 0);
+                } else if (powerUp.getPowerUpType() == PowerUpType.GAMMA) {
+                    currentObject = new GammaBetaPowerUpObject(coordinate, width, height, 0);
+                } else {
+                    currentObject = new SigmaBlockerObject(coordinate, width, height, 0);
+                }
+
+                addToObjectList(currentObject);
+            }
+        }
+
+        if(!atomList.isEmpty()) {
+            for (Atom atom : atomList) {
+                // create ui object from data in projectile
+                //instantiate object accordingly
+
+                GameObject currentObject;
+                int width = atom.getWidth();
+                int height = atom.getHeight();
+
+                if (atom.getAtomType() == AtomType.ALPHA) {
+                    currentObject = new AlphaAtomObject(atom.getCoordinate(), width, height, 0);
+                } else if (atom.getAtomType() == AtomType.BETA) {
+                    currentObject = new BetaAtomObject(atom.getCoordinate(), width, height, 0);
+                } else if (atom.getAtomType() == AtomType.GAMMA) {
+                    currentObject = new GammaAtomObject(atom.getCoordinate(), width, height, 0);
+                } else {
+                    currentObject = new SigmaAtomObject(atom.getCoordinate(), width, height, 0);
+                }
+                addToObjectList(currentObject);
             }
 
-            addToObjectList(currentObject);
         }
 
+        if(!shotPowerUpList.isEmpty()) {
+            for (PowerUp powerUp : shotPowerUpList) {
+                // create ui object from data in projectile
+                //instantiate object accordingly
 
+                GameObject currentObject;
+                int width = powerUp.getWidth();
+                int height = powerUp.getHeight();
 
-
-
-        for (ReactionBlocker reactionBlocker : reactionBlockerList) {
-            reactionBlocker.getCoordinate();
-            GameObject currentObject;
-            if (reactionBlocker.getReactionBlockerType() == ReactionBlockerType.ALPHA_B) {
-                currentObject = new AlphaBlockerObject(reactionBlocker.getCoordinate(), reactionBlocker.getWidth(), reactionBlocker.getHeight(), 0);
-            } else if (reactionBlocker.getReactionBlockerType() == ReactionBlockerType.BETA_B) {
-                currentObject = new BetaBlockerObject(reactionBlocker.getCoordinate(), reactionBlocker.getWidth(), reactionBlocker.getHeight(), 0);
-            } else if (reactionBlocker.getReactionBlockerType() == ReactionBlockerType.GAMMA_B) {
-                currentObject = new GammaBlockerObject(reactionBlocker.getCoordinate(), reactionBlocker.getWidth(), reactionBlocker.getHeight(), 0);
-            } else{
-                currentObject = new SigmaBlockerObject(reactionBlocker.getCoordinate(), reactionBlocker.getWidth(), reactionBlocker.getHeight(), 0);
+                if (powerUp.getPowerUpType() == PowerUpType.ALPHA) {
+                    currentObject = new AlphaBetaPowerUp(powerUp.getCoordinate(), width, height, 0);
+                } else if (powerUp.getPowerUpType() == PowerUpType.BETA) {
+                    currentObject = new BetaBetaPowerUpObject(powerUp.getCoordinate(), width, height, 0);
+                } else if (powerUp.getPowerUpType() == PowerUpType.GAMMA) {
+                    currentObject = new GammaBetaPowerUpObject(powerUp.getCoordinate(), width, height, 0);
+                } else {
+                    currentObject = new SigmaBetaPowerUpObject(powerUp.getCoordinate(), width, height, 0);
+                }
+                addToObjectList(currentObject);
             }
-            // create ui object from data in projectile
-            addToObjectList(currentObject);
         }
-        for (PowerUp powerUp : powerUpList) {
-            Coordinate coordinate = powerUp.getCoordinate();
-
-            // create ui object from data in projectile
-            GameObject currentObject;
-            int width = powerUp.getWidth();
-            int height = powerUp.getHeight();
-
-            if (powerUp.getPowerUpType() == PowerUpType.ALPHA) {
-                currentObject = new AlphaBlockerObject(coordinate, width, height, 0);
-            } else if (powerUp.getPowerUpType() == PowerUpType.BETA) {
-                currentObject = new BetaBetaPowerUpObject(coordinate, width, height, 0);
-            } else if (powerUp.getPowerUpType() == PowerUpType.GAMMA) {
-                currentObject = new GammaBetaPowerUpObject(coordinate, width, height, 0);
-            } else{
-                currentObject = new SigmaBlockerObject(coordinate, width, height, 0);
-           }
-
-            addToObjectList(currentObject);
-        }
-
-
-        for (Atom atom : atomList) {
-            // create ui object from data in projectile
-            //instantiate object accordingly
-
-            GameObject currentObject;
-            int width = atom.getWidth();
-            int height = atom.getHeight();
-
-            if (atom.getAtomType() == AtomType.ALPHA) {
-                currentObject = new AlphaAtomObject(atom.getCoordinate(), width, height, 0);
-            } else if (atom.getAtomType() == AtomType.BETA) {
-                currentObject = new BetaAtomObject(atom.getCoordinate(), width, height, 0);
-            } else if (atom.getAtomType() == AtomType.GAMMA) {
-                currentObject = new GammaAtomObject(atom.getCoordinate(), width, height, 0);
-            } else {
-                currentObject = new SigmaAtomObject(atom.getCoordinate(), width, height, 0);
-            }
-            addToObjectList(currentObject);
-        }
-
-
-        for (PowerUp powerUp : powerUpList) {
-            // create ui object from data in projectile
-            //instantiate object accordingly
-
-            GameObject currentObject;
-            int width = powerUp.getWidth();
-            int height = powerUp.getHeight();
-
-            if (powerUp.getPowerUpType() == PowerUpType.ALPHA) {
-                currentObject = new AlphaBetaPowerUp(powerUp.getCoordinate(), width, height, 0);
-            } else if (powerUp.getPowerUpType() == PowerUpType.BETA) {
-                currentObject = new BetaBetaPowerUpObject(powerUp.getCoordinate(), width, height, 0);
-            } else if (powerUp.getPowerUpType() == PowerUpType.GAMMA) {
-                currentObject = new GammaBetaPowerUpObject(powerUp.getCoordinate(), width, height, 0);
-            } else {
-                currentObject = new SigmaBetaPowerUpObject(powerUp.getCoordinate(), width, height, 0);
-            }
-            addToObjectList(currentObject);
-        }
+        GameObject lol = new GunObject(gunPosition,  (int)(GameWindowFactory.L / 2), GameWindowFactory.L, "shooter.png", gunAngle);
+        addToObjectList(lol);
+        this.draw();
     }
 
     @Override
