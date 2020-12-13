@@ -27,7 +27,8 @@ public class GameFactory extends GameObserver implements IGunListener {
     private List<PowerUp> powerUpList;
     private List<ReactionBlocker> reactionBlockerList;
     private List<Molecule> moleculeList;
-    private Projectile ammo;
+    private Atom ammoAtom;
+    private PowerUp ammoPowerUp;
     private GameWindowFactory factory;
     private Timer gameClock;
 
@@ -55,6 +56,8 @@ public class GameFactory extends GameObserver implements IGunListener {
     //gameLoop() handles both game clock and alien clock
     public void gameLoop() {
 
+        boolean flag = false;
+
         //16.68ms for 60FPS
             gameClock =  new Timer(300, new ActionListener() { // checks for cat icons collusion
 
@@ -62,6 +65,7 @@ public class GameFactory extends GameObserver implements IGunListener {
             public void actionPerformed(ActionEvent e) {
 
                 updatePositions();
+
             }
         });
 

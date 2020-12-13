@@ -10,10 +10,7 @@ import com.company.Domain.Models.Projectile.*;
 import com.company.Domain.Observer.GunObserver;
 import com.company.Domain.Observer.IGunListener;
 import com.company.Domain.Utility.Coordinate;
-import com.company.Enums.DirectionType;
-import com.company.Enums.MoleculeType;
-import com.company.Enums.PowerUpType;
-import com.company.Enums.ReactionBlockerType;
+import com.company.Enums.*;
 import com.company.UI.Objects.Observer.GameObserver;
 import com.company.UI.Objects.Observer.IGameListener;
 import com.company.Utils.CenterWindow;
@@ -174,6 +171,48 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
                 currentObject = new SigmaBlockerObject(coordinate, width, height, 0);
            }
 
+            addToObjectList(currentObject);
+        }
+
+
+        for (Atom atom : atomList) {
+            // create ui object from data in projectile
+            //instantiate object accordingly
+
+            GameObject currentObject;
+            int width = atom.getWidth();
+            int height = atom.getHeight();
+
+            if (atom.getAtomType() == AtomType.ALPHA) {
+                currentObject = new AlphaAtomObject(atom.getCoordinate(), width, height, 0);
+            } else if (atom.getAtomType() == AtomType.BETA) {
+                currentObject = new BetaAtomObject(atom.getCoordinate(), width, height, 0);
+            } else if (atom.getAtomType() == AtomType.GAMMA) {
+                currentObject = new GammaAtomObject(atom.getCoordinate(), width, height, 0);
+            } else {
+                currentObject = new SigmaAtomObject(atom.getCoordinate(), width, height, 0);
+            }
+            addToObjectList(currentObject);
+        }
+
+
+        for (PowerUp powerUp : powerUpList) {
+            // create ui object from data in projectile
+            //instantiate object accordingly
+
+            GameObject currentObject;
+            int width = powerUp.getWidth();
+            int height = powerUp.getHeight();
+
+            if (powerUp.getPowerUpType() == PowerUpType.ALPHA) {
+                currentObject = new AlphaBetaPowerUp(powerUp.getCoordinate(), width, height, 0);
+            } else if (powerUp.getPowerUpType() == PowerUpType.BETA) {
+                currentObject = new BetaBetaPowerUpObject(powerUp.getCoordinate(), width, height, 0);
+            } else if (powerUp.getPowerUpType() == PowerUpType.GAMMA) {
+                currentObject = new GammaBetaPowerUpObject(powerUp.getCoordinate(), width, height, 0);
+            } else {
+                currentObject = new SigmaBetaPowerUpObject(powerUp.getCoordinate(), width, height, 0);
+            }
             addToObjectList(currentObject);
         }
     }
