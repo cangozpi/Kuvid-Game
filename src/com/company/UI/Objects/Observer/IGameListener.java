@@ -1,14 +1,11 @@
 package com.company.UI.Objects.Observer;
 
-import com.company.Domain.Models.Projectile.Molecule;
-import com.company.Domain.Models.Projectile.PowerUp;
-import com.company.Domain.Models.Projectile.Projectile;
-import com.company.Domain.Models.Projectile.ReactionBlocker;
+import com.company.Domain.Models.Projectile.*;
 
 import java.util.List;
 
 
 public interface IGameListener {
-    void positionChanged(List<Molecule> moleculeList, List<Projectile> projectileList, List<ReactionBlocker> reactionBlockerList, List<PowerUp> powerUpList);
+    void positionChanged(List<Molecule> moleculeList, List<Atom> atomList, List<PowerUp> shotPowerUpList, List<ReactionBlocker> reactionBlockerList, List<PowerUp> powerUpList);
 
 }

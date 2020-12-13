@@ -6,10 +6,7 @@ import com.company.Domain.Controller.RotateGunHandler;
 import com.company.Domain.Controller.ShooterHandler;
 import com.company.Domain.Models.GameFactory;
 import com.company.Domain.Models.GunFactory;
-import com.company.Domain.Models.Projectile.Molecule;
-import com.company.Domain.Models.Projectile.PowerUp;
-import com.company.Domain.Models.Projectile.Projectile;
-import com.company.Domain.Models.Projectile.ReactionBlocker;
+import com.company.Domain.Models.Projectile.*;
 import com.company.Domain.Observer.GunObserver;
 import com.company.Domain.Observer.IGunListener;
 import com.company.Domain.Utility.Coordinate;
@@ -110,7 +107,7 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
     }
 
     @Override
-    public void positionChanged(List<Molecule> moleculeList, List<Projectile> projectileList, List<ReactionBlocker> reactionBlockerList, List<PowerUp> powerUpList) {
+    public void positionChanged(List<Molecule> moleculeList, List<Atom> atomList, List<PowerUp> shotpowerUpList, List<ReactionBlocker> reactionBlockerList, List<PowerUp> powerUpList) {
         //empty objectList before re-adding GameObjects from zero
         clearObjectList();
 
@@ -141,10 +138,7 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
         }
 
 
-        for (Projectile projectile : projectileList) {
 
-
-        }
 
 
         for (ReactionBlocker reactionBlocker : reactionBlockerList) {
@@ -185,7 +179,7 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
     }
 
     @Override
-    public void gunMoved(Coordinate coord, int angle, Projectile projectile){
+    public void gunMoved(Coordinate coord, int angle, Atom atom, PowerUp powerUp){
         clearObjectList();
         GameObject lol = new GunObject(coord,  (int)(GameWindowFactory.L / 2), GameWindowFactory.L, "shooter.png", angle);
         addToObjectList(lol);

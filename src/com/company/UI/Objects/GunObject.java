@@ -33,7 +33,7 @@ public class GunObject extends GameObject {
     @Override
     protected void paintComponent(Graphics g) {
 
-       super.paintComponent(g);
+        super.paintComponent(g);
 
     }
 
