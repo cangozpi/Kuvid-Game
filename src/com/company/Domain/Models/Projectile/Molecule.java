@@ -1,5 +1,6 @@
 package com.company.Domain.Models.Projectile;
 
+import com.company.Domain.Models.MovementStrategy.IMovementStrategy;
 import com.company.Domain.Models.MovementStrategyFactory;
 import com.company.Domain.Utility.Coordinate;
 import com.company.Domain.Utility.Path;
@@ -14,7 +15,7 @@ public class Molecule extends Projectile{
         super(coordinate, velocity, isAmmo, height, width);
         this.moleculeType = moleculeType;
         this.path = new Path(coordinate, velocity, 0);
-//
+
 
 
     }
@@ -25,7 +26,8 @@ public class Molecule extends Projectile{
     @Override
     public void move() {
         MovementStrategyFactory strategyFactory = new MovementStrategyFactory();
-        this.path = strategyFactory.getMovementStrategy().newPath(this.path);
+
+        this.path = strategyFactory.getMovementStrategy(getMoleculeType(),getCoordinate()).newPath(this.path);
         setCoordinate(path.getCoordinate());
     }
 }

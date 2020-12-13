@@ -19,6 +19,7 @@ public class GunObject extends GameObject {
         Image scaledGun = gun.getImage().getScaledInstance(WIDTH, HEIGHT, java.awt.Image.SCALE_SMOOTH); // scales the image
         ImageIcon gunIcon = new ImageIcon(scaledGun);
         JLabel gunLabel = new JLabel(gunIcon);
+
         //add to the JFrame
         this.add(gunLabel);
         GameWindowFactory.getInstance().getContentPane().add(this); // JFrame.add(JPanel)
@@ -31,7 +32,8 @@ public class GunObject extends GameObject {
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+
+       super.paintComponent(g);
 
     }
 

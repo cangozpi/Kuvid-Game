@@ -19,7 +19,7 @@ public class BuilderHandler {
         this.game = GameFactory.getInstance();
     }
 
-    public void buildGame(int gameWindowWidth, int gameWindowHeight, int difficulty, HashMap<AtomType, Integer> inventoryContents, Map<MoleculeType, Integer> moleculeAmounts, Map<PowerUpType, Integer> powerUpAmounts, Map<ReactionBlockerType, Integer> reactionBlockerAmounts){
+    public void buildGame(int gameWindowWidth, int gameWindowHeight, int difficulty, HashMap<AtomType, Integer> inventoryContents, HashMap<MoleculeType, Integer> moleculeAmounts, HashMap<PowerUpType, Integer> powerUpAmounts, Map<ReactionBlockerType, Integer> reactionBlockerAmounts){
         builder.buildGame(gameWindowHeight, gameWindowWidth, difficulty, inventoryContents);
         builder.createGoodAlien(moleculeAmounts, powerUpAmounts);
         builder.createBadAlien(reactionBlockerAmounts);

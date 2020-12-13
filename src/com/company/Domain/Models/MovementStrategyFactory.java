@@ -22,21 +22,19 @@ public class MovementStrategyFactory {
 
     public IMovementStrategy getMovementStrategy(ProjectileType projectileType, Coordinate position){
 
-
-
         int y_position = (int) position.getYCoordinate();
 
         if (MoleculeType.ALPHA_1.equals(projectileType)|AtomType.ALPHA.equals(projectileType)) {
             return new ZigZagStrategy();
         }else if(MoleculeType.ALPHA_2.equals(projectileType)){
             return new ZigZagStrategy();
-        }else if(MoleculeType.BETA_1.equals(projectileType)|AtomType.Be.equals(projectileType)){
+        }else if(MoleculeType.BETA_1.equals(projectileType)|AtomType.BETA.equals(projectileType)){
             return (y_position <= windowHeight/4) ? new StraightStrategy() : new ZigZagStrategy();
         }else if(MoleculeType.BETA_2.equals(projectileType)){
             return (y_position <= windowHeight/4) ? new StraightStrategy() : new ZigZagStrategy();
-        }else if(MoleculeType.SIGMA.equals(projectileType)){
+        }else if(MoleculeType.SIGMA.equals(projectileType)|AtomType.SIGMA.equals(projectileType)){
             return new StraightStrategy();
-        }else if(MoleculeType.GAMMA.equals(projectileType)){
+        }else if(MoleculeType.GAMMA.equals(projectileType)|AtomType.GAMMA.equals(projectileType)){
             return (y_position <= windowHeight/2) ? new StraightStrategy() : new ZigZagStrategy();
         }
 

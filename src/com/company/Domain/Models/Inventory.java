@@ -21,8 +21,7 @@ public class Inventory {
     }
 
     public void setPowerUpMap(HashMap<PowerUpType, Integer> powerUpMap) {
-        this.powerUpMap = powerUpMap;
-    }
+        this.powerUpMap = powerUpMap;}
 
     public int getAtomAmount(AtomType atomType){
         if(atomMap==null) {

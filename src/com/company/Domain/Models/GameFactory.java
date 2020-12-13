@@ -22,6 +22,7 @@ public class GameFactory extends GameObserver implements IGunListener {
     private int gameWindowWidth;
     private int difficulty;
     public int L;
+    public int moleculeSender;
 
     private Coordinate gunPosition;
     private int gunAngle;
@@ -53,6 +54,8 @@ public class GameFactory extends GameObserver implements IGunListener {
 
         gameLoop();
     }
+
+    //gameLoop() handles both game clock and alien clock
     public void gameLoop() {
 
         //16.68ms for 60FPS
@@ -62,11 +65,22 @@ public class GameFactory extends GameObserver implements IGunListener {
             public void actionPerformed(ActionEvent e) {
 
                 updatePositions();
-
             }
         });
 
         gameClock.start();
+
+        //handles alien actions
+        Timer alienClock =  new Timer(5000, new ActionListener() { // checks for cat icons collusion
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GoodAlienFactory alienFactoryInstance = GoodAlienFactory.getInstance();
+                alienFactoryInstance.sendMolecule();
+            }
+        });
+
+        alienClock.start();
     }
 
     public void pauseGame(){
@@ -136,8 +150,8 @@ public class GameFactory extends GameObserver implements IGunListener {
     }
 
     @Override
-    public void gunMoved(Coordinate coord, int angle, Projectile projectile){
-        setAmmo(ammo);
+    public void gunMoved(Coordinate coord, int angle, Projectile loadedProjectile){
+        setAmmo(loadedProjectile);
         this.gunPosition = coord;
         this.gunAngle = angle;
     }

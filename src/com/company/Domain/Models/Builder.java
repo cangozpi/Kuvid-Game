@@ -29,7 +29,7 @@ public class Builder {
     }
 
 
-    public void createGoodAlien(Map<MoleculeType, Integer> moleculeAmount, Map<PowerUpType, Integer> powerUpAmount) {
+    public void createGoodAlien(HashMap<MoleculeType, Integer> moleculeAmount, HashMap<PowerUpType, Integer> powerUpAmount) {
         goodAlien.setPowerUpAmount(powerUpAmount);
         goodAlien.setMoleculeAmount(moleculeAmount);
     }

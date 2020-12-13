@@ -24,15 +24,15 @@ public class GunFactory extends GunObserver {
     private Projectile ammo;
     private Coordinate rightestPointOfTheGun;
     private Coordinate leftistPointOfTheGUn;
-    private boolean loaded;
+
     private GunFactory() {}
 
     public static GunFactory getInstance() {
         if (gun == null){
             gun = new GunFactory();
-            gun.setPosition(new Coordinate(((GameWindowFactory.getInstance().windowWidth/2) - GameWindowFactory.getInstance().L / 4),
-                    GameWindowFactory.getInstance().windowHeight - (1.75) * GameWindowFactory.getInstance().L));
-
+            gun.setPosition(new Coordinate(((GameWindowFactory.getInstance().windowWidth/2) - GameFactory.getInstance().L / 4),
+                    GameWindowFactory.getInstance().windowHeight- (1.75) * GameWindowFactory.getInstance().L));
+            gun.setAngle(90);
             gun.rightestPointOfTheGun = new Coordinate(gun.getPosition().getXCoordinate() + gun.getGunWidth(), gun.getPosition().getYCoordinate());
             gun.leftistPointOfTheGUn = gun.getPosition();
             gun.loadGunWithAtom(AtomType.ALPHA);
@@ -86,13 +86,13 @@ public class GunFactory extends GunObserver {
 
 
         if(direction.equals(DirectionType.CLOCKWISE)){
-            if(angle <= 170){ // if can rotate
-                angle += 10;
+            if(angle >= 10){ // if can rotate
+                angle -= 10;
                 GunFactory.super.gunMovedEvent(position, angle, ammo);
             }
         }else if(direction.equals(DirectionType.ANTICLOCKWISE)){
-            if(angle >= 10){ // if can rotate
-                angle -= 10;
+            if(angle <= 170){ // if can rotate
+                angle += 10;
                 GunFactory.super.gunMovedEvent(position, angle, ammo);
             }
         }
