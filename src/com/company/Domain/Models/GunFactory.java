@@ -54,7 +54,7 @@ public class GunFactory extends GunObserver {
     //methods
     public void shootGun(){
 
-        Velocity projectileVelocity = new Velocity(getAngle(), 0);  //TODO: velocity
+        Velocity projectileVelocity = new Velocity(getAngle(), 10);  //TODO: velocity
         if( ammoAtom == null){
             ammoPowerUp.setVelocity(projectileVelocity);
             ammoPowerUp.setIsAmmo(false);

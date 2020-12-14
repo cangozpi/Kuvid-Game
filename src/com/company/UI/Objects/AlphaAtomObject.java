@@ -22,7 +22,7 @@ public class AlphaAtomObject extends GameObject{
         //add to the JFrame
         this.add(atomLabel);
         GameWindowFactory.getInstance().getContentPane().add(this); // JFrame.add(JPanel)
-        this.setBounds((int)coordinate.getXCoordinate(), (int)coordinate.getYCoordinate(), WIDTH, HEIGHT);
+        this.setBounds((int)coordinate.getXCoordinate(), (int)coordinate.getYCoordinate(), WIDTH*100, HEIGHT*100);
         this.setOpaque(false);
     }
 

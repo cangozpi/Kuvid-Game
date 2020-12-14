@@ -23,7 +23,7 @@ public class BetaAtomObject extends GameObject{
         //add to the JFrame
         this.add(gunLabel);
         GameWindowFactory.getInstance().getContentPane().add(this); // JFrame.add(JPanel)
-        this.setBounds((int)coordinate.getXCoordinate(), (int)coordinate.getYCoordinate(), WIDTH, HEIGHT);
+        this.setBounds((int)coordinate.getXCoordinate(), (int)coordinate.getYCoordinate(), WIDTH*10, HEIGHT*10);
         this.setOpaque(false);
     }
 

@@ -141,13 +141,13 @@ public class GameFactory extends GameObserver implements IGunListener {
 
     public void updatePositions(){
         if (!moleculeList.isEmpty()){
-            for (Projectile projectile : moleculeList) {
-                projectile.move();
+            for (Molecule molecule : moleculeList) {
+                molecule.move();
             }
         }
         if (!atomList.isEmpty()){
-            for (Projectile projectile : atomList) {
-                projectile.move();
+            for (Atom atom : atomList) {
+                atom.move();
             }
         }
         if (!shotPowerUpList.isEmpty()){
