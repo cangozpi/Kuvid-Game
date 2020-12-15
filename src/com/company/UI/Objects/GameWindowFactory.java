@@ -35,6 +35,7 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
     private ShooterHandler shooterHandler;
     private BlenderHandler blenderHandler;
     private SelectAtomHandler selectAtomHandler;
+    GameObject gunObj; //reference to gunObject that is drawn
 
     //list holding JPanel's to be drawn
     private ArrayList<GameObject> objectList = new ArrayList<>();
@@ -226,17 +227,59 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
                 addToObjectList(currentObject);
             }
         }
-        GameObject lol = new GunObject(gunPosition,  (int)(GameWindowFactory.L / 2), GameWindowFactory.L, "shooter.png", gunAngle);
-        addToObjectList(lol);
+        gunObj = new GunObject(gunPosition,  (int)(GameWindowFactory.L / 2), GameWindowFactory.L, "shooter.png", gunAngle);
+        addToObjectList(gunObj);
         this.draw();
     }
 
     @Override
     public void gunMoved(Coordinate coord, int angle, Atom atom, PowerUp powerUp){
-        clearObjectList();
-        GameObject lol = new GunObject(coord,  (int)(GameWindowFactory.L / 2), GameWindowFactory.L, "shooter.png", angle);
-        
-        addToObjectList(lol);
+        //clearObjectList();
+        //clear Gun From UI frame
+        this.remove(gunObj);
+        for(GameObject element : objectList){
+            if(element instanceof GunObject){
+                objectList.remove(element);
+            }
+        }
+        //re add the gunObj to its new position
+        gunObj = new GunObject(coord,  (int)(GameWindowFactory.L / 2), GameWindowFactory.L, "shooter.png", angle);
+        addToObjectList(gunObj);
+
+        if(atom != null){
+            GameObject currentObject;
+            int width = atom.getWidth();
+            int height = atom.getHeight();
+
+            //instantiate corresponding atom object
+            if (atom.getAtomType() == AtomType.ALPHA) {
+                currentObject = new AlphaAtomObject(atom.getCoordinate(), width, height, 0);
+            } else if (atom.getAtomType() == AtomType.BETA) {
+                currentObject = new BetaAtomObject(atom.getCoordinate(), width, height, 0);
+            } else if (atom.getAtomType() == AtomType.GAMMA) {
+                currentObject = new GammaAtomObject(atom.getCoordinate(), width, height, 0);
+            } else {
+                currentObject = new SigmaAtomObject(atom.getCoordinate(), width, height, 0);
+            }
+            addToObjectList(currentObject);
+        }
+        if(powerUp != null){
+            GameObject currentObject;
+            int width = powerUp.getWidth();
+            int height = powerUp.getHeight();
+
+            if (powerUp.getPowerUpType() == PowerUpType.ALPHA) {
+                currentObject = new AlphaBetaPowerUp(powerUp.getCoordinate(), width, height, 0);
+            } else if (powerUp.getPowerUpType() == PowerUpType.BETA) {
+                currentObject = new BetaBetaPowerUpObject(powerUp.getCoordinate(), width, height, 0);
+            } else if (powerUp.getPowerUpType() == PowerUpType.GAMMA) {
+                currentObject = new GammaBetaPowerUpObject(powerUp.getCoordinate(), width, height, 0);
+            } else {
+                currentObject = new SigmaBetaPowerUpObject(powerUp.getCoordinate(), width, height, 0);
+            }
+            addToObjectList(currentObject);
+        }
+
         this.draw();
     }
 
