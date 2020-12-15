@@ -35,6 +35,7 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
     private ShooterHandler shooterHandler;
     private BlenderHandler blenderHandler;
     private SelectAtomHandler selectAtomHandler;
+    GameObject gunObj; //reference to gunObject that is drawn
 
     //list holding JPanel's to be drawn
     private ArrayList<GameObject> objectList = new ArrayList<>();
@@ -226,17 +227,25 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
                 addToObjectList(currentObject);
             }
         }
-        GameObject lol = new GunObject(gunPosition,  (int)(GameWindowFactory.L / 2), GameWindowFactory.L, "shooter.png", gunAngle);
-        addToObjectList(lol);
+        gunObj = new GunObject(gunPosition,  (int)(GameWindowFactory.L / 2), GameWindowFactory.L, "shooter.png", gunAngle);
+        addToObjectList(gunObj);
         this.draw();
     }
 
     @Override
     public void gunMoved(Coordinate coord, int angle, Atom atom, PowerUp powerUp){
-        clearObjectList();
-        GameObject gunObj = new GunObject(coord,  (int)(GameWindowFactory.L / 2), GameWindowFactory.L, "shooter.png", angle);
+        //clearObjectList();
+        //clear Gun From UI frame
+        this.remove(gunObj);
+        for(GameObject element : objectList){
+            if(element instanceof GunObject){
+                objectList.remove(element);
+            }
+        }
+        //re add the gunObj to its new position
+        gunObj = new GunObject(coord,  (int)(GameWindowFactory.L / 2), GameWindowFactory.L, "shooter.png", angle);
         addToObjectList(gunObj);
-
+        
         if(atom != null){
             GameObject currentObject;
             int width = atom.getWidth();
