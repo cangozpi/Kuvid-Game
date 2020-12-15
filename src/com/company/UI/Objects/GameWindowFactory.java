@@ -1,9 +1,7 @@
 package com.company.UI.Objects;
 
-import com.company.Domain.Controller.BlenderHandler;
-import com.company.Domain.Controller.MoveShooterHandler;
-import com.company.Domain.Controller.RotateGunHandler;
-import com.company.Domain.Controller.ShooterHandler;
+import com.company.Domain.Controller.*;
+import com.company.Domain.Models.AtomSelectorFactory;
 import com.company.Domain.Models.GameFactory;
 import com.company.Domain.Models.GunFactory;
 import com.company.Domain.Models.Projectile.*;
@@ -36,6 +34,7 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
     private RotateGunHandler rotateGunHandler;
     private ShooterHandler shooterHandler;
     private BlenderHandler blenderHandler;
+    private SelectAtomHandler selectAtomHandler;
 
     //list holding JPanel's to be drawn
     private ArrayList<GameObject> objectList = new ArrayList<>();
@@ -47,6 +46,7 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
         rotateGunHandler = new RotateGunHandler();
         blenderHandler = new BlenderHandler();
         shooterHandler = new ShooterHandler();
+        selectAtomHandler = new SelectAtomHandler(AtomSelectorFactory.getInstance());
 
     }
 
@@ -235,6 +235,7 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
     public void gunMoved(Coordinate coord, int angle, Atom atom, PowerUp powerUp){
         clearObjectList();
         GameObject lol = new GunObject(coord,  (int)(GameWindowFactory.L / 2), GameWindowFactory.L, "shooter.png", angle);
+        
         addToObjectList(lol);
         this.draw();
     }
@@ -313,7 +314,7 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
     }
 
     public void selectAtom(){
-        rotateGunHandler.rotateGun(DirectionType.CLOCKWISE);
+        selectAtomHandler.selectAtom();
     }
 
     public void breakOrBlend(){
