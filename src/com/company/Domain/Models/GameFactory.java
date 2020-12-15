@@ -40,7 +40,7 @@ public class GameFactory extends GameObserver implements IGunListener {
 
     private GameFactory(){
         super(); //necessary for initializing Observer
-        factory = GameWindowFactory.getInstance();
+
     }
 
     public static GameFactory getInstance(){
