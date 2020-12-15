@@ -245,7 +245,7 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
         //re add the gunObj to its new position
         gunObj = new GunObject(coord,  (int)(GameWindowFactory.L / 2), GameWindowFactory.L, "shooter.png", angle);
         addToObjectList(gunObj);
-        
+
         if(atom != null){
             GameObject currentObject;
             int width = atom.getWidth();
