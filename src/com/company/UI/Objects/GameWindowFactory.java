@@ -234,9 +234,43 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
     @Override
     public void gunMoved(Coordinate coord, int angle, Atom atom, PowerUp powerUp){
         clearObjectList();
-        GameObject lol = new GunObject(coord,  (int)(GameWindowFactory.L / 2), GameWindowFactory.L, "shooter.png", angle);
-        
-        addToObjectList(lol);
+        GameObject gunObj = new GunObject(coord,  (int)(GameWindowFactory.L / 2), GameWindowFactory.L, "shooter.png", angle);
+        addToObjectList(gunObj);
+
+        if(atom != null){
+            GameObject currentObject;
+            int width = atom.getWidth();
+            int height = atom.getHeight();
+
+            //instantiate corresponding atom object
+            if (atom.getAtomType() == AtomType.ALPHA) {
+                currentObject = new AlphaAtomObject(atom.getCoordinate(), width, height, 0);
+            } else if (atom.getAtomType() == AtomType.BETA) {
+                currentObject = new BetaAtomObject(atom.getCoordinate(), width, height, 0);
+            } else if (atom.getAtomType() == AtomType.GAMMA) {
+                currentObject = new GammaAtomObject(atom.getCoordinate(), width, height, 0);
+            } else {
+                currentObject = new SigmaAtomObject(atom.getCoordinate(), width, height, 0);
+            }
+            addToObjectList(currentObject);
+        }
+        if(powerUp != null){
+            GameObject currentObject;
+            int width = powerUp.getWidth();
+            int height = powerUp.getHeight();
+
+            if (powerUp.getPowerUpType() == PowerUpType.ALPHA) {
+                currentObject = new AlphaBetaPowerUp(powerUp.getCoordinate(), width, height, 0);
+            } else if (powerUp.getPowerUpType() == PowerUpType.BETA) {
+                currentObject = new BetaBetaPowerUpObject(powerUp.getCoordinate(), width, height, 0);
+            } else if (powerUp.getPowerUpType() == PowerUpType.GAMMA) {
+                currentObject = new GammaBetaPowerUpObject(powerUp.getCoordinate(), width, height, 0);
+            } else {
+                currentObject = new SigmaBetaPowerUpObject(powerUp.getCoordinate(), width, height, 0);
+            }
+            addToObjectList(currentObject);
+        }
+
         this.draw();
     }
 
