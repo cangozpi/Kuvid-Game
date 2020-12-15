@@ -7,10 +7,10 @@ import java.awt.*;
 
 public class SigmaMoleculeObject extends GameObject{
     private int angle;
-    private String imageSource = "sigma.png";
+    private String imageSource = "sigma-.png";
 
     public SigmaMoleculeObject(Coordinate coordinate, int WIDTH, int HEIGHT, int angle) {
-        super(coordinate, WIDTH, HEIGHT, "sigma.png");
+        super(coordinate, WIDTH, HEIGHT, "sigma-.png");
         this.angle = angle;
     }
 

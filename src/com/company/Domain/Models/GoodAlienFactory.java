@@ -1,6 +1,7 @@
 package com.company.Domain.Models;
 
 import com.company.Domain.Models.Projectile.Molecule;
+import com.company.Domain.Models.Projectile.PowerUp;
 import com.company.Domain.Utility.Coordinate;
 import com.company.Domain.Utility.Velocity;
 import com.company.Enums.MoleculeType;
@@ -21,6 +22,7 @@ public class GoodAlienFactory {
 
     private GoodAlienFactory() {
         gameFactory = GameFactory.getInstance();
+        moleculeFactory = new MoleculeFactory();
     }
 
     public static GoodAlienFactory getInstance() {
@@ -30,21 +32,28 @@ public class GoodAlienFactory {
 
     //decrements the PowerUp value by one
     public void sendPowerUp() {
-        int powerUpToShoot = random.nextInt(getAvailablePowerUps().size());
-        PowerUpType type = getAvailablePowerUps().get(powerUpToShoot);
-        Coordinate position = new Coordinate(random.nextInt(GameWindowFactory.windowWidth),0);
+        List<PowerUpType> availablePowerUps = getAvailablePowerUps();
+        if(!availablePowerUps.isEmpty()) {
+            int powerUpToShoot = random.nextInt(availablePowerUps.size());
+            PowerUpType type = availablePowerUps.get(powerUpToShoot);
+            Coordinate position = new Coordinate(random.nextInt(GameWindowFactory.windowWidth), 0);
 
-        powerUpAmounts.put(type, powerUpAmounts.get(type) - 1);
-        //TODO: implement something that has to do with position
+            powerUpAmounts.put(type, powerUpAmounts.get(type) - 1);
+        }
+        //TODO: implement sending a powerup
     }
 
     public Molecule sendMolecule() {
-        int moleculeToShoot = random.nextInt(getAvailableMolecules().size());
-        MoleculeType type = getAvailableMolecules().get(moleculeToShoot);
-        Coordinate position = new Coordinate(random.nextInt(GameWindowFactory.windowWidth),0);
+        List<MoleculeType> availableMolecules = getAvailableMolecules();
+        if(!availableMolecules.isEmpty()){
+            int moleculeToShoot = random.nextInt(availableMolecules.size());
+            MoleculeType type = availableMolecules.get(moleculeToShoot);
+            Coordinate position = new Coordinate(random.nextInt(GameWindowFactory.windowWidth),0);
 
-        moleculeAmounts.put(type, moleculeAmounts.get(type) - 1);
-        return moleculeFactory.getInstance(position, new Velocity(270,gameFactory.getFallSpeed()), false, type , 30, 30);
+            moleculeAmounts.put(type, moleculeAmounts.get(type) - 1);
+            return moleculeFactory.getInstance(position, new Velocity(270,gameFactory.getFallSpeed()), false, type , 30, 30);
+        }
+        return null;
     }
 
     public void setPowerUpAmount(HashMap<PowerUpType, Integer> powerUpAmount) {
@@ -54,23 +63,21 @@ public class GoodAlienFactory {
     public void setMoleculeAmount(HashMap<MoleculeType, Integer> moleculeAmount) {
         this.moleculeAmounts = moleculeAmount;
     }
-    public ArrayList<MoleculeType> getAvailableMolecules(){
+    public List<MoleculeType> getAvailableMolecules(){
         ArrayList<MoleculeType> availableMolecules = new ArrayList<>();
-        MoleculeType molecules[] = (MoleculeType[]) moleculeAmounts.keySet().toArray();
-        for(MoleculeType molecule: molecules){
-            if (moleculeAmounts.get(molecule) != 0){
-                availableMolecules.add(molecule);
+        for (Map.Entry<MoleculeType, Integer> entry : moleculeAmounts.entrySet()) {
+            if (entry.getValue() != 0) {
+                availableMolecules.add(entry.getKey());
             }
         }
         return availableMolecules;
     }
 
-    public ArrayList<PowerUpType> getAvailablePowerUps(){
+    public List<PowerUpType> getAvailablePowerUps(){
         ArrayList<PowerUpType> availablePowerUps = new ArrayList<>();
-        PowerUpType powerUps[] = (PowerUpType[]) powerUpAmounts.keySet().toArray();
-        for(PowerUpType powerUp: powerUps){
-            if (powerUpAmounts.get(powerUp) != 0){
-                availablePowerUps.add(powerUp);
+        for (Map.Entry<PowerUpType, Integer> entry : powerUpAmounts.entrySet()) {
+            if (entry.getValue() != 0) {
+                availablePowerUps.add(entry.getKey());
             }
         }
         return availablePowerUps;

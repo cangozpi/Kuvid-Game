@@ -72,7 +72,7 @@ public class GameFactory extends GameObserver implements IGunListener {
         boolean flag = false;
 
         //16.68ms for 60FPS
-            gameClock =  new Timer(300, new ActionListener() { // checks for cat icons collusion
+            gameClock =  new Timer(16, new ActionListener() { // checks for cat icons collusion
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -90,11 +90,14 @@ public class GameFactory extends GameObserver implements IGunListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 GoodAlienFactory alienFactoryInstance = GoodAlienFactory.getInstance();
-                alienFactoryInstance.sendMolecule();
+                Molecule moleculeToSend = alienFactoryInstance.sendMolecule();
+                if (moleculeToSend!=null)
+                    insertMolecule(moleculeToSend);
             }
         });
+        alienClock.start();
 
-       // alienClock.start();
+
     }
 
     public void pauseGame(){
