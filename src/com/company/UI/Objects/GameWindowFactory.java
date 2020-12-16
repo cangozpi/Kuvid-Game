@@ -237,7 +237,7 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
         //clearObjectList();
         //clear Gun From UI frame
         this.remove(gunObj);
-        for(GameObject element : objectList){
+        for(GameObject element : (ArrayList<GameObject>)objectList.clone()){
             if(element instanceof GunObject){
                 objectList.remove(element);
             }
