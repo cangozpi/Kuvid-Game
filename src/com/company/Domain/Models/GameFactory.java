@@ -5,7 +5,7 @@ import com.company.Domain.Observer.GunObserver;
 import com.company.Domain.Observer.IGunListener;
 import com.company.Domain.Utility.Coordinate;
 import com.company.UI.Objects.GameWindowFactory;
-import com.company.UI.Objects.Observer.GameObserver;
+import com.company.UI.Observer.GameObserver;
 
 import javax.lang.model.type.ArrayType;
 import javax.swing.*;
