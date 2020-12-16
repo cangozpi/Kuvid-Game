@@ -26,7 +26,7 @@ public class Atom extends Projectile{
     public void move(){
         int angle = getVelocity().getAngle();
         double speed = getVelocity().getSpeed();
-        setXCoordinate(getXCoordinate() - speed*cos(Math.toRadians(-angle)));
+        setXCoordinate(getXCoordinate() - speed*cos(Math.toRadians(180-angle)));
         setYCoordinate(getYCoordinate() - speed*sin(Math.toRadians(angle)));
 
     }

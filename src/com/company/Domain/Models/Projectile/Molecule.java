@@ -14,7 +14,7 @@ public class Molecule extends Projectile{
     public Molecule(Coordinate coordinate, Velocity velocity, boolean isAmmo, MoleculeType moleculeType, int height, int width) {
         super(coordinate, velocity, isAmmo, height, width);
         this.moleculeType = moleculeType;
-        this.path = new Path(coordinate, velocity, 0);
+        this.path = new Path(coordinate, velocity, 60);
 
 
 
