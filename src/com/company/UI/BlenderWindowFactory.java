@@ -49,19 +49,19 @@ public class BlenderWindowFactory extends JFrame {
                 inputPanel.add(panelHolder[m][n]);
             }
         }
-        ImageIcon alpha = new ImageIcon(getClass().getResource("Assets/atoms/alpha.png"));
+        ImageIcon alpha = new ImageIcon(getClass().getResource("Objects/Assets/atoms/alpha.png"));
         Image scaledAlpha = alpha.getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH); // scales the image
         JLabel alphaLabel = new JLabel(new ImageIcon(scaledAlpha));
 
-        ImageIcon beta = new ImageIcon(getClass().getResource("Assets/atoms/beta.png"));
+        ImageIcon beta = new ImageIcon(getClass().getResource("Objects/Assets/atoms/beta.png"));
         Image scaledBeta = beta.getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH); // scales the image
         JLabel betaLabel = new JLabel(new ImageIcon(scaledBeta));
 
-        ImageIcon gamma = new ImageIcon(getClass().getResource("Assets/atoms/gamma.png"));
+        ImageIcon gamma = new ImageIcon(getClass().getResource("Objects/Assets/atoms/gamma.png"));
         Image scaledGamma = gamma.getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH); // scales the image
         JLabel gammaLabel = new JLabel(new ImageIcon(scaledGamma));
 
-        ImageIcon sigma = new ImageIcon(getClass().getResource("Assets/atoms/sigma.png"));
+        ImageIcon sigma = new ImageIcon(getClass().getResource("Objects/Assets/atoms/sigma.png"));
         Image scaledSigma = sigma.getImage().getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH); // scales the image
         JLabel sigmaLabel = new JLabel(new ImageIcon(scaledSigma));
 
