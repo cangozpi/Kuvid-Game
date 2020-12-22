@@ -1,6 +1,6 @@
 package com.company;
 
-import com.company.UI.Objects.*;
+import com.company.UI.*;
 
 public class Main {
 

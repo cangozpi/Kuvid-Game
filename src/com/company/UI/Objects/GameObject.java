@@ -1,7 +1,8 @@
 package com.company.UI.Objects;
 
 import com.company.Domain.Utility.Coordinate;
-import com.company.UI.Objects.Observer.IGameListener;
+import com.company.Enums.IProjectileType;
+import com.company.UI.Observer.IGameListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,17 +10,12 @@ import java.awt.*;
 public abstract class GameObject extends JPanel implements Drawable {
 
     protected Coordinate coordinate;
-    protected int WIDTH;
-    protected int HEIGHT;
     protected String imageSource;
 
-    public GameObject(Coordinate coordinate, int WIDTH, int HEIGHT, String imageSource) {
+    public GameObject(Coordinate coordinate, String imageSource) {
         this.coordinate = coordinate;
-        this.WIDTH = WIDTH;
-        this.HEIGHT = HEIGHT;
         this.imageSource = imageSource;
     }
-
 
     @Override
     protected void paintComponent(Graphics g) {

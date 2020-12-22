@@ -2,7 +2,7 @@ package com.company.Domain.Controller;
 
 import com.company.Domain.Models.Blender;
 import com.company.Enums.AtomType;
-import com.company.UI.Objects.BlenderWindowFactory;
+import com.company.UI.BlenderWindowFactory;
 import com.company.UI.Objects.GameWindowFactory;
 
 import java.awt.event.KeyEvent;
