@@ -8,6 +8,9 @@ import com.company.Enums.AtomType;
 
 import java.util.Random;
 
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
+
 public class AlphaDecorator extends AtomDecorator{
 
     private Random rand = new Random();
@@ -60,4 +63,5 @@ public class AlphaDecorator extends AtomDecorator{
     public double getNeutrons() {
         return neutrons;
     }
+
 }

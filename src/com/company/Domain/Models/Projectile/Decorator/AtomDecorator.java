@@ -26,12 +26,47 @@ public abstract class AtomDecorator extends Atom {
     //methods to delegate to the component reference
 
 
-    public void move() {
-        atomReference.move();
-    }
 
     //Atom class specific methods delegate to component reference
     public AtomType getAtomType() { return atomReference.getAtomType(); }
 
     public void setAtomType(AtomType atomType) { atomReference.setAtomType(atomType); }
+
+    public int getWidth() {return atomReference.getWidth(); }
+
+    public void setWidth(int width) { atomReference.setWidth(width); }
+
+    public int getHeight() { return atomReference.getHeight(); }
+
+    public void setHeight(int height) { atomReference.setHeight(height); }
+
+    public void move(){ atomReference.move();}
+
+    public boolean isAmmo() { return atomReference.isAmmo(); }
+
+    public void setIsAmmo(boolean isAmmo) { atomReference.setIsAmmo(isAmmo); }
+
+    public Coordinate getCoordinate() {
+        return atomReference.getCoordinate();
+    }
+
+    public Velocity getVelocity() {
+        return atomReference.getVelocity();
+    }
+
+    public void setCoordinate(Coordinate coordinate) {
+        super.setCoordinate(coordinate);
+    }
+
+    public double getXCoordinate(){ return atomReference.getXCoordinate();}
+
+    public double getYCoordinate(){ return atomReference.getYCoordinate();}
+
+    public void setXCoordinate(double xCoordinate){ atomReference.setXCoordinate(xCoordinate);}
+
+    public void setYCoordinate(double yCoordinate){ atomReference.setYCoordinate(yCoordinate);}
+
+    public void setVelocity(Velocity velocity) {
+        atomReference.setVelocity(velocity);
+    }
 }
