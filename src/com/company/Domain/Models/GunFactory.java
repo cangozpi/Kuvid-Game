@@ -56,7 +56,7 @@ public class GunFactory{
     //methods
     public void shootGun(){
 
-        Velocity projectileVelocity = new Velocity(getAngle(), L/60);  //TODO: velocity
+        Velocity projectileVelocity = new Velocity(getAngle(), 10);  //TODO: velocity
         ammo.setVelocity(projectileVelocity);
         ammo.setIsAmmo(false);
         GameFactory.getInstance().insertProjectileFromGun(ammo);
@@ -64,7 +64,7 @@ public class GunFactory{
     }
 
     public void moveGun(DirectionType direction){
-        //Code can be so complex that there are no obvious bugs or so simple that there are obviously no bugs
+        //gun position has problems need some calculations
         if(direction.equals(DirectionType.RIGHT)){
             if(rightestPointOfTheGun.getXCoordinate() + gunWidth <= windowWidth){ // if can move right
                 position.setXCoordinate(position.getXCoordinate() + L);

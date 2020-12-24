@@ -145,35 +145,35 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
                 //instantiate object accordingly
                 GameObject currentObject;
                 switch(projectile.getProjectileType().toString()){
-                    case "ALPHA_atom":
+                    case AtomType.ALPHA_atom:
                         currentObject = new AtomObject(projectile.getCoordinate(),0,AtomType.ALPHA);
                         addToObjectList(currentObject);
                         break;
-                    case "BETA_atom":
+                    case AtomType.BETA_atom:
                         currentObject = new AtomObject(projectile.getCoordinate(),0,AtomType.BETA);
                         addToObjectList(currentObject);
                         break;
-                    case "GAMMA_atom":
+                    case AtomType.GAMMA_atom:
                         currentObject = new AtomObject(projectile.getCoordinate(),0,AtomType.GAMMA);
                         addToObjectList(currentObject);
                         break;
-                    case "SIGMA_atom":
+                    case AtomType.SIGMA_atom:
                         currentObject = new AtomObject(projectile.getCoordinate(),0,AtomType.SIGMA);
                         addToObjectList(currentObject);
                         break;
-                    case "ALPHA_powerUp":
+                    case PowerUpType.ALPHA_powerUp:
                         currentObject = new PowerUpObject(projectile.getCoordinate(),0,PowerUpType.ALPHA);
                         addToObjectList(currentObject);
                         break;
-                    case "BETA_powerUp":
+                    case PowerUpType.BETA_powerUp:
                         currentObject = new PowerUpObject(projectile.getCoordinate(),0,PowerUpType.BETA);
                         addToObjectList(currentObject);
                         break;
-                    case "GAMMA_powerUp":
+                    case PowerUpType.GAMMA_powerUp:
                         currentObject = new PowerUpObject(projectile.getCoordinate(),0,PowerUpType.GAMMA);
                         addToObjectList(currentObject);
                         break;
-                    case "SIGMA_powerUp":
+                    case PowerUpType.SIGMA_powerUp:
                         currentObject = new PowerUpObject(projectile.getCoordinate(),0,PowerUpType.SIGMA);
                         addToObjectList(currentObject);
                         break;
