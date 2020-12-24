@@ -1,21 +1,19 @@
 package com.company.Domain.Models;
 
 import com.company.Domain.Models.Projectile.*;
-import com.company.Domain.Observer.GunObserver;
-import com.company.Domain.Observer.IGunListener;
+
+
 import com.company.Domain.Utility.Coordinate;
 import com.company.UI.Objects.GameWindowFactory;
 import com.company.UI.Observer.GameObserver;
-
-import javax.lang.model.type.ArrayType;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameFactory extends GameObserver implements IGunListener {
+public class GameFactory extends GameObserver  {
     private boolean isRunning;
 
     private static GameFactory instance;
@@ -23,17 +21,16 @@ public class GameFactory extends GameObserver implements IGunListener {
     private int gameWindowWidth;
     private int difficulty;
     public int L;
-    public int moleculeSender;
+
 
     private Coordinate gunPosition;
     private int gunAngle;
-    private ArrayList<Atom> atomList = new ArrayList<>();
+    private ArrayList<Projectile> projectileFromGunList = new ArrayList<>();
     private ArrayList<PowerUp> shotPowerUpList = new ArrayList<>();
     private ArrayList<PowerUp> powerUpList = new ArrayList<>();
     private ArrayList<ReactionBlocker> reactionBlockerList = new ArrayList<>();
     private ArrayList<Molecule> moleculeList = new ArrayList<>();
-    private Atom ammoAtom;
-    private PowerUp ammoPowerUp;
+    private Projectile ammo;
     private GameWindowFactory factory;
     private int fallSpeed;
     private Timer gameClock;
@@ -58,8 +55,6 @@ public class GameFactory extends GameObserver implements IGunListener {
 
     public void startGame(){
         L = gameWindowHeight / 10;
-        GunObserver gunObserver = GunFactory.getInstance();
-        gunObserver.addListener(this);
         setGunPosition(new Coordinate(((gameWindowWidth/2) - L / 4),
                 gameWindowHeight -  L));
         setGunAngle(90);
@@ -108,22 +103,10 @@ public class GameFactory extends GameObserver implements IGunListener {
         gameClock.start();
     }
 
-    public void insertAtom(Atom atom){    //projectiles shot by the gun
+    public void insertProjectileFromGun(Projectile ammo){    //projectiles loaded in the gun and shot by the gun
 
 
-        atomList.add(atom);
-
-    }
-    public void insertPowerUpShotFromGun(PowerUp powerUp){    //projectiles shot by the gun
-
-
-        shotPowerUpList.add(powerUp);
-
-    }
-    public void insertProjectile(Projectile projectileFromGun){    //projectiles shot by the gun
-
-      //  projectileFromGun.
-
+        projectileFromGunList.add(ammo);
 
     }
 
@@ -148,16 +131,12 @@ public class GameFactory extends GameObserver implements IGunListener {
                 molecule.move();
             }
         }
-        if (!atomList.isEmpty()){
-            for (Atom atom : atomList) {
-                atom.move();
+        if (!projectileFromGunList.isEmpty()){                //projectiles shot by the gun
+            for (Projectile projectileFromGun : projectileFromGunList) {
+                projectileFromGun.move();
             }
         }
-        if (!shotPowerUpList.isEmpty()){
-            for (PowerUp powerUp : shotPowerUpList) {
-                powerUp.move();
-            }
-        }
+
 
         if (!reactionBlockerList.isEmpty()) {
             for (ReactionBlocker reactionBlocker : reactionBlockerList) {
@@ -175,7 +154,7 @@ public class GameFactory extends GameObserver implements IGunListener {
 
 
 
-        GameFactory.super.positionUpdateEvent(moleculeList, atomList, shotPowerUpList, reactionBlockerList,powerUpList, gunPosition, gunAngle);
+        GameFactory.super.positionUpdateEvent(moleculeList, projectileFromGunList,  reactionBlockerList,powerUpList, gunPosition, gunAngle, ammo);
     }
 
     public void checkCollisions(){
@@ -184,13 +163,10 @@ public class GameFactory extends GameObserver implements IGunListener {
 
     }
 
-    @Override
-    public void gunMoved(Coordinate coord, int angle, Atom atom, PowerUp powerUp){
-        if(atom == null){
-            setAmmoPowerUp(powerUp);
-        }else{
-            setAmmoAtom(atom);
-        }
+
+    public void moveGun(Coordinate coord, int angle, Projectile ammo){
+
+        setAmmo(ammo);
         this.gunPosition = coord;
         this.gunAngle = angle;
     }
@@ -225,17 +201,13 @@ public class GameFactory extends GameObserver implements IGunListener {
         return difficulty;
     }
 
-    public ArrayList<Atom> getAtomList() {
-        return atomList;
+    public ArrayList<Projectile> getProjectileFromGunList() {
+        return projectileFromGunList;
     }
 
-    public void setAtomList(ArrayList<Atom> atomList) {
-        this.atomList = atomList;
+    public void setProjectileFromGunList(ArrayList<Projectile> projectileFromGunList) {
+        this.projectileFromGunList = projectileFromGunList;
     }
-
-    public ArrayList<PowerUp> getShotPowerUpList() { return shotPowerUpList; }
-
-    public void setShotPowerUpList(ArrayList<PowerUp> shotPowerUpList) { this.shotPowerUpList = shotPowerUpList; }
 
     public void setGameWindowHeight(int gameWindowHeight) {
         this.gameWindowHeight = gameWindowHeight;
@@ -268,20 +240,12 @@ public class GameFactory extends GameObserver implements IGunListener {
 
     public ArrayList<Molecule> getMoleculeList() { return moleculeList; }
 
-    public Atom getAmmoAtom() {
-        return ammoAtom;
+    public Projectile getAmmo() {
+        return ammo;
     }
 
-    public void setAmmoAtom(Atom ammoAtom) {
-        this.ammoAtom = ammoAtom;
-    }
-
-    public PowerUp getAmmoPowerUp() {
-        return ammoPowerUp;
-    }
-
-    public void setAmmoPowerUp(PowerUp ammoPowerUp) {
-        this.ammoPowerUp = ammoPowerUp;
+    public void setAmmo(Projectile ammo) {
+        this.ammo = ammo;
     }
 
     public static void setInstance(GameFactory instance) { GameFactory.instance = instance; }

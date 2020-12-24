@@ -28,7 +28,7 @@ public class AtomSelectorFactory {
         if(!legalAtomList.isEmpty()) {
             AtomType selectedAtom = legalAtomList.get((int) (Math.random() * (legalAtomList.size())));
             inventory.removeAtom(selectedAtom);
-            gun.loadGunWithAtom(selectedAtom);
+            gun.loadGun(selectedAtom);
         }else System.err.println("There are no legal Atoms to use.");
         }
 }

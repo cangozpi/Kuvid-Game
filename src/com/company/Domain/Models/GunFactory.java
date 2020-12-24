@@ -4,25 +4,27 @@ package com.company.Domain.Models;
 import com.company.Domain.Models.Projectile.Atom;
 import com.company.Domain.Models.Projectile.PowerUp;
 import com.company.Domain.Models.Projectile.Projectile;
-import com.company.Domain.Observer.GunObserver;
+
 import com.company.Domain.Utility.Coordinate;
 import com.company.Domain.Utility.Velocity;
 import com.company.Enums.AtomType;
 import com.company.Enums.DirectionType;
+import com.company.Enums.IProjectileType;
 import com.company.Enums.PowerUpType;
 import com.company.UI.Objects.GameWindowFactory;
 
+import java.util.regex.Pattern;
+
 import static com.company.UI.Objects.GameWindowFactory.*;
 
-public class GunFactory extends GunObserver {
+public class GunFactory{
     //instance variables
     private static GunFactory gun = null;
     private Coordinate position; //left top corner of gun
     private int angle; //looking left is 0, most right is 180 deg.
     private double gunWidth = L * 0.5;
     private double gunHeight = L;
-    private Atom ammoAtom;
-    private PowerUp ammoPowerUp;
+    private Projectile ammo;
     private Coordinate rightestPointOfTheGun;
     private Coordinate leftistPointOfTheGUn;
     private Inventory inventory;
@@ -37,7 +39,7 @@ public class GunFactory extends GunObserver {
             gun.setAngle(90);
             gun.rightestPointOfTheGun = new Coordinate(gun.getPosition().getXCoordinate() + gun.getGunWidth(), gun.getPosition().getYCoordinate());
             gun.leftistPointOfTheGUn = gun.getPosition();
-            gun.loadGunWithAtom(AtomType.ALPHA);
+            gun.loadGun(AtomType.ALPHA);
             gun.setInventory();
 
         }
@@ -54,20 +56,11 @@ public class GunFactory extends GunObserver {
     //methods
     public void shootGun(){
 
-        Velocity projectileVelocity = new Velocity(getAngle(), 10);  //TODO: velocity
-        if( ammoAtom == null){
-            ammoPowerUp.setVelocity(projectileVelocity);
-            ammoPowerUp.setIsAmmo(false);
-            GameFactory.getInstance().insertPowerUpShotFromGun(ammoPowerUp);
-        }else{
-            ammoAtom.setVelocity(projectileVelocity);
-            ammoAtom.setIsAmmo(false);
-            GameFactory.getInstance().insertAtom(ammoAtom);
-         }
-
-
-
-
+        Velocity projectileVelocity = new Velocity(getAngle(), L/60);  //TODO: velocity
+        ammo.setVelocity(projectileVelocity);
+        ammo.setIsAmmo(false);
+        GameFactory.getInstance().insertProjectileFromGun(ammo);
+        ammo = null;
     }
 
     public void moveGun(DirectionType direction){
@@ -77,16 +70,12 @@ public class GunFactory extends GunObserver {
                 position.setXCoordinate(position.getXCoordinate() + L);
                 rightestPointOfTheGun.setXCoordinate(rightestPointOfTheGun.getXCoordinate() + L);
                 leftistPointOfTheGUn.setXCoordinate(rightestPointOfTheGun.getXCoordinate() + L);
-                if( ammoAtom == null) {
-                    ammoPowerUp.setXCoordinate(ammoPowerUp.getXCoordinate()+ L);
-                    GunFactory.super.gunMovedEvent(position, angle, ammoAtom, ammoPowerUp);
-                }else {
-                    ammoAtom.setXCoordinate(ammoAtom.getXCoordinate()+ L);
-                    GunFactory.super.gunMovedEvent(position, angle, ammoAtom, ammoPowerUp);
-                }
-
+                ammo.setXCoordinate(ammo.getXCoordinate()+ L);
+                GameFactory.getInstance().moveGun(position, angle, ammo);
             }
+
         }
+
 
 
         else if(direction.equals(DirectionType.LEFT)){
@@ -94,15 +83,12 @@ public class GunFactory extends GunObserver {
                 position.setXCoordinate(position.getXCoordinate() - L);
                 rightestPointOfTheGun.setXCoordinate(rightestPointOfTheGun.getXCoordinate() - L);
                 leftistPointOfTheGUn.setXCoordinate(rightestPointOfTheGun.getXCoordinate() - L);
-                if( ammoAtom == null) {
-                    ammoPowerUp.setXCoordinate(ammoPowerUp.getXCoordinate()- L);
-                    GunFactory.super.gunMovedEvent(position, angle, ammoAtom,ammoPowerUp);
-                }else {
-                    ammoAtom.setXCoordinate(ammoAtom.getXCoordinate()- L);
-                    GunFactory.super.gunMovedEvent(position, angle, ammoAtom, ammoPowerUp);
-                }
+
+                    ammo.setXCoordinate(ammo.getXCoordinate()- L);
+                    GameFactory.getInstance().moveGun(position, angle, ammo);
             }
         }
+
 
     }
 
@@ -112,84 +98,67 @@ public class GunFactory extends GunObserver {
         if(direction.equals(DirectionType.CLOCKWISE)){
             if(angle >= 10){ // if can rotate
                 angle -= 10;
-                if( ammoAtom == null) {
-
-                    GunFactory.super.gunMovedEvent(position, angle, ammoAtom, ammoPowerUp);
-                }else {
-
-                    GunFactory.super.gunMovedEvent(position, angle, ammoAtom, ammoPowerUp);
-                }
-
+                GameFactory.getInstance().moveGun(position, angle, ammo);
             }
+
+
         }else if(direction.equals(DirectionType.ANTICLOCKWISE)){
-            if(angle <= 170){ // if can rotate
+            if(angle <= 170) { // if can rotate
                 angle += 10;
-                if( ammoAtom == null) {
 
-                    GunFactory.super.gunMovedEvent(position, angle, ammoAtom, ammoPowerUp);
-                }else {
-
-                    GunFactory.super.gunMovedEvent(position, angle, ammoAtom, ammoPowerUp);
-                }
+                GameFactory.getInstance().moveGun(position, angle, ammo);
             }
         }
 
     }
 
-    public void loadGunWithAtom(AtomType atomType){              // gets ammo type from atom selector
+    public void loadGun(IProjectileType ammoType){              // gets ammo type from atom selector
 
         double xCoord = getPosition().getXCoordinate();    //TODO: position and angle calculations to line it up with the tip of the gun
         double yCoord = getPosition().getYCoordinate() - L/10;
         int ammoAngle = getAngle();
-        AtomFactory atomFactory = new AtomFactory();
         Coordinate ammoCoord = new Coordinate(xCoord, yCoord);                                                // creates projectile and sends it to game
         Velocity ammoVelocity = new Velocity(ammoAngle, 0);
-        setAmmoAtom(atomFactory.getInstance(ammoCoord, ammoVelocity, atomType, true,L/10,L/10));
-        GameFactory.getInstance().setAmmoAtom(getAmmoAtom());
-        GunFactory.super.gunMovedEvent(position, angle, ammoAtom, ammoPowerUp);
-        if( ammoAtom == null) {
-            inventory.addPowerUp(ammoPowerUp.getPowerUpType());
-            ammoPowerUp = null;
+
+
+        if(ammo != null) {
+            inventory.addAmmo(ammo.getProjectileType());
         }
 
-    }
-    public void loadGunWithPowerUp(PowerUpType powerUpType){          //powerup version
+        if(Pattern.matches(".*atom$", ammoType.toString())) {
 
-        double xCoord = 0;    //TODO: position and angle calculations to line it up with the tip of the gun
-        double yCoord = 0;
-        int ammoAngle = 0;
+            AtomFactory atomFactory = new AtomFactory();
+            setAmmo(atomFactory.getInstance(ammoCoord, ammoVelocity, ammoType, true,L/10,L/10));
+        }else{
+            setAmmo(new PowerUp(ammoCoord, ammoVelocity, ammoType, true,0,0));    //TODO: powerup factory width
 
-        Coordinate ammoCoord = new Coordinate(xCoord, yCoord);                                                // creates projectile and sends it to game
-        Velocity ammoVelocity = new Velocity(ammoAngle, 0);
-        setAmmoPowerUp(new PowerUp(ammoCoord, ammoVelocity, powerUpType, true,0,0));    //TODO: powerup factory wifth
-        GameFactory.getInstance().insertPowerUpShotFromGun(ammoPowerUp);
-        GunFactory.super.gunMovedEvent(position, angle, ammoAtom, ammoPowerUp);
-        if( ammoAtom != null) {
-            inventory.addAtom(ammoAtom.getAtomType());
-            ammoAtom = null;
         }
+
+        GameFactory.getInstance().setAmmo(ammo);
+
+
+
+
+
+
+        GameFactory.getInstance().setAmmo(getAmmo());
 
 
     }
+
 
 
     //getters and setters
 
-    public Atom getAmmoAtom() {
-        return ammoAtom;
+    public void setAmmo(Projectile ammo) {
+        this.ammo = ammo;
     }
 
-    public void setAmmoAtom(Atom ammoAtom) {
-        this.ammoAtom = ammoAtom;
+    public Projectile getAmmo() {
+        return ammo;
     }
 
-    public PowerUp getAmmoPowerUp() {
-        return ammoPowerUp;
-    }
 
-    public void setAmmoPowerUp(PowerUp ammoPowerUp) {
-        this.ammoPowerUp = ammoPowerUp;
-    }
 
     public double getGunWidth() {
         return gunWidth;

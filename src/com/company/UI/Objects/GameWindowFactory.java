@@ -5,8 +5,6 @@ import com.company.Domain.Models.AtomSelectorFactory;
 import com.company.Domain.Models.GameFactory;
 import com.company.Domain.Models.GunFactory;
 import com.company.Domain.Models.Projectile.*;
-import com.company.Domain.Observer.GunObserver;
-import com.company.Domain.Observer.IGunListener;
 import com.company.Domain.Utility.Coordinate;
 import com.company.Enums.*;
 import com.company.UI.Observer.GameObserver;
@@ -22,8 +20,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
-public class GameWindowFactory extends JFrame implements IGameListener, KeyListener, ActionListener,IGunListener {
+public class GameWindowFactory extends JFrame implements IGameListener, KeyListener, ActionListener {
 /*
     Main UI Frame, uses Singleton Pattern
  */
@@ -71,8 +70,7 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
         KeyListener blendListener = new BlenderHandler();
         addKeyListener(blendListener);
 
-        GunObserver gunObserver = GunFactory.getInstance();
-        gunObserver.addListener(this);
+
         GameObserver gameObserver = GameFactory.getInstance();
         gameObserver.addListener(this);
 
@@ -106,8 +104,9 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
     }
 
     @Override
-    public void positionChanged(ArrayList<Molecule> moleculeList, ArrayList<Atom> atomList, ArrayList<PowerUp> shotPowerUpList,
-                                ArrayList<ReactionBlocker> reactionBlockerList, ArrayList<PowerUp> powerUpList, Coordinate gunPosition, int gunAngle) {
+    public void positionChanged(ArrayList<Molecule> moleculeList, ArrayList<Projectile> projectileFromGunList,
+                                ArrayList<ReactionBlocker> reactionBlockerList,
+                                ArrayList<PowerUp> powerUpList, Coordinate gunPosition, int gunAngle, Projectile ammo ) {
         //empty objectList before re-adding GameObjects from zero
         clearObjectList();
 
@@ -135,66 +134,83 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
             for (PowerUp powerUp : powerUpList) {
                 // create ui object from data in projectile
                 GameObject currentObject;
-                currentObject = new PowerUpObject(powerUp.getCoordinate(),0,powerUp.getPowerUpType());
+                currentObject = new PowerUpObject(powerUp.getCoordinate(),0,powerUp.getProjectileType());
                 addToObjectList(currentObject);
             }
         }
 
-        if(!atomList.isEmpty()) {
-            for (Atom atom : atomList) {
+        if(!projectileFromGunList.isEmpty()) {
+            for (Projectile projectile : projectileFromGunList) {
                 // create ui object from data in projectile
                 //instantiate object accordingly
                 GameObject currentObject;
+                switch(projectile.getProjectileType().toString()){
+                    case "ALPHA_atom":
+                        currentObject = new AtomObject(projectile.getCoordinate(),0,AtomType.ALPHA);
+                        addToObjectList(currentObject);
+                        break;
+                    case "BETA_atom":
+                        currentObject = new AtomObject(projectile.getCoordinate(),0,AtomType.BETA);
+                        addToObjectList(currentObject);
+                        break;
+                    case "GAMMA_atom":
+                        currentObject = new AtomObject(projectile.getCoordinate(),0,AtomType.GAMMA);
+                        addToObjectList(currentObject);
+                        break;
+                    case "SIGMA_atom":
+                        currentObject = new AtomObject(projectile.getCoordinate(),0,AtomType.SIGMA);
+                        addToObjectList(currentObject);
+                        break;
+                    case "ALPHA_powerUp":
+                        currentObject = new PowerUpObject(projectile.getCoordinate(),0,PowerUpType.ALPHA);
+                        addToObjectList(currentObject);
+                        break;
+                    case "BETA_powerUp":
+                        currentObject = new PowerUpObject(projectile.getCoordinate(),0,PowerUpType.BETA);
+                        addToObjectList(currentObject);
+                        break;
+                    case "GAMMA_powerUp":
+                        currentObject = new PowerUpObject(projectile.getCoordinate(),0,PowerUpType.GAMMA);
+                        addToObjectList(currentObject);
+                        break;
+                    case "SIGMA_powerUp":
+                        currentObject = new PowerUpObject(projectile.getCoordinate(),0,PowerUpType.SIGMA);
+                        addToObjectList(currentObject);
+                        break;
 
-                currentObject = new AtomObject(atom.getCoordinate(),0,atom.getAtomType());
-                addToObjectList(currentObject);
-            }
-
-        }
-
-        if(!shotPowerUpList.isEmpty()) {
-            for (PowerUp powerUp : shotPowerUpList) {
-                // create ui object from data in projectile
-                //instantiate object accordingly
-                GameObject currentObject;
-                currentObject = new PowerUpObject(powerUp.getCoordinate(),0,powerUp.getPowerUpType());
-                addToObjectList(currentObject);
-            }
-        }
-        gunObj = new GunObject(gunPosition, gunAngle);
-        addToObjectList(gunObj);
-        this.draw();
-    }
-
-    @Override
-    public void gunMoved(Coordinate coord, int angle, Atom atom, PowerUp powerUp){
-        //clearObjectList();
-        //clear Gun From UI frame
-        this.remove(gunObj);
-
-            for (GameObject element : (ArrayList<GameObject>) objectList.clone()) {
-                if (element instanceof GunObject) {
-                    objectList.remove(element);
                 }
+
+
+
+
+
             }
 
-        //re add the gunObj to its new position
-        gunObj = new GunObject(coord, angle);
-        addToObjectList(gunObj);
+        }
 
-        if(atom != null){
+
+
+
+
+            //re add the gunObj to its new position
+            gunObj = new GunObject(gunPosition, gunAngle);
+            addToObjectList(gunObj);
             GameObject currentObject;
-            //instantiate corresponding atom object
-            currentObject = new AtomObject(atom.getCoordinate(),0,atom.getAtomType());
-            addToObjectList(currentObject);
-        }
-        if(powerUp != null){
-            GameObject currentObject;
-            currentObject = new PowerUpObject(powerUp.getCoordinate(),0,powerUp.getPowerUpType());
-            addToObjectList(currentObject);
-        }
-        this.draw();
+
+            if(Pattern.matches(".*atom$", ammo.getProjectileType().toString())) {
+                //instantiate corresponding atom object
+                currentObject = new AtomObject(ammo.getCoordinate(), 0, ammo.getProjectileType());
+                addToObjectList(currentObject);
+            }else{        //instantiate corresponding powerup object
+
+                currentObject = new PowerUpObject(ammo.getCoordinate(),0,ammo.getProjectileType());
+                addToObjectList(currentObject);
+            }
+            this.draw();
+
     }
+
+
 
     @Override
     public void keyTyped(KeyEvent e) {// Do not implement this

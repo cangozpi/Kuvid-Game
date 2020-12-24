@@ -5,13 +5,14 @@ import com.company.Domain.Models.Projectile.Projectile;
 import com.company.Domain.Utility.Coordinate;
 import com.company.Domain.Utility.Velocity;
 import com.company.Enums.AtomType;
+import com.company.Enums.IProjectileType;
 
 public abstract class AtomDecorator extends Atom {
 
     //reference to decorator's Component
     private Atom atomReference;
 
-    public AtomDecorator(Coordinate coordinate, Velocity velocity, AtomType atomType, boolean isAmmo, int height, int width, Atom atom) {
+    public AtomDecorator(Coordinate coordinate, Velocity velocity, IProjectileType atomType, boolean isAmmo, int height, int width, Atom atom) {
         super(coordinate, velocity, atomType, isAmmo, height, width);
         this.atomReference = atom;
     }
