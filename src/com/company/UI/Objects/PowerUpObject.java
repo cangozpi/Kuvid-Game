@@ -35,13 +35,13 @@ public class PowerUpObject extends GameObject{
         @Override
         public void draw() {
             ImageIcon powerUp = new ImageIcon(getClass().getResource("Assets/powerups/"+imageSource));
-            Image scaledPowerUp = powerUp.getImage().getScaledInstance(L/10, L/10, java.awt.Image.SCALE_SMOOTH); // scales the image
+            Image scaledPowerUp = powerUp.getImage().getScaledInstance(5*L/4, 5*L/4, java.awt.Image.SCALE_SMOOTH); // scales the image
             ImageIcon powerUpIcon = new ImageIcon(scaledPowerUp);
             JLabel powerUpLabel = new JLabel(powerUpIcon);
             //add to the JFrame
             this.add(powerUpLabel);
             GameWindowFactory.getInstance().getContentPane().add(this); // JFrame.add(JPanel)
-            this.setBounds((int)coordinate.getXCoordinate(), (int)coordinate.getYCoordinate(), L/10, L/10);
+            this.setBounds((int)coordinate.getXCoordinate(), (int)coordinate.getYCoordinate(), 5*L/4, 5*L/4);
             this.setOpaque(false);
         }
 

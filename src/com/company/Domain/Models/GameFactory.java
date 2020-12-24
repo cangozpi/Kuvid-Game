@@ -36,7 +36,6 @@ public class GameFactory extends GameObserver implements IGunListener {
     private PowerUp ammoPowerUp;
     private GameWindowFactory factory;
     private int fallSpeed;
-    private Timer gameClock;
 
     private GameFactory(){
         super(); //necessary for initializing Observer
@@ -68,37 +67,45 @@ public class GameFactory extends GameObserver implements IGunListener {
 
     //gameLoop() handles both game clock and alien clock
     public void gameLoop() {
-
-        boolean flag = false;
-
-        //16.68ms for 60FPS
-            gameClock =  new Timer(16, new ActionListener() { // checks for cat icons collusion
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                updatePositions();
-
-            }
-        });
-
         gameClock.start();
-
-        //handles alien actions
-        Timer alienClock =  new Timer(5000, new ActionListener() { // checks for cat icons collusion
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                GoodAlienFactory alienFactoryInstance = GoodAlienFactory.getInstance();
-                Molecule moleculeToSend = alienFactoryInstance.sendMolecule();
-                if (moleculeToSend!=null)
-                    insertMolecule(moleculeToSend);
-            }
-        });
-        alienClock.start();
-
-
+        goodalienClock.start();
+        badalienClock.start();
     }
+
+    Timer badalienClock =  new Timer(5000, new ActionListener() { // checks for cat icons collusion
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            BadAlienFactory badAlienFactory = BadAlienFactory.getInstance();
+            ReactionBlocker reactionBlocker = badAlienFactory.sendReactionBlocker();
+            if (reactionBlocker!=null)
+                insertReactionBlocker(reactionBlocker);
+        }
+    });
+
+    Timer goodalienClock =  new Timer(5000, new ActionListener() { // checks for cat icons collusion
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            GoodAlienFactory goodAlienFactory = GoodAlienFactory.getInstance();
+            PowerUp powerUpToSend = goodAlienFactory.sendPowerUp();
+            Molecule moleculeToSend = goodAlienFactory.sendMolecule();
+            if (moleculeToSend!=null)
+                insertMolecule(moleculeToSend);
+            if (powerUpToSend!=null)
+                insertPowerUp(powerUpToSend);
+        }
+    });
+
+    //16.68ms for 60FPS
+    Timer gameClock =  new Timer(16, new ActionListener() { // checks for cat icons collusion
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            updatePositions();
+        }
+    });
+
+
 
     public void pauseGame(){
         gameClock.stop();
