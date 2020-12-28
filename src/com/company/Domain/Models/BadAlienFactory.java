@@ -57,4 +57,10 @@ public class BadAlienFactory {
         return availableReactionBlockers;
     }
 
+    //for save functionality
+
+
+    public Map<ReactionBlockerType, Integer> getReactionBlockerAmount() {
+        return reactionBlockerAmount;
+    }
 }

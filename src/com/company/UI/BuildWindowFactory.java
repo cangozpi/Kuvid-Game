@@ -162,7 +162,7 @@ public class BuildWindowFactory extends JFrame {
 
 
                 //pass extracted variables and call controller class
-                builderHandler.buildGame(windowWidth, windowHeight, difficultyLevel, atomAmount, moleculeAmount, powerUpAmount, reactionBlockerAmount);
+                builderHandler.buildGame(windowWidth, windowHeight, difficultyLevel, atomAmount, moleculeAmount, powerUpAmount, reactionBlockerAmount, isLinear);
                 BuildWindowFactory.getInstance().getDefaultCloseOperation();
                 BuildWindowFactory.getInstance().setVisible(false);
                 BuildWindowFactory.getInstance().dispose();
