@@ -4,11 +4,11 @@ import com.company.Domain.Models.BadAlienFactory;
 import com.company.Domain.Models.GameFactory;
 import com.company.Domain.Models.GoodAlienFactory;
 import com.company.Domain.Models.Inventory;
-import com.company.Domain.SaveAndLoadGame.LoadGame;
 import com.company.Enums.AtomType;
 import com.company.Enums.MoleculeType;
 import com.company.Enums.PowerUpType;
 import com.company.Enums.ReactionBlockerType;
+import com.company.UI.Objects.GameObject;
 import com.company.UI.Objects.GameWindowFactory;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -21,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,8 +36,8 @@ public class LocalDB implements Database {
     private int score;
     private boolean isLinear;
     private int time;
+    private ArrayList<GameObject> objectList;
 
-    LoadGame instance = new LoadGame();
     @Override
     public void saveGame(String username, HashMap<AtomType, Integer> atomMap, HashMap<PowerUpType, Integer> powerUpMap, HashMap<PowerUpType, Integer> userPowerUpMap, HashMap<MoleculeType, Integer> moleculeMap, Map<ReactionBlockerType, Integer> reactionBlockerAmount, int score, boolean isLinear, int time) {
         //Types of atoms and molecules
@@ -134,7 +135,7 @@ public class LocalDB implements Database {
             score = mapper.readValue(savedGame.get("score").toString(), Integer.class);
             isLinear =  mapper.readValue(savedGame.get("isLinear").toString(), Boolean.class);
             time = mapper.readValue(savedGame.get("time").toString(), Integer.class);
-
+            objectList = mapper.readValue(savedGame.get("objectList").toString(), ObjectListJSON.class);
             atomMapRaw.forEach((key,value) -> {
                 if (key.contains("GAMMA")) {
                     atomMap.put(AtomType.GAMMA, value);

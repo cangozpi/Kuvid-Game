@@ -6,8 +6,6 @@ import com.company.Domain.Models.BadAlienFactory;
 import com.company.Domain.Models.GameFactory;
 import com.company.Domain.Models.GoodAlienFactory;
 import com.company.Domain.Models.Inventory;
-import com.company.Domain.SaveAndLoadGame.LoadGame;
-import com.company.Domain.SaveAndLoadGame.SaveGame;
 import com.company.Enums.AtomType;
 import com.company.Enums.MoleculeType;
 import com.company.Enums.PowerUpType;
@@ -16,6 +14,7 @@ import com.company.UI.Objects.GameWindowFactory;
 import com.company.Utils.CenterWindow;
 import com.company.repository.DatabaseAdapter;
 import com.company.repository.LocalDB;
+import com.company.repository.MongoDB;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,8 +26,6 @@ import java.util.Map;
 
 public class MenuWindowFactory extends JFrame implements KeyListener {
 
-    private LoadGame loadGame;
-    private SaveGame saveGame;
     public static int windowWidth = 720;
     public static int windowHeight = 360;
     private static MenuWindowFactory factoryInstance;
@@ -52,9 +49,8 @@ public class MenuWindowFactory extends JFrame implements KeyListener {
 
     private MenuWindowFactory() {
         menuHandler = new MenuHandler();
-        saveGame = new SaveGame();
-        loadGame = new LoadGame();
-        databaseAdapter = new DatabaseAdapter(new LocalDB());
+        //databaseAdapter = new DatabaseAdapter(new LocalDB());
+        databaseAdapter = new DatabaseAdapter(new MongoDB());
         //saveGame parameters
         Inventory inventoryInstance = Inventory.getInstance();
         GameFactory gameFactory = GameFactory.getInstance();

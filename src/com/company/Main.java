@@ -1,6 +1,5 @@
 package com.company;
 
-import com.company.Domain.SaveAndLoadGame.SaveGame;
 import com.company.UI.*;
 
 public class Main {
