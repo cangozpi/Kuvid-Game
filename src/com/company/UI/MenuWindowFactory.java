@@ -10,6 +10,7 @@ import com.company.Enums.AtomType;
 import com.company.Enums.MoleculeType;
 import com.company.Enums.PowerUpType;
 import com.company.Enums.ReactionBlockerType;
+import com.company.UI.Objects.GameObject;
 import com.company.UI.Objects.GameWindowFactory;
 import com.company.Utils.CenterWindow;
 import com.company.repository.DatabaseAdapter;
@@ -20,6 +21,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,16 +43,18 @@ public class MenuWindowFactory extends JFrame implements KeyListener {
     private int score;
     private boolean isLinear;
     private int time;
+    private ArrayList<GameObject> objectList;
     HashMap<PowerUpType, Integer> goodAlienPowerUpMap;
     private DatabaseAdapter databaseAdapter;
+
 
     //singleton instance
     private static MenuWindowFactory instance;
 
     private MenuWindowFactory() {
         menuHandler = new MenuHandler();
-        //databaseAdapter = new DatabaseAdapter(new LocalDB());
-        databaseAdapter = new DatabaseAdapter(new MongoDB());
+        databaseAdapter = new DatabaseAdapter(new LocalDB());
+        //databaseAdapter = new DatabaseAdapter(new MongoDB());
         //saveGame parameters
         Inventory inventoryInstance = Inventory.getInstance();
         GameFactory gameFactory = GameFactory.getInstance();
@@ -69,6 +73,8 @@ public class MenuWindowFactory extends JFrame implements KeyListener {
 
         isLinear = gameFactory.isLinear();
 
+        GameWindowFactory gameWindowInstance = GameWindowFactory.getInstance();
+        objectList = gameWindowInstance.getObjectList();
     }
 
     public static MenuWindowFactory getInstance(){
@@ -125,7 +131,7 @@ public class MenuWindowFactory extends JFrame implements KeyListener {
         }
 
         else if(e.getKeyCode() == 83){ //S
-            databaseAdapter.saveGame("Karel",atomMap, goodAlienPowerUpMap, powerUpMap, moleculeMap, reactionBlockerAmount, score, isLinear, time);
+            databaseAdapter.saveGame("Karel",atomMap, goodAlienPowerUpMap, powerUpMap, moleculeMap, reactionBlockerAmount, score, isLinear, time, objectList);
         }
 
         else if(e.getKeyCode() == 76){ //L

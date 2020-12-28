@@ -39,7 +39,7 @@ public class LocalDB implements Database {
     private ArrayList<GameObject> objectList;
 
     @Override
-    public void saveGame(String username, HashMap<AtomType, Integer> atomMap, HashMap<PowerUpType, Integer> powerUpMap, HashMap<PowerUpType, Integer> userPowerUpMap, HashMap<MoleculeType, Integer> moleculeMap, Map<ReactionBlockerType, Integer> reactionBlockerAmount, int score, boolean isLinear, int time) {
+    public void saveGame(String username, HashMap<AtomType, Integer> atomMap, HashMap<PowerUpType, Integer> powerUpMap, HashMap<PowerUpType, Integer> userPowerUpMap, HashMap<MoleculeType, Integer> moleculeMap, Map<ReactionBlockerType, Integer> reactionBlockerAmount, int score, boolean isLinear, int time, ArrayList<GameObject> objectList) {
         //Types of atoms and molecules
         JSONObject savedGame = new JSONObject();
 
@@ -136,6 +136,9 @@ public class LocalDB implements Database {
             isLinear =  mapper.readValue(savedGame.get("isLinear").toString(), Boolean.class);
             time = mapper.readValue(savedGame.get("time").toString(), Integer.class);
             objectList = mapper.readValue(savedGame.get("objectList").toString(), ObjectListJSON.class);
+            //GameObject[] emikObjectList = mapper.readValue(savedGame.get("objectList").toString(), GameObject[].class);
+            System.out.println(objectList);
+
             atomMapRaw.forEach((key,value) -> {
                 if (key.contains("GAMMA")) {
                     atomMap.put(AtomType.GAMMA, value);
@@ -201,11 +204,6 @@ public class LocalDB implements Database {
 
 
 
-        }
-        catch (JsonGenerationException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
