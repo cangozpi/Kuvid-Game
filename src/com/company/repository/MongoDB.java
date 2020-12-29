@@ -1,20 +1,18 @@
 package com.company.repository;
 
+import com.company.Domain.Models.BadAlienFactory;
 import com.company.Domain.Models.GameFactory;
+import com.company.Domain.Models.GoodAlienFactory;
+import com.company.Domain.Models.Inventory;
 import com.company.Enums.AtomType;
 import com.company.Enums.MoleculeType;
 import com.company.Enums.PowerUpType;
 import com.company.Enums.ReactionBlockerType;
-import com.company.UI.Objects.GameObject;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
-
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,7 +50,7 @@ public class MongoDB implements Database{
     public void saveGame(String username, HashMap<AtomType, Integer> atomMap,
                          HashMap<PowerUpType, Integer> powerUpMap, HashMap<PowerUpType,
             Integer> userPowerUpMap, HashMap<MoleculeType, Integer> moleculeMap, Map<ReactionBlockerType,
-            Integer> reactionBlockerAmount, int score, boolean isLinear, int time, ArrayList<GameObject> objectList) {
+            Integer> reactionBlockerAmount, int score, boolean isLinear, int time) {
 
         Document gameDb = new Document("username", username)
                 .append("atomMap", atomMap.toString())
@@ -62,13 +60,9 @@ public class MongoDB implements Database{
                 .append("reactionBlockerAmount", reactionBlockerAmount.toString())
                 .append("score", score)
                 .append("isLinear", isLinear)
-                .append("time", time)
-                .append("objectList", objectList.toString());
+                .append("time", time);
 
-
-        // empties the Db
         gameCollection.deleteMany(new Document());
-        //writes on Db
         gameCollection.insertOne(gameDb);
     }
 
@@ -77,13 +71,14 @@ public class MongoDB implements Database{
         Document savedGame = gameCollection.find(new Document("username", "Karel")).first();
         String atomMapRaw = (String) savedGame.get("atomMap");
         String powerUpMapRaw = (String) savedGame.get("powerUpMap");
-        String userPowerUpMapRaw = (String) savedGame.get("userPowerUpMan");
+        String userPowerUpMapRaw = (String) savedGame.get("userPowerUpMap");
         String moleculeMapRaw = (String) savedGame.get("moleculeMap");
         String reactionBlockerAmountRaw = (String) savedGame.get("reactionBlockerAmount");
-        //Object objectList = savedGame.get("objectList");
         int score = (int) savedGame.get("score");
         boolean isLinear = (boolean) savedGame.get("isLinear");
         int time = (int) savedGame.get("time");
+
+
         gameFactory.setLinear(isLinear);
         gameFactory.setTime(time);
         gameFactory.setScore(score);
@@ -96,12 +91,8 @@ public class MongoDB implements Database{
             userPowerUpMap = new HashMap<>();
             moleculeMap = new HashMap<>();
             reactionBlockerAmount = new HashMap<>();
-            ObjectMapper mapper = new ObjectMapper();
-            //powerUpMap = mapper.readValue(powerUpMap.toString(), HashMap.class);
-            //userPowerUpMap = mapper.readValue(userPowerUpMap.toString(), HashMap.class);
-            //moleculeMap = mapper.readValue(moleculeMap.toString(), HashMap.class);
-            //reactionBlockerAmount = mapper.readValue(reactionBlockerAmount.toString(), HashMap.class);
-            //objectList = mapper.readValue(objectList.toString(), ArrayList.class);
+
+
 
             Arrays.stream(atomMapRaw.split(", ")).forEach((x)->{
                 if (x.contains("GAMMA")) {
@@ -130,9 +121,10 @@ public class MongoDB implements Database{
                     userPowerUpMap.put(PowerUpType.SIGMA, Integer.parseInt(x.replaceAll("\\D+","")));
                 }else if(x.contains("ALPHA")){
                     userPowerUpMap.put(PowerUpType.ALPHA, Integer.parseInt(x.replaceAll("\\D+","")));
-                }else
-                    userPowerUpMap.put(PowerUpType.BETA, Integer.parseInt(x.replaceAll("\\D+","")));
-            });
+                }else {
+                    userPowerUpMap.put(PowerUpType.BETA, Integer.parseInt(x.replaceAll("\\D+", "")));
+                }
+                });
             Arrays.stream(moleculeMapRaw.split(", ")).forEach((x)->{
                 if (x.contains("GAMMA")) {
                     moleculeMap.put(MoleculeType.GAMMA, Integer.parseInt(x.replaceAll("\\D+","")));
@@ -157,21 +149,22 @@ public class MongoDB implements Database{
                 }else
                     reactionBlockerAmount.put(ReactionBlockerType.BETA_B, Integer.parseInt(x.replaceAll("\\D+","")));
             });
+            Inventory inventoryInstance = Inventory.getInstance();
+            inventoryInstance.setAtomMap(atomMap);
+            inventoryInstance.setPowerUpMap(powerUpMap);
 
+            GoodAlienFactory goodAlienInstance = GoodAlienFactory.getInstance();
+            goodAlienInstance.setPowerUpAmount(powerUpMap);
+            goodAlienInstance.setMoleculeAmount(moleculeMap);
 
-
-
-
-
-            System.out.println("a");
-
+            BadAlienFactory badAlienInstance = BadAlienFactory.getInstance();
+            badAlienInstance.setReactionBlockerAmount(reactionBlockerAmount);
 
 
 
         }catch (Exception e){
             e.printStackTrace();
         }
-
 
 
     }

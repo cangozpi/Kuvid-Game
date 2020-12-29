@@ -57,4 +57,8 @@ public abstract class Projectile {
     public void setVelocity(Velocity velocity) {
         this.velocity = velocity;
     }
+
+    public void setAmmo(boolean ammo) {
+        isAmmo = ammo;
+    }
 }

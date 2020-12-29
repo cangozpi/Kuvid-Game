@@ -80,7 +80,7 @@ public class GameFactory extends GameObserver implements IGunListener {
         badalienClock.start();
     }
 
-    Timer badalienClock =  new Timer(5000, new ActionListener() { // checks for cat icons collusion
+    Timer badalienClock =  new Timer(15000, new ActionListener() { // checks for cat icons collusion
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -91,7 +91,7 @@ public class GameFactory extends GameObserver implements IGunListener {
         }
     });
 
-    Timer goodalienClock =  new Timer(5000, new ActionListener() { // checks for cat icons collusion
+    Timer goodalienClock =  new Timer(13000, new ActionListener() { // checks for cat icons collusion
         @Override
         public void actionPerformed(ActionEvent e) {
             GoodAlienFactory goodAlienFactory = GoodAlienFactory.getInstance();
@@ -324,5 +324,18 @@ public class GameFactory extends GameObserver implements IGunListener {
 
     public void setTime(int time) {
         this.time = time;
+    }
+
+
+    public void setPowerUpList(ArrayList<PowerUp> powerUpList) {
+        this.powerUpList = powerUpList;
+    }
+
+    public void setReactionBlockerList(ArrayList<ReactionBlocker> reactionBlockerList) {
+        this.reactionBlockerList = reactionBlockerList;
+    }
+
+    public void setMoleculeList(ArrayList<Molecule> moleculeList) {
+        this.moleculeList = moleculeList;
     }
 }

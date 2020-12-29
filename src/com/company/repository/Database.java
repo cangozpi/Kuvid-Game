@@ -1,5 +1,6 @@
 package com.company.repository;
 
+import com.company.Domain.Models.Projectile.Molecule;
 import com.company.Enums.AtomType;
 import com.company.Enums.MoleculeType;
 import com.company.Enums.PowerUpType;
@@ -17,7 +18,7 @@ public interface Database {
     void saveGame(String username, HashMap<AtomType,Integer> atomMap, HashMap<PowerUpType,Integer> powerUpMap,
                   HashMap<PowerUpType,Integer> userPowerUpMap,
                   HashMap<MoleculeType,Integer> moleculeMap, Map<ReactionBlockerType,
-                    Integer> reactionBlockerAmount, int score, boolean isLinear, int time, ArrayList<GameObject> objectList);
+                    Integer> reactionBlockerAmount, int score, boolean isLinear, int time);
     void loadGame();
 
 }

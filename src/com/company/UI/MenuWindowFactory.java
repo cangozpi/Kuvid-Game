@@ -6,6 +6,7 @@ import com.company.Domain.Models.BadAlienFactory;
 import com.company.Domain.Models.GameFactory;
 import com.company.Domain.Models.GoodAlienFactory;
 import com.company.Domain.Models.Inventory;
+import com.company.Domain.Models.Projectile.Molecule;
 import com.company.Enums.AtomType;
 import com.company.Enums.MoleculeType;
 import com.company.Enums.PowerUpType;
@@ -43,7 +44,6 @@ public class MenuWindowFactory extends JFrame implements KeyListener {
     private int score;
     private boolean isLinear;
     private int time;
-    private ArrayList<GameObject> objectList;
     HashMap<PowerUpType, Integer> goodAlienPowerUpMap;
     private DatabaseAdapter databaseAdapter;
 
@@ -53,8 +53,8 @@ public class MenuWindowFactory extends JFrame implements KeyListener {
 
     private MenuWindowFactory() {
         menuHandler = new MenuHandler();
-        databaseAdapter = new DatabaseAdapter(new LocalDB());
-        //databaseAdapter = new DatabaseAdapter(new MongoDB());
+        //databaseAdapter = new DatabaseAdapter(new LocalDB());
+        databaseAdapter = new DatabaseAdapter(new MongoDB());
         //saveGame parameters
         Inventory inventoryInstance = Inventory.getInstance();
         GameFactory gameFactory = GameFactory.getInstance();
@@ -72,9 +72,6 @@ public class MenuWindowFactory extends JFrame implements KeyListener {
         time = gameFactory.getTime();
 
         isLinear = gameFactory.isLinear();
-
-        GameWindowFactory gameWindowInstance = GameWindowFactory.getInstance();
-        objectList = gameWindowInstance.getObjectList();
     }
 
     public static MenuWindowFactory getInstance(){
@@ -131,7 +128,7 @@ public class MenuWindowFactory extends JFrame implements KeyListener {
         }
 
         else if(e.getKeyCode() == 83){ //S
-            databaseAdapter.saveGame("Karel",atomMap, goodAlienPowerUpMap, powerUpMap, moleculeMap, reactionBlockerAmount, score, isLinear, time, objectList);
+            databaseAdapter.saveGame("Karel",atomMap, goodAlienPowerUpMap, powerUpMap, moleculeMap, reactionBlockerAmount, score, isLinear, time);
         }
 
         else if(e.getKeyCode() == 76){ //L

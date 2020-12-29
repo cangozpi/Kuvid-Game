@@ -4,6 +4,7 @@ import com.company.Domain.Models.BadAlienFactory;
 import com.company.Domain.Models.GameFactory;
 import com.company.Domain.Models.GoodAlienFactory;
 import com.company.Domain.Models.Inventory;
+import com.company.Domain.Models.Projectile.Molecule;
 import com.company.Enums.AtomType;
 import com.company.Enums.MoleculeType;
 import com.company.Enums.PowerUpType;
@@ -21,7 +22,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,10 +36,9 @@ public class LocalDB implements Database {
     private int score;
     private boolean isLinear;
     private int time;
-    private ArrayList<GameObject> objectList;
 
     @Override
-    public void saveGame(String username, HashMap<AtomType, Integer> atomMap, HashMap<PowerUpType, Integer> powerUpMap, HashMap<PowerUpType, Integer> userPowerUpMap, HashMap<MoleculeType, Integer> moleculeMap, Map<ReactionBlockerType, Integer> reactionBlockerAmount, int score, boolean isLinear, int time, ArrayList<GameObject> objectList) {
+    public void saveGame(String username, HashMap<AtomType, Integer> atomMap, HashMap<PowerUpType, Integer> powerUpMap, HashMap<PowerUpType, Integer> userPowerUpMap, HashMap<MoleculeType, Integer> moleculeMap, Map<ReactionBlockerType, Integer> reactionBlockerAmount, int score, boolean isLinear, int time) {
         //Types of atoms and molecules
         JSONObject savedGame = new JSONObject();
 
@@ -60,8 +59,7 @@ public class LocalDB implements Database {
 
         //UI part
         GameWindowFactory gameWindowInstance = GameWindowFactory.getInstance();
-        JSONObject objectListJSON = new JSONObject();
-        savedGame.put("objectList", gameWindowInstance.getObjectList().toString());
+
 
 
         //Write JSON file
@@ -135,9 +133,6 @@ public class LocalDB implements Database {
             score = mapper.readValue(savedGame.get("score").toString(), Integer.class);
             isLinear =  mapper.readValue(savedGame.get("isLinear").toString(), Boolean.class);
             time = mapper.readValue(savedGame.get("time").toString(), Integer.class);
-           //objectList = mapper.readValue(savedGame.get("objectList").toString(), ObjectListJSON.class);
-            //GameObject[] emikObjectList = mapper.readValue(savedGame.get("objectList").toString(), GameObject[].class);
-            //System.out.println(objectList);
 
             atomMapRaw.forEach((key,value) -> {
                 if (key.contains("GAMMA")) {
