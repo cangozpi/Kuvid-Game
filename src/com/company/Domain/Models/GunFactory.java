@@ -33,7 +33,7 @@ public class GunFactory extends GunObserver {
         if (gun == null) {
             gun = new GunFactory();
             gun.setPosition(new Coordinate(((GameFactory.getInstance().getGameWindowWidth() / 2) - GameFactory.getInstance().L / 4),
-                    GameFactory.getInstance().getGameWindowHeight() -  GameFactory.getInstance().L));
+                    GameFactory.getInstance().getGameWindowHeight() +  GameFactory.getInstance().L));
             gun.setAngle(90);
             gun.rightestPointOfTheGun = new Coordinate(gun.getPosition().getXCoordinate() + gun.getGunWidth(), gun.getPosition().getYCoordinate());
             gun.leftistPointOfTheGUn = gun.getPosition();

@@ -21,13 +21,13 @@ public class MovementStrategyFactory {
 
         int y_position = (int) position.getYCoordinate();
 
-        if (MoleculeType.ALPHA_1.equals(IProjectileType)|AtomType.ALPHA.equals(IProjectileType)) {
+        if (MoleculeType.ALPHA.equals(IProjectileType)|AtomType.ALPHA.equals(IProjectileType)) {
             return new ZigZagStrategy();
-        }else if(MoleculeType.ALPHA_2.equals(IProjectileType)){
+        }else if(MoleculeType.ALPHA_L.equals(IProjectileType)){
             return new ZigZagStrategy();
-        }else if(MoleculeType.BETA_1.equals(IProjectileType)|AtomType.BETA.equals(IProjectileType)){
+        }else if(MoleculeType.BETA.equals(IProjectileType)|AtomType.BETA.equals(IProjectileType)){
             return (y_position <= windowHeight/4) ? new StraightStrategy() : new ZigZagStrategy();
-        }else if(MoleculeType.BETA_2.equals(IProjectileType)){
+        }else if(MoleculeType.BETA_L.equals(IProjectileType)){
             return (y_position <= windowHeight/4) ? new StraightStrategy() : new ZigZagStrategy();
         }else if(MoleculeType.SIGMA.equals(IProjectileType)|AtomType.SIGMA.equals(IProjectileType)){
             return new StraightStrategy();

@@ -99,7 +99,7 @@ public class BuildWindowFactory extends JFrame {
         panelHolder[1][1].add(difficultySlider);
         panelHolder[1][1].add(hardSliderLabel);
         panelHolder[2][1].add(moleculeStructureLabel);
-        JCheckBox checkBox = new JCheckBox("Linear mode", true);
+        JCheckBox checkBox = new JCheckBox("Nonlinear mode", true);
         panelHolder[3][1].add(checkBox);
 
         JTextField[] inputs = new JTextField[4];//array holding input JTextFields
@@ -143,14 +143,14 @@ public class BuildWindowFactory extends JFrame {
                 }
                 for(MoleculeType element : MoleculeType.values()){
                     if(isLinear){
-                        if(!element.equals(MoleculeType.ALPHA_2) && !element.equals(MoleculeType.BETA_2)) {
+                        if(!element.equals(MoleculeType.ALPHA_L) && !element.equals(MoleculeType.BETA_L)) {
                             if (isStringInt(inputs[1].getText()))
                                 moleculeAmount.put(element, Integer.parseInt(inputs[1].getText()));
                             else
                                 moleculeAmount.put(element, 100);
                         }
                     }else{
-                        if(!element.equals(MoleculeType.ALPHA_1) && !element.equals(MoleculeType.BETA_1)) {
+                        if(!element.equals(MoleculeType.ALPHA) && !element.equals(MoleculeType.BETA)) {
                             if (isStringInt(inputs[1].getText()))
                                 moleculeAmount.put(element, Integer.parseInt(inputs[1].getText()));
                             else
@@ -159,29 +159,13 @@ public class BuildWindowFactory extends JFrame {
                     }
                 }
 
-
-
                 //pass extracted variables and call controller class
                 builderHandler.buildGame(windowWidth, windowHeight, difficultyLevel, atomAmount, moleculeAmount, powerUpAmount, reactionBlockerAmount, isLinear);
                 BuildWindowFactory.getInstance().getDefaultCloseOperation();
                 BuildWindowFactory.getInstance().setVisible(false);
                 BuildWindowFactory.getInstance().dispose();
 
-                //Game window below -->
                 final GameWindowFactory gamePanel = GameWindowFactory.getInstance();
-
-                //TODO: remove code below only *******************************
-                //add elements t
-                // o be drawn to the list
-                // Note: It is important to add BackgroundObject Last to draw it at the bottom layer of JFrame
-
-                GameObject lol = new GunObject(new Coordinate(((GameWindowFactory.getInstance().windowWidth/2) - GameWindowFactory.getInstance().L / 4), GameWindowFactory.getInstance().windowHeight - (1.75) * GameWindowFactory.getInstance().L),0);
-                gamePanel.addToObjectList(lol);
-                GameObject bgObject = new BackgroundObject(new Coordinate(0, -10));
-                gamePanel.addToObjectList(bgObject);
-                //***********************************
-
-                //render Game Frame
                 gamePanel.render();
             }
 
@@ -198,6 +182,5 @@ public class BuildWindowFactory extends JFrame {
             return false;
         }
     }
-
 
 }

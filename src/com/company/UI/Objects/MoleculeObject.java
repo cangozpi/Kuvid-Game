@@ -11,27 +11,41 @@ import static com.company.UI.Objects.GameWindowFactory.L;
 public class MoleculeObject extends GameObject{
         private int angle;
         private String imageSource = "alpha-1.png";
+        private int width;
+        private int height;
 
         public MoleculeObject(Coordinate coordinate, int angle, MoleculeType moleculeType) {
             super(coordinate, "alpha-1.png");
             this.angle = angle;
             switch (moleculeType){
-                case ALPHA_1:
+                case ALPHA:
+                    width = 5*L/4;
+                    height = 5*L/4;
                     imageSource = "alpha-1.png";
                     break;
-                case BETA_1:
+                case BETA:
+                    width = 5*L/4;
+                    height = 5*L/4;
                     imageSource = "beta-1.png";
                     break;
-                case ALPHA_2:
+                case ALPHA_L:
+                    width = 5*L/3;
+                    height = 5*L/6;
                     imageSource = "alpha-2.png";
                     break;
-                case BETA_2:
+                case BETA_L:
+                    width = 5*L/3;
+                    height = 5*L/6;
                     imageSource = "beta-2.png";
                     break;
                 case GAMMA:
+                    width = 5*L/4;
+                    height = 5*L/4;
                     imageSource = "gamma-.png";
                     break;
                 case SIGMA:
+                    width = 5*L/4;
+                    height = 5*L/4;
                     imageSource = "sigma-.png";
                     break;
 
@@ -41,13 +55,13 @@ public class MoleculeObject extends GameObject{
         @Override
         public void draw() {
             ImageIcon molecule = new ImageIcon(getClass().getResource("Assets/molecules/"+imageSource));
-            Image scaledMolecule = molecule.getImage().getScaledInstance(5*L/4, 5*L/4, java.awt.Image.SCALE_SMOOTH); // scales the image
+            Image scaledMolecule = molecule.getImage().getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH); // scales the image
             ImageIcon moleculeIcon = new ImageIcon(scaledMolecule);
             JLabel moleculeLabel = new JLabel(moleculeIcon);
             //add to the JFrame
             this.add(moleculeLabel);
             GameWindowFactory.getInstance().getContentPane().add(this); // JFrame.add(JPanel)
-            this.setBounds((int)coordinate.getXCoordinate(), (int)coordinate.getYCoordinate(), 5*L/4, 5*L/4);
+            this.setBounds((int)coordinate.getXCoordinate(), (int)coordinate.getYCoordinate(), width, height);
             this.setOpaque(false);
         }
 

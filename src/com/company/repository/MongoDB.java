@@ -80,7 +80,7 @@ public class MongoDB implements Database{
         String userPowerUpMapRaw = (String) savedGame.get("userPowerUpMan");
         String moleculeMapRaw = (String) savedGame.get("moleculeMap");
         String reactionBlockerAmountRaw = (String) savedGame.get("reactionBlockerAmount");
-        Object objectList = savedGame.get("objectList");
+        //Object objectList = savedGame.get("objectList");
         int score = (int) savedGame.get("score");
         boolean isLinear = (boolean) savedGame.get("isLinear");
         int time = (int) savedGame.get("time");
@@ -112,6 +112,50 @@ public class MongoDB implements Database{
                     atomMap.put(AtomType.ALPHA, Integer.parseInt(x.replaceAll("\\D+","")));
                 }else
                     atomMap.put(AtomType.BETA, Integer.parseInt(x.replaceAll("\\D+","")));
+            });
+            Arrays.stream(powerUpMapRaw.split(", ")).forEach((x)->{
+                if (x.contains("GAMMA")) {
+                    powerUpMap.put(PowerUpType.GAMMA, Integer.parseInt(x.replaceAll("\\D+","")));
+                }else if(x.contains("SIGMA")){
+                    powerUpMap.put(PowerUpType.SIGMA, Integer.parseInt(x.replaceAll("\\D+","")));
+                }else if(x.contains("ALPHA")){
+                    powerUpMap.put(PowerUpType.ALPHA, Integer.parseInt(x.replaceAll("\\D+","")));
+                }else
+                    powerUpMap.put(PowerUpType.BETA, Integer.parseInt(x.replaceAll("\\D+","")));
+            });
+            Arrays.stream(userPowerUpMapRaw.split(", ")).forEach((x)->{
+                if (x.contains("GAMMA")) {
+                    userPowerUpMap.put(PowerUpType.GAMMA, Integer.parseInt(x.replaceAll("\\D+","")));
+                }else if(x.contains("SIGMA")){
+                    userPowerUpMap.put(PowerUpType.SIGMA, Integer.parseInt(x.replaceAll("\\D+","")));
+                }else if(x.contains("ALPHA")){
+                    userPowerUpMap.put(PowerUpType.ALPHA, Integer.parseInt(x.replaceAll("\\D+","")));
+                }else
+                    userPowerUpMap.put(PowerUpType.BETA, Integer.parseInt(x.replaceAll("\\D+","")));
+            });
+            Arrays.stream(moleculeMapRaw.split(", ")).forEach((x)->{
+                if (x.contains("GAMMA")) {
+                    moleculeMap.put(MoleculeType.GAMMA, Integer.parseInt(x.replaceAll("\\D+","")));
+                }else if(x.contains("SIGMA")){
+                    moleculeMap.put(MoleculeType.SIGMA, Integer.parseInt(x.replaceAll("\\D+","")));
+                }else if(x.contains("ALPHA_L")){
+                    moleculeMap.put(MoleculeType.ALPHA_L, Integer.parseInt(x.replaceAll("\\D+","")));
+                }else if(x.contains("BETA_L")){
+                    moleculeMap.put(MoleculeType.BETA_L, Integer.parseInt(x.replaceAll("\\D+","")));
+                }else if(x.contains("ALPHA")){
+                    moleculeMap.put(MoleculeType.ALPHA, Integer.parseInt(x.replaceAll("\\D+","")));
+                }else
+                    moleculeMap.put(MoleculeType.BETA, Integer.parseInt(x.replaceAll("\\D+","")));
+            });
+            Arrays.stream(reactionBlockerAmountRaw.split(", ")).forEach((x)->{
+                if (x.contains("GAMMA")) {
+                    reactionBlockerAmount.put(ReactionBlockerType.GAMMA_B, Integer.parseInt(x.replaceAll("\\D+","")));
+                }else if(x.contains("SIGMA")){
+                    reactionBlockerAmount.put(ReactionBlockerType.SIGMA_B, Integer.parseInt(x.replaceAll("\\D+","")));
+                }else if(x.contains("ALPHA")){
+                    reactionBlockerAmount.put(ReactionBlockerType.ALPHA_B, Integer.parseInt(x.replaceAll("\\D+","")));
+                }else
+                    reactionBlockerAmount.put(ReactionBlockerType.BETA_B, Integer.parseInt(x.replaceAll("\\D+","")));
             });
 
 

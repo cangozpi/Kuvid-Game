@@ -135,9 +135,9 @@ public class LocalDB implements Database {
             score = mapper.readValue(savedGame.get("score").toString(), Integer.class);
             isLinear =  mapper.readValue(savedGame.get("isLinear").toString(), Boolean.class);
             time = mapper.readValue(savedGame.get("time").toString(), Integer.class);
-            objectList = mapper.readValue(savedGame.get("objectList").toString(), ObjectListJSON.class);
+           //objectList = mapper.readValue(savedGame.get("objectList").toString(), ObjectListJSON.class);
             //GameObject[] emikObjectList = mapper.readValue(savedGame.get("objectList").toString(), GameObject[].class);
-            System.out.println(objectList);
+            //System.out.println(objectList);
 
             atomMapRaw.forEach((key,value) -> {
                 if (key.contains("GAMMA")) {
@@ -177,14 +177,14 @@ public class LocalDB implements Database {
             moleculeMapRaw.forEach((key,value) -> {
                 if (key.contains("GAMMA")) {
                     moleculeMap.put(MoleculeType.GAMMA, value);
-                }else if(key.contains("BETA_1")){
-                    moleculeMap.put(MoleculeType.BETA_1, value);
-                } else if(key.contains("ALPHA_1")){
-                    moleculeMap.put(MoleculeType.ALPHA_1, value);
-                } else if(key.contains("BETA_2")){
-                    moleculeMap.put(MoleculeType.BETA_2, value);
-                } else if(key.contains("ALPHA_2")){
-                    moleculeMap.put(MoleculeType.ALPHA_2, value);
+                } else if(key.contains("BETA_L")){
+                    moleculeMap.put(MoleculeType.BETA_L, value);
+                } else if(key.contains("ALPHA_L")){
+                    moleculeMap.put(MoleculeType.ALPHA_L, value);
+                }else if(key.contains("BETA")){
+                    moleculeMap.put(MoleculeType.BETA, value);
+                } else if(key.contains("ALPHA")){
+                    moleculeMap.put(MoleculeType.ALPHA, value);
                 } else{
                     moleculeMap.put(MoleculeType.SIGMA, value);
                 }

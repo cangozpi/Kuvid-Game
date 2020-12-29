@@ -68,7 +68,7 @@ public class GameFactory extends GameObserver implements IGunListener {
         GunObserver gunObserver = GunFactory.getInstance();
         gunObserver.addListener(this);
         setGunPosition(new Coordinate(((gameWindowWidth/2) - L / 4),
-                gameWindowHeight -  L));
+                gameWindowHeight +  L));
         setGunAngle(90);
         gameLoop();
     }
