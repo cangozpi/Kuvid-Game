@@ -35,13 +35,13 @@ public class ReactionBlockerObject extends GameObject{
     @Override
     public void draw() {
         ImageIcon gun = new ImageIcon(getClass().getResource("Assets/blockers/"+imageSource));
-        Image scaledGun = gun.getImage().getScaledInstance(L/10, L/10, java.awt.Image.SCALE_SMOOTH); // scales the image
+        Image scaledGun = gun.getImage().getScaledInstance(5*L/4, 5*L/4, java.awt.Image.SCALE_SMOOTH); // scales the image
         ImageIcon gunIcon = new ImageIcon(scaledGun);
         JLabel gunLabel = new JLabel(gunIcon);
         //add to the JFrame
         this.add(gunLabel);
         GameWindowFactory.getInstance().getContentPane().add(this); // JFrame.add(JPanel)
-        this.setBounds((int)coordinate.getXCoordinate(), (int)coordinate.getYCoordinate(), L/10, L/10);
+        this.setBounds((int)coordinate.getXCoordinate(), (int)coordinate.getYCoordinate(), 5*L/4, 5*L/4);
         this.setOpaque(false);
     }
 

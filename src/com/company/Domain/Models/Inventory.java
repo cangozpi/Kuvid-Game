@@ -1,6 +1,8 @@
 package com.company.Domain.Models;
 import com.company.Enums.AtomType;
 import com.company.Enums.PowerUpType;
+
+import java.util.Arrays;
 import java.util.HashMap;
 
 
@@ -10,7 +12,12 @@ public class Inventory {
     HashMap<PowerUpType,Integer> powerUpMap;
 
 
-    private Inventory(){}
+    private Inventory(){
+        powerUpMap = new HashMap<>();
+        Arrays.stream(PowerUpType.values()).forEach((x) -> powerUpMap.put(x, 0));
+
+    }
+
     public static Inventory getInstance(){
         if(inventory==null) inventory = new Inventory();
         return inventory;
@@ -21,7 +28,8 @@ public class Inventory {
     }
 
     public void setPowerUpMap(HashMap<PowerUpType, Integer> powerUpMap) {
-        this.powerUpMap = powerUpMap;}
+        this.powerUpMap = powerUpMap;
+    }
 
     public int getAtomAmount(AtomType atomType){
         if(atomMap==null) {
@@ -196,5 +204,15 @@ public class Inventory {
                 atomMap.merge(AtomType.SIGMA,-1,Integer::sum);
         }
         return true;
+    }
+
+    //For save and Load Game functionalities
+
+    public HashMap<AtomType, Integer> getAtomMap() {
+        return atomMap;
+    }
+
+    public HashMap<PowerUpType, Integer> getPowerUpMap() {
+        return powerUpMap;
     }
 }

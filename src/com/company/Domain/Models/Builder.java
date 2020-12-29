@@ -17,7 +17,7 @@ public class Builder {
     public Builder() {
     }
 
-    public void buildGame(int gameWindowHeight, int gameWindowWidth, int difficulty, HashMap<AtomType, Integer> inventoryContents) {
+    public void buildGame(int gameWindowHeight, int gameWindowWidth, int difficulty, HashMap<AtomType, Integer> inventoryContents, boolean isLinear) {
         badAlien = BadAlienFactory.getInstance();
         goodAlien = GoodAlienFactory.getInstance();
         GameFactory game = GameFactory.getInstance();
@@ -27,6 +27,7 @@ public class Builder {
         game.setGameWindowHeight(gameWindowHeight);
         game.setGameWindowWidth(gameWindowWidth);
         game.startGame();
+        game.setLinear(isLinear);
     }
 
 

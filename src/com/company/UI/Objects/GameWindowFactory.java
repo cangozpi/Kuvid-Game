@@ -70,6 +70,10 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
         factoryInstance.getContentPane().setBackground(Color.DARK_GRAY);
         KeyListener blendListener = new BlenderHandler();
         addKeyListener(blendListener);
+        KeyListener menuListener = new MenuHandler();
+
+        //add the keyListener to the JFrame
+        this.addKeyListener(menuListener);
 
         GunObserver gunObserver = GunFactory.getInstance();
         gunObserver.addListener(this);
@@ -299,5 +303,13 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
     @Override
     public void paintComponents(Graphics graphics) {
         super.paintComponents(graphics);
+    }
+
+    public ArrayList<GameObject> getObjectList() {
+        return objectList;
+    }
+
+    public void setObjectList(ArrayList<GameObject> objectList) {
+        this.objectList = objectList;
     }
 }

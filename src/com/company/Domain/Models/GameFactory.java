@@ -6,6 +6,8 @@ import com.company.Domain.Observer.IGunListener;
 import com.company.Domain.Utility.Coordinate;
 import com.company.UI.Objects.GameWindowFactory;
 import com.company.UI.Observer.GameObserver;
+import com.company.repository.DatabaseAdapter;
+import com.company.repository.LocalDB;
 
 import javax.lang.model.type.ArrayType;
 import javax.swing.*;
@@ -13,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class GameFactory extends GameObserver implements IGunListener {
@@ -36,18 +39,22 @@ public class GameFactory extends GameObserver implements IGunListener {
     private PowerUp ammoPowerUp;
     private GameWindowFactory factory;
     private int fallSpeed;
-    private Timer gameClock;
+
+
+    private boolean isLinear;
+    private int score;
+    private int time;
 
     private GameFactory(){
         super(); //necessary for initializing Observer
+        time = 0;
+        score = 0; //TODO: implement score on collision and such
 
     }
 
     public static GameFactory getInstance(){
         if(instance == null){
             instance = new GameFactory();
-
-
 
         }
         return instance;
@@ -68,37 +75,46 @@ public class GameFactory extends GameObserver implements IGunListener {
 
     //gameLoop() handles both game clock and alien clock
     public void gameLoop() {
-
-        boolean flag = false;
-
-        //16.68ms for 60FPS
-            gameClock =  new Timer(16, new ActionListener() { // checks for cat icons collusion
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                updatePositions();
-
-            }
-        });
-
         gameClock.start();
-
-        //handles alien actions
-        Timer alienClock =  new Timer(5000, new ActionListener() { // checks for cat icons collusion
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                GoodAlienFactory alienFactoryInstance = GoodAlienFactory.getInstance();
-                Molecule moleculeToSend = alienFactoryInstance.sendMolecule();
-                if (moleculeToSend!=null)
-                    insertMolecule(moleculeToSend);
-            }
-        });
-        alienClock.start();
-
-
+        goodalienClock.start();
+        badalienClock.start();
     }
+
+    Timer badalienClock =  new Timer(5000, new ActionListener() { // checks for cat icons collusion
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            BadAlienFactory badAlienFactory = BadAlienFactory.getInstance();
+            ReactionBlocker reactionBlocker = badAlienFactory.sendReactionBlocker();
+            if (reactionBlocker!=null)
+                insertReactionBlocker(reactionBlocker);
+        }
+    });
+
+    Timer goodalienClock =  new Timer(5000, new ActionListener() { // checks for cat icons collusion
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            GoodAlienFactory goodAlienFactory = GoodAlienFactory.getInstance();
+            PowerUp powerUpToSend = goodAlienFactory.sendPowerUp();
+            Molecule moleculeToSend = goodAlienFactory.sendMolecule();
+            if (moleculeToSend!=null)
+                insertMolecule(moleculeToSend);
+            if (powerUpToSend!=null)
+                insertPowerUp(powerUpToSend);
+        }
+    });
+
+    //16.68ms for 60FPS
+    Timer gameClock =  new Timer(16, new ActionListener() { // checks for cat icons collusion
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            time++;
+            updatePositions();
+        }
+    });
+
+
 
     public void pauseGame(){
         gameClock.stop();
@@ -286,4 +302,27 @@ public class GameFactory extends GameObserver implements IGunListener {
 
     public static void setInstance(GameFactory instance) { GameFactory.instance = instance; }
 
+    public boolean isLinear() {
+        return isLinear;
+    }
+
+    public void setLinear(boolean linear) {
+        isLinear = linear;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getTime() {
+        return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
 }

@@ -1,5 +1,6 @@
 package com.company.Domain.Models.Projectile;
 
+import com.company.Domain.Models.GameFactory;
 import com.company.Domain.Utility.Coordinate;
 import com.company.Domain.Utility.Velocity;
 import com.company.Enums.ReactionBlockerType;
@@ -16,5 +17,9 @@ public class ReactionBlocker extends Projectile {
         return reactionBlockerType;
     }
 
+    @Override
+    public void move() {
+        setCoordinate(new Coordinate(getXCoordinate(),getYCoordinate()+ GameFactory.getInstance().getFallSpeed()));
+    }
 
 }

@@ -15,8 +15,8 @@ public class GoodAlienFactory {
     private static GoodAlienFactory instance;
     Random random = new Random();
     //variables
-    HashMap<PowerUpType, Integer> powerUpAmounts;
-    HashMap<MoleculeType, Integer> moleculeAmounts;
+    private HashMap<PowerUpType, Integer> powerUpAmounts;
+    private HashMap<MoleculeType, Integer> moleculeAmounts;
     private GameFactory gameFactory;
     private MoleculeFactory moleculeFactory;
 
@@ -31,7 +31,7 @@ public class GoodAlienFactory {
     }
 
     //decrements the PowerUp value by one
-    public void sendPowerUp() {
+    public PowerUp sendPowerUp() {
         List<PowerUpType> availablePowerUps = getAvailablePowerUps();
         if(!availablePowerUps.isEmpty()) {
             int powerUpToShoot = random.nextInt(availablePowerUps.size());
@@ -39,8 +39,9 @@ public class GoodAlienFactory {
             Coordinate position = new Coordinate(random.nextInt(GameWindowFactory.windowWidth), 0);
 
             powerUpAmounts.put(type, powerUpAmounts.get(type) - 1);
+            return new PowerUp(position, new Velocity(270, gameFactory.getFallSpeed()), type, false, 30, 30);
         }
-        //TODO: implement sending a powerup
+        return null;
     }
 
     public Molecule sendMolecule() {
@@ -83,4 +84,11 @@ public class GoodAlienFactory {
         return availablePowerUps;
     }
 
+    public HashMap<PowerUpType, Integer> getPowerUpAmounts() {
+        return powerUpAmounts;
+    }
+
+    public HashMap<MoleculeType, Integer> getMoleculeAmounts() {
+        return moleculeAmounts;
+    }
 }

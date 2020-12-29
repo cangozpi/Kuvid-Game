@@ -19,8 +19,8 @@ public class BuilderHandler {
 
     }
 
-    public void buildGame(int gameWindowWidth, int gameWindowHeight, int difficulty, HashMap<AtomType, Integer> inventoryContents, HashMap<MoleculeType, Integer> moleculeAmounts, HashMap<PowerUpType, Integer> powerUpAmounts, Map<ReactionBlockerType, Integer> reactionBlockerAmounts){
-        builder.buildGame(gameWindowHeight, gameWindowWidth, difficulty, inventoryContents);
+    public void buildGame(int gameWindowWidth, int gameWindowHeight, int difficulty, HashMap<AtomType, Integer> inventoryContents, HashMap<MoleculeType, Integer> moleculeAmounts, HashMap<PowerUpType, Integer> powerUpAmounts, Map<ReactionBlockerType, Integer> reactionBlockerAmounts, boolean isLinear){
+        builder.buildGame(gameWindowHeight, gameWindowWidth, difficulty, inventoryContents, isLinear);
         builder.createGoodAlien(moleculeAmounts, powerUpAmounts);
         builder.createBadAlien(reactionBlockerAmounts);
 
