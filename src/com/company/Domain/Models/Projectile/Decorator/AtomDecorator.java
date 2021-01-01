@@ -56,7 +56,7 @@ public abstract class AtomDecorator extends Atom {
     }
 
     public void setCoordinate(Coordinate coordinate) {
-        super.setCoordinate(coordinate);
+        atomReference.setCoordinate(coordinate);
     }
 
     public double getXCoordinate(){ return atomReference.getXCoordinate();}

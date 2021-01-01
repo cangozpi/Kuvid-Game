@@ -1,9 +1,7 @@
 package com.company.UI.Objects;
 
 import com.company.Domain.Controller.*;
-import com.company.Domain.Models.AtomSelectorFactory;
 import com.company.Domain.Models.GameFactory;
-import com.company.Domain.Models.GunFactory;
 import com.company.Domain.Models.Projectile.*;
 import com.company.Domain.Utility.Coordinate;
 import com.company.Enums.*;
@@ -16,24 +14,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Pattern;
 
-public class GameWindowFactory extends JFrame implements IGameListener, KeyListener, ActionListener {
+public class GameWindowFactory extends JFrame implements IGameListener,  ActionListener {
 /*
     Main UI Frame, uses Singleton Pattern
  */
     public static int windowWidth = 852;
     public static int windowHeight = 480;
     public static int L = windowHeight / 10;
-    private MoveShooterHandler moveShooterHandler;
-    private RotateGunHandler rotateGunHandler;
-    private ShooterHandler shooterHandler;
-    private BlenderHandler blenderHandler;
-    private SelectAtomHandler selectAtomHandler;
+
     GameObject gunObj; //reference to gunObject that is drawn
 
     //list holding JPanel's to be drawn
@@ -42,11 +34,7 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
     private static GameWindowFactory factoryInstance; //holds single instance variable of this class
 
     private GameWindowFactory()  {
-        moveShooterHandler = new MoveShooterHandler();
-        rotateGunHandler = new RotateGunHandler();
-        blenderHandler = new BlenderHandler();
-        shooterHandler = new ShooterHandler();
-        selectAtomHandler = new SelectAtomHandler(AtomSelectorFactory.getInstance());
+
 
     }
 
@@ -58,6 +46,7 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
     }
 
     public void render(){
+
         //setup main JFrame
         factoryInstance.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         factoryInstance.setResizable(false);
@@ -65,14 +54,19 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
         factoryInstance.setTitle("Karel Kuvid");
         factoryInstance.setLayout(null);
         CenterWindow.centerWindow(this);
+
+
         //Dark mode for aesthetic purposes
         factoryInstance.getContentPane().setBackground(Color.DARK_GRAY);
-        KeyListener blendListener = new BlenderHandler();
-        addKeyListener(blendListener);
+
+        //blender listener
+        KeyListener blenderListener = new BlenderHandler();
+        addKeyListener(blenderListener);
+
+        //menu listener
         KeyListener menuListener = new MenuHandler();
 
-        //add the keyListener to the JFrame
-        this.addKeyListener(menuListener);
+
 
 
         GameObserver gameObserver = GameFactory.getInstance();
@@ -80,7 +74,7 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
 
 
         draw();
-        this.addKeyListener(this);
+
         factoryInstance.setVisible(true);
     }
 
@@ -104,7 +98,7 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
     }
 
     public void clearObjectList(){//empty object list
-        objectList = new ArrayList<GameObject>();
+        objectList = new ArrayList<>();
     }
 
     @Override
@@ -202,114 +196,24 @@ public class GameWindowFactory extends JFrame implements IGameListener, KeyListe
             GameObject currentObject;
 
             if(Pattern.matches(".*atom$", ammo.getProjectileType().toString())) {
+
                 //instantiate corresponding atom object
                 currentObject = new AtomObject(ammo.getCoordinate(), 0, ammo.getProjectileType());
-                addToObjectList(currentObject);
-            }else{        //instantiate corresponding powerup object
+
+            }else{
+
+                //instantiate corresponding powerup object
 
                 currentObject = new PowerUpObject(ammo.getCoordinate(),0,ammo.getProjectileType());
-                addToObjectList(currentObject);
             }
-            this.draw();
+        addToObjectList(currentObject);
+        this.draw();
 
     }
 
 
 
-    @Override
-    public void keyTyped(KeyEvent e) {// Do not implement this
 
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        System.out.println(e.getKeyCode());
-
-
-        if(e.getKeyCode() == 37){ //Left Arrow
-            leftArrow();
-        }
-
-        if(e.getKeyCode() == 39){ //Right Arrow
-            rightArrow();
-        }
-
-        if(e.getKeyCode() == 38){ //Up Arrow
-            upArrow();
-        }
-
-        if(e.getKeyCode() == 65){ //A
-            rotateLeft();
-        }
-
-        if(e.getKeyCode() == 68){ //D
-            rotateRight();
-        }
-
-        if(e.getKeyCode() == 67){ //C
-            selectAtom();
-        }
-
-        if(e.getKeyCode() == 80){ //P
-            pause();
-        }
-
-        if(e.getKeyCode() == 66){ //B
-            breakOrBlend();
-        }
-
-        if(e.getKeyCode() == 66){ //B
-            breakOrBlend();
-        }
-
-        if(e.getKeyCode() == 82){ //R
-            resume();
-        }
-
-    }
-
-    //ActionPerformed actions below
-    public void upArrow(){
-        shooterHandler.shootGun();
-    }
-
-    public void leftArrow(){
-        moveShooterHandler.moveGun(DirectionType.LEFT);
-    }
-
-    public void rightArrow(){
-        moveShooterHandler.moveGun(DirectionType.RIGHT);
-    }
-
-    public void rotateLeft(){
-        rotateGunHandler.rotateGun(DirectionType.ANTICLOCKWISE);
-    }
-
-    public void rotateRight(){
-        rotateGunHandler.rotateGun(DirectionType.CLOCKWISE);
-    }
-
-    public void selectAtom(){
-        selectAtomHandler.selectAtom();
-    }
-
-    public void breakOrBlend(){
-
-    }
-
-    public void resume(){
-        GameFactory.getInstance().resumeGame();
-    }
-
-    public void pause(){
-        GameFactory.getInstance().pauseGame();
-    }
-
-
-    @Override
-    public void keyReleased(KeyEvent e) { // Do not implement this
-
-    }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {

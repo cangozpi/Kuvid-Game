@@ -20,12 +20,22 @@ public class Builder {
     public void buildGame(int gameWindowHeight, int gameWindowWidth, int difficulty, HashMap<AtomType, Integer> inventoryContents, boolean isLinear) {
         badAlien = BadAlienFactory.getInstance();
         goodAlien = GoodAlienFactory.getInstance();
+
+
+
         GameFactory game = GameFactory.getInstance();
         Inventory.getInstance().setAtomMap(inventoryContents);
         game.setDifficulty(difficulty);
         game.setFallSpeed(difficulty);
         game.setGameWindowHeight(gameWindowHeight);
         game.setGameWindowWidth(gameWindowWidth);
+
+
+        GunFactory.getInstance();
+        AtomSelector atomSelector = new AtomSelector();
+        atomSelector.selectAtom();
+
+
         game.startGame();
         game.setLinear(isLinear);
     }

@@ -3,13 +3,12 @@ package com.company.Domain.Controller;
 import com.company.Domain.Models.Blender;
 import com.company.Enums.AtomType;
 import com.company.UI.BlenderWindowFactory;
-import com.company.UI.Objects.GameWindowFactory;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class BlenderHandler implements KeyListener {
-    private Blender blender;
+    private final Blender blender;
     public BlenderHandler() {
         this.blender = Blender.getInstance();
     }

@@ -1,25 +1,20 @@
 package com.company.Domain.Models;
 
-import com.company.Domain.Models.Projectile.*;
-
-
+import com.company.Domain.Models.Projectile.Molecule;
+import com.company.Domain.Models.Projectile.PowerUp;
+import com.company.Domain.Models.Projectile.Projectile;
+import com.company.Domain.Models.Projectile.ReactionBlocker;
 import com.company.Domain.Utility.Coordinate;
 import com.company.UI.Objects.GameWindowFactory;
 import com.company.UI.Observer.GameObserver;
-import com.company.repository.DatabaseAdapter;
-import com.company.repository.LocalDB;
 
-import javax.lang.model.type.ArrayType;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class GameFactory extends GameObserver  {
-    private boolean isRunning;
+
 
     private static GameFactory instance;
     private int gameWindowHeight;
@@ -73,11 +68,11 @@ public class GameFactory extends GameObserver  {
     //gameLoop() handles both game clock and alien clock
     public void gameLoop() {
         gameClock.start();
-        goodalienClock.start();
-        badalienClock.start();
+        goodAlienClock.start();
+        badAlienClock.start();
     }
 
-    Timer badalienClock =  new Timer(5000, new ActionListener() {
+    Timer badAlienClock =  new Timer(5000, new ActionListener() {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -88,7 +83,7 @@ public class GameFactory extends GameObserver  {
         }
     });
 
-    Timer goodalienClock =  new Timer(3000, new ActionListener() {
+    Timer goodAlienClock =  new Timer(3000, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             GoodAlienFactory goodAlienFactory = GoodAlienFactory.getInstance();
@@ -115,10 +110,15 @@ public class GameFactory extends GameObserver  {
 
     public void pauseGame(){
         gameClock.stop();
+        goodAlienClock.stop();
+        badAlienClock.stop();
     }
 
     public void resumeGame(){
+
         gameClock.start();
+        goodAlienClock.start();
+        badAlienClock.start();
     }
 
     public void insertProjectileFromGun(Projectile ammo){    //projectiles loaded in the gun and shot by the gun

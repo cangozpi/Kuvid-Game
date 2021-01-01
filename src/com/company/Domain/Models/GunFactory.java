@@ -39,9 +39,7 @@ public class GunFactory{
             gun.setAngle(90);
             gun.rightestPointOfTheGun = new Coordinate(gun.getPosition().getXCoordinate() + gun.getGunWidth(), gun.getPosition().getYCoordinate());
             gun.leftistPointOfTheGUn = gun.getPosition();
-            gun.loadGun(AtomType.ALPHA);
             gun.setInventory();
-
         }
         return gun;
     }
@@ -112,7 +110,7 @@ public class GunFactory{
 
     }
 
-    public void loadGun(IProjectileType ammoType){              // gets ammo type from atom selector
+    public void loadGun(Projectile newAmmo){              // gets ammo type from atom selector     //TODO gets atom or powerup
 
         double xCoord = getPosition().getXCoordinate();    //TODO: position and angle calculations to line it up with the tip of the gun
         double yCoord = getPosition().getYCoordinate() - L/10;
@@ -120,30 +118,16 @@ public class GunFactory{
         Coordinate ammoCoord = new Coordinate(xCoord, yCoord);                                                // creates projectile and sends it to game
         Velocity ammoVelocity = new Velocity(ammoAngle, 0);
 
-
-        if(ammo != null) {
-            inventory.addAmmo(ammo.getProjectileType());
+        if(this.ammo != null) {
+            inventory.addAmmo(this.ammo);
         }
 
-        if(Pattern.matches(".*atom$", ammoType.toString())) {
-
-            AtomFactory atomFactory = new AtomFactory();
-            setAmmo(atomFactory.getInstance(ammoCoord, ammoVelocity, ammoType, true,L/10,L/10));
-        }else{
-            setAmmo(new PowerUp(ammoCoord, ammoVelocity, ammoType, true,0,0));    //TODO: powerup factory width
-
-        }
-
-        GameFactory.getInstance().setAmmo(ammo);
-
-
-
-
-
-
-        GameFactory.getInstance().setAmmo(getAmmo());
-
-
+        setAmmo(newAmmo);
+        this.ammo.setCoordinate(ammoCoord);
+        this.ammo.setVelocity(ammoVelocity);
+        this.ammo.setHeight(L/10);
+        this.ammo.setWidth(L/10);
+        GameFactory.getInstance().setAmmo(this.ammo);
     }
 
 

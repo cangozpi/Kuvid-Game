@@ -1,4 +1,6 @@
 package com.company.Domain.Models;
+import com.company.Domain.Models.Projectile.Atom;
+import com.company.Domain.Models.Projectile.Projectile;
 import com.company.Enums.AtomType;
 import com.company.Enums.IProjectileType;
 import com.company.Enums.PowerUpType;
@@ -15,6 +17,7 @@ public class Inventory {
 
     private Inventory(){
         powerUpMap = new HashMap<>();
+        shieldedAtomList = new ArrayList<>();
         Arrays.stream(PowerUpType.values()).forEach((x) -> powerUpMap.put(x, 0));
 
     }
@@ -31,6 +34,10 @@ public class Inventory {
     public void setPowerUpMap(HashMap<PowerUpType, Integer> powerUpMap) {
         this.powerUpMap = powerUpMap;
     }
+
+    public int getShieldedAtomAmount() {if(shieldedAtomList!=null) {return shieldedAtomList.size();}else return 0;}
+
+    public Projectile getShieldedAtom(int index){return shieldedAtomList.remove(index);}
 
     public int getAtomAmount(AtomType atomType){
         if(atomMap==null) {
@@ -86,14 +93,14 @@ public class Inventory {
                 atomMap.merge(AtomType.SIGMA,1,Integer::sum);
         }
     }
-    public void addAmmo(IProjectileType projectileType){
+    public void addAmmo(Projectile projectile){
         if(atomMap==null) {
             System.err.println("Atom Map is not initialized.");
             return;
         }
-        switch (projectileType.toString()){
-            case "ALPHA_atom":
-                atomMap.merge(AtomType.ALPHA,1,Integer::sum);
+        switch (projectile.getProjectileType().toString()){
+            case AtomType.ALPHA_atom:
+                shieldedAtomList.add(projectile);
                 break;
             case "BETA_atom":
                 atomMap.merge(AtomType.BETA,1,Integer::sum);
