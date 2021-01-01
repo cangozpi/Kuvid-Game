@@ -31,7 +31,7 @@ public class GameFactory extends GameObserver  {
     private Coordinate gunPosition;
     private int gunAngle;
     private ArrayList<Projectile> projectileFromGunList = new ArrayList<>();
-    private ArrayList<PowerUp> shotPowerUpList = new ArrayList<>();
+
     private ArrayList<PowerUp> powerUpList = new ArrayList<>();
     private ArrayList<ReactionBlocker> reactionBlockerList = new ArrayList<>();
     private ArrayList<Molecule> moleculeList = new ArrayList<>();
@@ -77,7 +77,7 @@ public class GameFactory extends GameObserver  {
         badalienClock.start();
     }
 
-    Timer badalienClock =  new Timer(15000, new ActionListener() { // checks for cat icons collusion
+    Timer badalienClock =  new Timer(5000, new ActionListener() {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -88,7 +88,7 @@ public class GameFactory extends GameObserver  {
         }
     });
 
-    Timer goodalienClock =  new Timer(13000, new ActionListener() { // checks for cat icons collusion
+    Timer goodalienClock =  new Timer(3000, new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             GoodAlienFactory goodAlienFactory = GoodAlienFactory.getInstance();

@@ -14,7 +14,7 @@ public class PowerUp extends Projectile{
     public PowerUp(Coordinate coordinate, Velocity velocity, IProjectileType powerUpType, boolean isAmmo, int height, int width) {
         super(coordinate, velocity, isAmmo, height, width, powerUpType);
         this.projectileType = powerUpType;
-        setPowerUpType(powerUpType);
+        initializePowerUpType(powerUpType);
     }
 
     //getters and setters
@@ -22,18 +22,18 @@ public class PowerUp extends Projectile{
         return powerUpType;
     }
 
-    public void setPowerUpType(IProjectileType projectileType){
+    public void initializePowerUpType(IProjectileType projectileType){
         switch (projectileType.toString()){
-            case ("ALPHA_atom"):
+            case ("ALPHA_powerUp"):
                 setPowerUpType(PowerUpType.ALPHA);
                 break;
-            case ("BETA_atom"):
+            case ("BETA_powerUp"):
                 setPowerUpType(PowerUpType.BETA);
                 break;
-            case ("GAMMA_atom"):
+            case ("GAMMA_powerUp"):
                 setPowerUpType(PowerUpType.GAMMA);
                 break;
-            case ("SIGMA_atom"):
+            case ("SIGMA_powerUp"):
                 setPowerUpType(PowerUpType.SIGMA);
                 break;
         }
