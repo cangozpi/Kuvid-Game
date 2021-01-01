@@ -112,7 +112,7 @@ public class GunFactory{
 
     public void loadGun(Projectile newAmmo){              // gets ammo type from atom selector     //TODO gets atom or powerup
 
-        double xCoord = getPosition().getXCoordinate();    //TODO: position and angle calculations to line it up with the tip of the gun
+        double xCoord = getPosition().getXCoordinate() + L/10;    //TODO: position and angle calculations to line it up with the tip of the gun
         double yCoord = getPosition().getYCoordinate() - L/10;
         int ammoAngle = getAngle();
         Coordinate ammoCoord = new Coordinate(xCoord, yCoord);                                                // creates projectile and sends it to game

@@ -5,6 +5,7 @@ import com.company.Enums.AtomType;
 import com.company.Enums.IProjectileType;
 import com.company.Enums.PowerUpType;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -13,7 +14,7 @@ public class Inventory {
     private static Inventory inventory = null;
     HashMap<AtomType,Integer> atomMap;
     HashMap<PowerUpType,Integer> powerUpMap;
-
+    ArrayList<Projectile> shieldedAtomList;
 
     private Inventory(){
         powerUpMap = new HashMap<>();
@@ -31,9 +32,8 @@ public class Inventory {
         this.atomMap = atomMap;
     }
 
-    public void setPowerUpMap(HashMap<PowerUpType, Integer> powerUpMap) {
-        this.powerUpMap = powerUpMap;
-    }
+    public void setPowerUpMap(HashMap<PowerUpType, Integer> powerUpMap) {this.powerUpMap = powerUpMap;}
+
 
     public int getShieldedAtomAmount() {if(shieldedAtomList!=null) {return shieldedAtomList.size();}else return 0;}
 
@@ -102,24 +102,24 @@ public class Inventory {
             case AtomType.ALPHA_atom:
                 shieldedAtomList.add(projectile);
                 break;
-            case "BETA_atom":
-                atomMap.merge(AtomType.BETA,1,Integer::sum);
+            case AtomType.BETA_atom:
+                shieldedAtomList.add(projectile);
                 break;
-            case "GAMMA_atom":
-                atomMap.merge(AtomType.GAMMA,1,Integer::sum);
+            case AtomType.GAMMA_atom:
+                shieldedAtomList.add(projectile);
                 break;
-            case "SIGMA_atom":
-                atomMap.merge(AtomType.SIGMA,1,Integer::sum);
-            case "ALPHA_powerUp":
+            case AtomType.SIGMA_atom:
+                shieldedAtomList.add(projectile);
+            case PowerUpType.ALPHA_powerUp:
                 powerUpMap.merge(PowerUpType.ALPHA,1,Integer::sum);
                 break;
-            case "BETA_powerUp":
+            case PowerUpType.BETA_powerUp:
                 powerUpMap.merge(PowerUpType.BETA,1,Integer::sum);
                 break;
-            case "GAMMA_powerUp":
+            case PowerUpType.GAMMA_powerUp:
                 powerUpMap.merge(PowerUpType.GAMMA,1,Integer::sum);
                 break;
-            case "SIGMA_powerUp":
+            case PowerUpType.SIGMA_powerUp:
                 powerUpMap.merge(PowerUpType.SIGMA,1,Integer::sum);
         }
     }
@@ -230,23 +230,23 @@ public class Inventory {
         }
         return true;
     }
-    public boolean removePowerUp(PowerUpType powerUpType){
+    public boolean removePowerUp(IProjectileType powerUpType){
         if(powerUpMap==null) {
             System.err.println("PowerUp Map is not initialized.");
             return false;
         }
         if(powerUpMap.get(powerUpType)-1 < 0)return false;
-        switch (powerUpType){
-            case ALPHA:
+        switch (powerUpType.toString()){
+            case PowerUpType.ALPHA_powerUp:
                 atomMap.merge(AtomType.ALPHA,-1,Integer::sum);
                 break;
-            case BETA:
-                atomMap.merge(AtomType.BETA,-1,Integer::sum);
+            case PowerUpType.BETA_powerUp:
+               atomMap.merge(AtomType.BETA,-1,Integer::sum);
                 break;
-            case GAMMA:
+            case PowerUpType.GAMMA_powerUp:
                 atomMap.merge(AtomType.GAMMA,-1,Integer::sum);
                 break;
-            case SIGMA:
+            case PowerUpType.SIGMA_powerUp:
                 atomMap.merge(AtomType.SIGMA,-1,Integer::sum);
         }
         return true;

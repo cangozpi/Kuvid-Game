@@ -124,7 +124,7 @@ public class MenuWindowFactory extends JFrame implements KeyListener {
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == 82){ //R
             getInstance().dispose();
-            GameWindowFactory.getInstance().resume();
+            GameFactory.getInstance().resumeGame();
         }
 
         else if(e.getKeyCode() == 83){ //S
@@ -134,7 +134,7 @@ public class MenuWindowFactory extends JFrame implements KeyListener {
         else if(e.getKeyCode() == 76){ //L
             databaseAdapter.loadGame();
             getInstance().dispose();
-            GameWindowFactory.getInstance().resume();
+            GameFactory.getInstance().resumeGame();
         }
     }
 

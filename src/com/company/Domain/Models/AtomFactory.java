@@ -19,13 +19,13 @@ public class AtomFactory {
     public Atom getInstance(Coordinate coordinate, Velocity velocity, IProjectileType atomType, boolean isAmmo, int height, int width){
         Atom referenceAtom;
         switch (atomType.toString()){
-            case "ALPHA_atom":
+            case AtomType.ALPHA_atom:
                 referenceAtom = new Atom(coordinate, velocity, AtomType.ALPHA, isAmmo, height, width);
                 return new AlphaDecorator(coordinate, velocity, AtomType.ALPHA, isAmmo, height, width, referenceAtom);
-            case "BETA_atom":
+            case AtomType.BETA_atom:
                 referenceAtom = new Atom(coordinate, velocity, AtomType.BETA, isAmmo, height, width);
                 return new BetaDecorator(coordinate, velocity, AtomType.BETA, isAmmo, height, width, referenceAtom);
-            case "GAMMA_atom":
+            case AtomType.GAMMA_atom:
                 referenceAtom = new Atom(coordinate, velocity, AtomType.GAMMA, isAmmo, height, width);
                 return new GammaDecorator(coordinate, velocity, AtomType.GAMMA, isAmmo, height, width, referenceAtom);
             default: //case SIGMA:

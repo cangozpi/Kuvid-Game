@@ -65,6 +65,30 @@ public class GameWindowFactory extends JFrame implements IGameListener,  ActionL
 
         //menu listener
         KeyListener menuListener = new MenuHandler();
+        addKeyListener(menuListener);
+
+        //move shooter listener
+        KeyListener moveShooterListener = new MoveShooterHandler();
+        addKeyListener(moveShooterListener);
+
+        //rotate shooter listener
+        KeyListener rotateGunListener  = new RotateGunHandler();
+        addKeyListener(rotateGunListener);
+
+        //select atom listener
+        KeyListener selectAtomListener  = new SelectAtomHandler();
+        addKeyListener(selectAtomListener);
+
+        //shoot  listener
+        KeyListener shootListener  = new ShooterHandler();
+        addKeyListener(shootListener);
+
+
+        //select powerUp listener     mouse listener
+       // KeyListener selectPowerUpListener  = new SelectPowerUpHandler();
+       // addKeyListener(selectPowerUpListener);
+
+        //shoot listener
 
 
 

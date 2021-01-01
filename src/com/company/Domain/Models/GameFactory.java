@@ -122,24 +122,18 @@ public class GameFactory extends GameObserver  {
     }
 
     public void insertProjectileFromGun(Projectile ammo){    //projectiles loaded in the gun and shot by the gun
-
-
         projectileFromGunList.add(ammo);
-
     }
 
     public void insertMolecule(Molecule molecule){         //molecules from good alien
-
         moleculeList.add(molecule);
     }
 
     public void insertPowerUp(PowerUp powerUp){           //powerups from good alien
-
         powerUpList.add(powerUp);
     }
 
     public void insertReactionBlocker(ReactionBlocker reactionBlocker){    //reaction blockers from bad alien
-
        reactionBlockerList.add(reactionBlocker);
     }
 
@@ -154,8 +148,6 @@ public class GameFactory extends GameObserver  {
                 projectileFromGun.move();
             }
         }
-
-
         if (!reactionBlockerList.isEmpty()) {
             for (ReactionBlocker reactionBlocker : reactionBlockerList) {
                 reactionBlocker.move();
@@ -165,12 +157,9 @@ public class GameFactory extends GameObserver  {
             for (PowerUp powerUp : powerUpList) {
                 powerUp.move();
             }
-        }   
+        }
 
         checkCollisions();
-
-
-
 
         GameFactory.super.positionUpdateEvent(moleculeList, projectileFromGunList,  reactionBlockerList,powerUpList, gunPosition, gunAngle, ammo);
     }
