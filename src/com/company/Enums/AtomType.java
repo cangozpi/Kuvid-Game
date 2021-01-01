@@ -14,4 +14,6 @@ public enum AtomType implements IProjectileType {
     public String toString() {
         return super.toString() + "_atom";
     }
+
+
 }

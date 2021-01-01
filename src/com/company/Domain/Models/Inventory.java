@@ -1,5 +1,6 @@
 package com.company.Domain.Models;
 import com.company.Enums.AtomType;
+import com.company.Enums.IProjectileType;
 import com.company.Enums.PowerUpType;
 
 import java.util.Arrays;
@@ -85,6 +86,44 @@ public class Inventory {
                 atomMap.merge(AtomType.SIGMA,1,Integer::sum);
         }
     }
+    public void addAmmo(IProjectileType projectileType){
+        if(atomMap==null) {
+            System.err.println("Atom Map is not initialized.");
+            return;
+        }
+        switch (projectileType.toString()){
+            case "ALPHA_atom":
+                atomMap.merge(AtomType.ALPHA,1,Integer::sum);
+                break;
+            case "BETA_atom":
+                atomMap.merge(AtomType.BETA,1,Integer::sum);
+                break;
+            case "GAMMA_atom":
+                atomMap.merge(AtomType.GAMMA,1,Integer::sum);
+                break;
+            case "SIGMA_atom":
+                atomMap.merge(AtomType.SIGMA,1,Integer::sum);
+            case "ALPHA_powerUp":
+                powerUpMap.merge(PowerUpType.ALPHA,1,Integer::sum);
+                break;
+            case "BETA_powerUp":
+                powerUpMap.merge(PowerUpType.BETA,1,Integer::sum);
+                break;
+            case "GAMMA_powerUp":
+                powerUpMap.merge(PowerUpType.GAMMA,1,Integer::sum);
+                break;
+            case "SIGMA_powerUp":
+                powerUpMap.merge(PowerUpType.SIGMA,1,Integer::sum);
+        }
+    }
+
+
+
+
+
+
+
+
     public void addAtom(AtomType atomType, int n){
         if(atomMap==null) {
             System.err.println("Atom Map is not initialized.");

@@ -2,6 +2,12 @@ package com.company.Domain.Models.Projectile;
 
 import com.company.Domain.Utility.Coordinate;
 import com.company.Domain.Utility.Velocity;
+import com.company.Enums.IProjectileType;
+
+import java.util.regex.Pattern;
+
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
 
 public abstract class Projectile {
     Coordinate coordinate;
@@ -9,16 +15,28 @@ public abstract class Projectile {
     boolean isAmmo;
     int width;
     int height;
+    IProjectileType projectileType;
 
 
+    public Projectile(Coordinate coordinate, Velocity velocity, boolean isAmmo,int height,int width,IProjectileType projectileType){
+        this.coordinate = coordinate;
+        this.velocity = velocity;
+        this.isAmmo = isAmmo;
+        this.height = height;
+        this.width = width;
+        this.projectileType = projectileType;
+    }
     public Projectile(Coordinate coordinate, Velocity velocity, boolean isAmmo,int height,int width){
         this.coordinate = coordinate;
         this.velocity = velocity;
         this.isAmmo = isAmmo;
         this.height = height;
         this.width = width;
+
     }
 
+
+    public IProjectileType getProjectileType(){return projectileType; }
 
     public int getWidth() {return width; }
 
@@ -28,7 +46,12 @@ public abstract class Projectile {
 
     public void setHeight(int height) { this.height = height; }
 
-    public void move(){ }
+    public void move(){
+        int angle = getVelocity().getAngle();
+        double speed = getVelocity().getSpeed();
+        setXCoordinate(getXCoordinate() - speed*cos(Math.toRadians(180-angle)));
+        setYCoordinate(getYCoordinate() - speed*sin(Math.toRadians(angle)));
+    }
 
     public boolean isAmmo() { return isAmmo; }
 

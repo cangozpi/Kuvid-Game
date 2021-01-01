@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/kuvid.iml" filepath="$PROJECT_DIR$/.idea/kuvid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kuvid.iml" filepath="$PROJECT_DIR$/kuvid.iml" />
     </modules>
   </component>
 </project>

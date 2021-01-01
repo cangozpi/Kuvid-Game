@@ -2,6 +2,7 @@ package com.company.UI.Objects;
 
 import com.company.Domain.Utility.Coordinate;
 import com.company.Enums.AtomType;
+import com.company.Enums.IProjectileType;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,20 +12,20 @@ import static com.company.UI.Objects.GameWindowFactory.L;
 public class AtomObject extends GameObject{
     private int angle;
     private String imageSource;
-    public AtomObject(Coordinate coordinate, int angle, AtomType atomType) {
+    public AtomObject(Coordinate coordinate, int angle, IProjectileType atomType) {
         super(coordinate, "alpha.png");
         this.angle = angle;
-        switch (atomType){
-            case ALPHA:
+        switch (atomType.toString()){
+            case "ALPHA_atom":
                 imageSource = "alpha.png";
                 break;
-            case BETA:
+            case "BETA_atom":
                 imageSource = "beta.png";
                 break;
-            case GAMMA:
+            case "GAMMA_atom":
                 imageSource = "gamma.png";
                 break;
-            case SIGMA:
+            case "SIGMA_atom":
                 imageSource = "sigma.png";
                 break;
         }

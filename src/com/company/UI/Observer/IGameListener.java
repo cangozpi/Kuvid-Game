@@ -8,7 +8,8 @@ import java.util.List;
 
 
 public interface IGameListener {
-    void positionChanged(ArrayList<Molecule> moleculeList, ArrayList<Atom> atomList, ArrayList<PowerUp> shotPowerUpList,
-                         ArrayList<ReactionBlocker> reactionBlockerList, ArrayList<PowerUp> powerUpList, Coordinate gunPosition, int gunAngle);
+    void positionChanged(ArrayList<Molecule> moleculeList, ArrayList<Projectile> projectileFromGunList,
+                         ArrayList<ReactionBlocker> reactionBlockerList, ArrayList<PowerUp> powerUpList,
+                         Coordinate gunPosition, int gunAngle,Projectile ammo);
 
 }

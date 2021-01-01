@@ -1,10 +1,12 @@
 package com.company.UI.Objects;
 
 import com.company.Domain.Utility.Coordinate;
+import com.company.Enums.IProjectileType;
 import com.company.Enums.PowerUpType;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.IllegalPathStateException;
 
 import static com.company.UI.Objects.GameWindowFactory.L;
 
@@ -12,20 +14,20 @@ public class PowerUpObject extends GameObject{
         private int angle;
         private String imageSource = "alpha-b.png";
 
-        public PowerUpObject(Coordinate coordinate, int angle, PowerUpType powerUpType) {
+        public PowerUpObject(Coordinate coordinate, int angle, IProjectileType powerUpType) {
             super(coordinate, "alpha-b.png");
             this.angle = angle;
-            switch (powerUpType){
-                case ALPHA:
+            switch (powerUpType.toString()){
+                case "ALPHA_powerUp":
                     imageSource = "+alpha-b.png";
                     break;
-                case BETA:
+                case "BETA_powerUp":
                     imageSource = "+beta-b.png";
                     break;
-                case GAMMA:
+                case "GAMMA_powerUp":
                     imageSource = "+gamma-b.png";
                     break;
-                case SIGMA:
+                case "SIGMA_powerUp":
                     imageSource = "+sigma-b.png";
                     break;
 
