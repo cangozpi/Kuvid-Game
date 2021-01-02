@@ -62,7 +62,7 @@ public class MoleculeObject extends GameObject{
             //add to the JFrame
             this.add(moleculeLabel);
             GameWindowFactory.getInstance().getContentPane().add(this); // JFrame.add(JPanel)
-            this.setBounds((int)coordinate.getXCoordinate(), (int)coordinate.getYCoordinate(), width, height);
+            this.setBounds((int)coordinate.getXCoordinate(), (int)coordinate.getYCoordinate(), width*2, height*2);
             this.setOpaque(false);
         }
 

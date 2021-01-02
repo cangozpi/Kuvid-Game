@@ -28,12 +28,11 @@ public class GunObject extends GameObject {
         //add to the JFrame
         this.add(gunLabel);
         GameWindowFactory.getInstance().getContentPane().add(this); // JFrame.add(JPanel)
-        this.setBounds((int)coordinate.getXCoordinate(), (int)coordinate.getYCoordinate(), gunWidth*6, gunHeight);
+        this.setBounds((int)(coordinate.getXCoordinate()- 2*L/3), (int)coordinate.getYCoordinate(), gunWidth*6, gunHeight);
         this.setOpaque(false);
 
     }
     public void rotation(Graphics g){
-        System.out.println(Math.toRadians(angle));
         Graphics2D g2d = (Graphics2D) g;
         g2d.rotate(Math.toRadians(-angle+90),gunWidth*3, gunHeight);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

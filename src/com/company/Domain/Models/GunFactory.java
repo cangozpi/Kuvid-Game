@@ -92,6 +92,10 @@ public class GunFactory{
         if(direction.equals(DirectionType.CLOCKWISE)){
             if(angle >= 10){ // if can rotate
                 angle -= 10;
+
+   //             ammo.setXCoordinate(ammo.getXCoordinate() + 2*L*Math.sin(Math.toRadians(angleChange/2)) * Math.sin(Math.toRadians(angle-angleChange/2)));
+   //             ammo.setYCoordinate(ammo.getYCoordinate() + 2*L*Math.sin(Math.toRadians(angleChange/2)) * Math.cos(Math.toRadians(angle-angleChange/2)));
+
                 GameFactory.getInstance().moveGun(position, angle, ammo);
             }
 

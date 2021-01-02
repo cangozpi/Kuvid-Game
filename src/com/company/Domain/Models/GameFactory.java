@@ -53,7 +53,6 @@ public class GameFactory extends GameObserver  {
 
 
 
-
     public void startGame(){
         gameLoop();
     }
@@ -159,7 +158,171 @@ public class GameFactory extends GameObserver  {
 
     public void checkCollisions(){
         // iterates over reaction blocker list
-        //
+        ArrayList<Projectile> projectileRemovalList = new ArrayList<>();
+        ArrayList<Molecule> moleculeRemovalList = new ArrayList<>();
+        ArrayList<PowerUp> powerUpRemovalList = new ArrayList<>();
+
+        ArrayList<ReactionBlocker> reactionBlockerRemovalList = new ArrayList<>();
+        ArrayList<ReactionBlocker> explosionList = new ArrayList<>();
+
+        //molecules
+        for (Molecule molecule : moleculeList) {
+            if (molecule.getYCoordinate() + molecule.getHeight() > gameWindowHeight - 35  ){         // bottom edge check
+                moleculeRemovalList.add(molecule);
+            }
+            for(ReactionBlocker reactionBlocker : reactionBlockerList){
+                if(hasCollidedReactionBlocker(reactionBlocker.getCoordinate(), L/2, L/2, molecule.getCoordinate(), molecule.getWidth(), molecule.getHeight() )){
+                    explosionList.add(reactionBlocker);
+                    moleculeRemovalList.add(molecule);
+                }
+
+            }
+        }
+
+        for (Molecule element : moleculeRemovalList){
+            moleculeList.remove(element);
+        }
+        moleculeRemovalList.clear();
+
+
+        //powerups
+        for (PowerUp powerUp : powerUpList) {
+            if (powerUp.getYCoordinate() + powerUp.getHeight() > gameWindowHeight - 35 ){         // bottom edge check
+                powerUpRemovalList.add(powerUp);
+            }
+
+            if ( gunPosition.getYCoordinate() <= powerUp.getYCoordinate() + powerUp.getHeight()){             // gun collects powerUp
+                if ((powerUp.getXCoordinate() <= gunPosition.getXCoordinate() + L/2 &
+                        gunPosition.getXCoordinate() + L/2 <= powerUp.getXCoordinate() + powerUp.getWidth()) |
+                        (powerUp.getXCoordinate() <= gunPosition.getXCoordinate() &
+                                gunPosition.getXCoordinate() <= powerUp.getXCoordinate() + powerUp.getWidth())){
+                    powerUpRemovalList.add(powerUp);
+                    Inventory.getInstance().addAmmo(powerUp);
+                }
+            }
+
+            for(ReactionBlocker reactionBlocker : reactionBlockerList){
+                if(hasCollidedReactionBlocker(reactionBlocker.getCoordinate(), L/2, L/2, powerUp.getCoordinate(), powerUp.getWidth(), powerUp.getHeight() )){
+                    explosionList.add(reactionBlocker);
+                    powerUpRemovalList.add(powerUp);
+                }
+
+            }
+        }
+
+        for (PowerUp element : powerUpRemovalList){
+            powerUpList.remove(element);
+        }
+       powerUpRemovalList.clear();
+
+        // projectiles
+        for (Projectile projectile : projectileFromGunList) {
+            if (projectile.getYCoordinate() - projectile.getHeight() <= 0 ){         // top edge check
+                projectileRemovalList.add(projectile);
+            }
+            for(ReactionBlocker reactionBlocker : reactionBlockerList){
+                if(hasCollidedReactionBlocker(reactionBlocker.getCoordinate(), L/2, L/2, projectile.getCoordinate(), projectile.getWidth(), projectile.getHeight() )){
+                    if(projectile instanceof Atom){
+                        explosionList.add(reactionBlocker);
+                        projectileRemovalList.add(projectile);
+                    } else {                                                      //TODO powerup shot from gun interacts differently with reaction blocker
+                        reactionBlockerRemovalList.add(reactionBlocker);
+                        projectileRemovalList.add(projectile);
+                    }
+
+                }
+
+            }
+        }
+
+
+        for (Projectile element : projectileRemovalList){
+            projectileFromGunList.remove(element);
+        }
+        projectileRemovalList.clear();
+
+
+
+        // reaction blockers
+        for (ReactionBlocker reactionBlocker : reactionBlockerList ) {
+            if(hasCollidedReactionBlocker(reactionBlocker.getCoordinate(),L/2,L/2,getGunPosition(), L/2,L)){   //gun check
+                explosionList.add(reactionBlocker);
+            }else if (reactionBlocker.getYCoordinate() + 0.5 * L >= gameWindowHeight - 35 ){         // bottom edge check
+                explosionList.add(reactionBlocker);
+            }
+
+        }
+//        //Ammo Deletion (if required)
+//        Gun.setAmmo(null);
+//        AtomSelector.selectAtom();
+
+        for (ReactionBlocker reactionBlocker : explosionList){          // TODO explosion
+            reactionBlockerList.remove(reactionBlocker);
+
+            if (hasCollidedReactionBlocker(reactionBlocker.getCoordinate(), 2*L, 2*L, getGunPosition(), L/2, L)){   // collision explosion radius
+                //TODO lose health
+            }
+            for(PowerUp powerUp : powerUpList){
+                if (hasCollidedReactionBlocker(reactionBlocker.getCoordinate(), 2*L, 2*L, powerUp.getCoordinate(), powerUp.getWidth(), powerUp.getHeight())){
+                    powerUpRemovalList.add(powerUp);
+                }
+            }
+            for(Molecule molecule : moleculeList){
+                if (hasCollidedReactionBlocker(reactionBlocker.getCoordinate(), 2*L, 2*L, molecule.getCoordinate(), molecule.getWidth(), molecule.getHeight())){
+                    moleculeRemovalList.add(molecule);
+                }
+            }
+            for(Projectile projectile : projectileFromGunList){
+                if (hasCollidedReactionBlocker(reactionBlocker.getCoordinate(), 2*L, 2*L, projectile.getCoordinate(), projectile.getWidth(), projectile.getHeight())){
+                    projectileRemovalList.add(projectile);
+                }
+            }
+
+            for(ReactionBlocker blocker : reactionBlockerList){
+                if (hasCollidedReactionBlocker(reactionBlocker.getCoordinate(), 2*L, 2*L, blocker.getCoordinate(), L/2, L/2)){
+                    reactionBlockerRemovalList.add(blocker);
+                }
+            }
+
+        }
+        explosionList.clear();
+
+
+        for (Projectile projectile : projectileFromGunList) {
+            if (projectile.getYCoordinate() - projectile.getHeight() <= 0 ){         // top edge check
+                projectileRemovalList.add(projectile);
+            }
+            if(projectile instanceof Atom){
+                for(Molecule molecule : moleculeList){               //TODO atom collects molecule not powerup
+                  if(hasCollided(molecule,projectile)){
+                      moleculeRemovalList.add(molecule);
+                      projectileRemovalList.add(projectile);
+                   }
+                }
+            }
+        }
+        for (Projectile element : projectileRemovalList){
+            projectileFromGunList.remove(element);
+        }
+        projectileRemovalList.clear();
+
+        for (Molecule element : moleculeRemovalList){
+            moleculeList.remove(element);
+        }
+        moleculeRemovalList.clear();
+
+        for (ReactionBlocker element :reactionBlockerRemovalList){
+            reactionBlockerList.remove(element);
+        }
+       reactionBlockerRemovalList.clear();
+
+
+
+
+
+
+
+
 
     }
     public boolean hasCollided(Projectile projectile1, Projectile projectile2){

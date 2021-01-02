@@ -2,6 +2,7 @@ package com.company.UI;
 
 import com.company.Domain.Controller.BuilderHandler;
 import com.company.Domain.Models.Builder;
+import com.company.Domain.Models.GameFactory;
 import com.company.Domain.Utility.Coordinate;
 import com.company.Enums.AtomType;
 import com.company.Enums.MoleculeType;
@@ -57,7 +58,7 @@ public class BuildWindowFactory extends JFrame {
         CenterWindow.centerWindow(this);
         //panel to add input to
         JPanel inputPanel = new JPanel();
-        int rows = 5;
+        int rows = 6;
         int columns = 2;
 
         inputPanel.setLayout(new GridLayout(rows,columns));
@@ -87,6 +88,10 @@ public class BuildWindowFactory extends JFrame {
 
         JSlider difficultySlider = new JSlider(1,3);
 
+               JLabel LRatioSliderLabel = new JLabel("L Ratio Slider");
+        JSlider LRatioSlider = new JSlider(2,8);
+        LRatioSlider.setValue(2);
+
         //add to JPanel
         panelHolder[0][0].add(variableAmounts);
         panelHolder[1][0].add(atomAmountLabel);
@@ -101,8 +106,9 @@ public class BuildWindowFactory extends JFrame {
         panelHolder[2][1].add(moleculeStructureLabel);
         JCheckBox checkBox = new JCheckBox("Nonlinear mode", true);
         panelHolder[3][1].add(checkBox);
-
-        JTextField[] inputs = new JTextField[4];//array holding input JTextFields
+        panelHolder[4][1].add(LRatioSliderLabel);
+        panelHolder[4][1].add(LRatioSlider);
+        JTextField[] inputs = new JTextField[5];//array holding input JTextFields
         for(int m = 1; m < rows; m++) {//advanced for loop
             for(int n = 0; n < 1; n++) {
                 JTextField textField = new JTextField(7);
@@ -113,14 +119,14 @@ public class BuildWindowFactory extends JFrame {
 
         //submit button
         JButton submitBtn = new JButton("Play!");
-        panelHolder[4][1].add(submitBtn);
+        panelHolder[5][1].add(submitBtn);
         submitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 BuilderHandler builderHandler = new BuilderHandler(builder);
 
 
-                //extract information from JFrame
+                //extract information fr
                 difficultyLevel = difficultySlider.getValue();
                 isLinear = checkBox.isSelected();
                 for(AtomType element : AtomType.values()){

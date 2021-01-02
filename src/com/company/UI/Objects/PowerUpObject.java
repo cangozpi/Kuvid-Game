@@ -37,7 +37,7 @@ public class PowerUpObject extends GameObject{
         @Override
         public void draw() {
             ImageIcon powerUp = new ImageIcon(getClass().getResource("Assets/powerups/"+imageSource));
-            Image scaledPowerUp = powerUp.getImage().getScaledInstance(5*L/4, 5*L/4, java.awt.Image.SCALE_SMOOTH); // scales the image
+            Image scaledPowerUp = powerUp.getImage().getScaledInstance((int) (L/4), (int)(L/4), java.awt.Image.SCALE_SMOOTH); // scales the image
             ImageIcon powerUpIcon = new ImageIcon(scaledPowerUp);
             JLabel powerUpLabel = new JLabel(powerUpIcon);
             //add to the JFrame

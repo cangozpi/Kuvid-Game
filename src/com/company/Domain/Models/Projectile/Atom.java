@@ -97,7 +97,5 @@ public class Atom extends Projectile{
         double speed = getVelocity().getSpeed();
         setXCoordinate(getXCoordinate() - speed*cos(Math.toRadians(180-angle)));
         setYCoordinate(getYCoordinate() - speed*sin(Math.toRadians(angle)));
-
     }
-
 }
