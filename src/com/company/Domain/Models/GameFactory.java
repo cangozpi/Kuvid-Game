@@ -287,6 +287,25 @@ public class GameFactory extends GameObserver  {
         }
         explosionList.clear();
 
+        for (Projectile element : projectileRemovalList){
+            projectileFromGunList.remove(element);
+        }
+        projectileRemovalList.clear();
+
+        for (Molecule element : moleculeRemovalList){
+            moleculeList.remove(element);
+        }
+        moleculeRemovalList.clear();
+
+        for (ReactionBlocker element :reactionBlockerRemovalList){
+            reactionBlockerList.remove(element);
+        }
+        reactionBlockerRemovalList.clear();
+
+        for (PowerUp element : powerUpRemovalList){
+            powerUpList.remove(element);
+        }
+        powerUpRemovalList.clear();
 
         for (Projectile projectile : projectileFromGunList) {
             if (projectile.getYCoordinate() - projectile.getHeight() <= 0 ){         // top edge check
