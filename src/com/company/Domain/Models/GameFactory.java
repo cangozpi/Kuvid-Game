@@ -483,4 +483,15 @@ public class GameFactory extends GameObserver  {
     public void setL(double L_ratio){
         L = (int) (L_ratio * gameWindowHeight);
     }
+
+    public void resetObjectLists(){
+        projectileFromGunList = new ArrayList<>();
+        powerUpList = new ArrayList<>();
+        reactionBlockerList = new ArrayList<>();
+        moleculeList = new ArrayList<>();
+
+        gunPosition = new Coordinate(((GameFactory.getInstance().getGameWindowWidth()/2) - GameFactory.getInstance().getL() / 4),
+                GameFactory.getInstance().getGameWindowHeight() +  GameFactory.getInstance().getL());
+        gunAngle = 90;
+    }
 }
