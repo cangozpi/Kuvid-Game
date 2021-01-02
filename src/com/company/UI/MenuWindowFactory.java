@@ -7,12 +7,15 @@ import com.company.Domain.Models.GameFactory;
 import com.company.Domain.Models.GoodAlienFactory;
 import com.company.Domain.Models.Inventory;
 import com.company.Domain.Models.Projectile.Molecule;
+import com.company.Domain.Utility.Coordinate;
 import com.company.Enums.AtomType;
 import com.company.Enums.MoleculeType;
 import com.company.Enums.PowerUpType;
 import com.company.Enums.ReactionBlockerType;
+import com.company.UI.Objects.BackgroundObject;
 import com.company.UI.Objects.GameObject;
 import com.company.UI.Objects.GameWindowFactory;
+import com.company.UI.Objects.GunObject;
 import com.company.Utils.CenterWindow;
 import com.company.repository.DatabaseAdapter;
 import com.company.repository.LocalDB;
@@ -135,6 +138,9 @@ public class MenuWindowFactory extends JFrame implements KeyListener {
             databaseAdapter.loadGame();
             getInstance().dispose();
             GameFactory.getInstance().resumeGame();
+            //reset game UI
+            GameFactory.getInstance().resetObjectLists();
+
         }
     }
 
