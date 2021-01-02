@@ -93,8 +93,8 @@ public class MenuWindowFactory extends JFrame implements KeyListener {
 
         CenterWindow.centerWindow(this);
         JPanel inputPanel = new JPanel();
-        int rows = 1;
-        int columns = 1;
+        int rows = 4;
+        int columns = 7;
 
         inputPanel.setLayout(new GridLayout(rows, columns));
 

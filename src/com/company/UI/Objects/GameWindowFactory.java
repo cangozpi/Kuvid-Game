@@ -248,12 +248,4 @@ public class GameWindowFactory extends JFrame implements IGameListener,  ActionL
     public void paintComponents(Graphics graphics) {
         super.paintComponents(graphics);
     }
-
-    public ArrayList<GameObject> getObjectList() {
-        return objectList;
-    }
-
-    public void setObjectList(ArrayList<GameObject> objectList) {
-        this.objectList = objectList;
-    }
 }
