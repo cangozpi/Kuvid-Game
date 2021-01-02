@@ -11,15 +11,15 @@ import com.company.Enums.AtomType;
 import com.company.Enums.DirectionType;
 import com.company.Enums.IProjectileType;
 import com.company.Enums.PowerUpType;
-import com.company.UI.Objects.GameWindowFactory;
 
-import java.util.regex.Pattern;
+
 
 import static com.company.UI.Objects.GameWindowFactory.*;
 
 public class GunFactory{
     //instance variables
     private static GunFactory gun = null;
+    private static int L;
     private Coordinate position; //left top corner of gun
     private int angle; //looking left is 0, most right is 180 deg.
     private double gunWidth = L * 0.5;
@@ -29,46 +29,45 @@ public class GunFactory{
     private Coordinate leftistPointOfTheGUn;
     private Inventory inventory;
 
+
     private GunFactory() {}
 
     public static GunFactory getInstance() {
         if (gun == null) {
             gun = new GunFactory();
-            gun.setPosition(new Coordinate(((GameFactory.getInstance().getGameWindowWidth() / 2) - GameFactory.getInstance().L / 4),
-                    GameFactory.getInstance().getGameWindowHeight() +  GameFactory.getInstance().L));
+            gun.L = GameFactory.getInstance().getL();
+            gun.gunWidth = L* 0.5;
+            gun.gunHeight = L;
+            gun.setPosition(new Coordinate(((GameFactory.getInstance().getGameWindowWidth() / 2) - L / 4),
+                    GameFactory.getInstance().getGameWindowHeight() - L - 35));
             gun.setAngle(90);
             gun.rightestPointOfTheGun = new Coordinate(gun.getPosition().getXCoordinate() + gun.getGunWidth(), gun.getPosition().getYCoordinate());
             gun.leftistPointOfTheGUn = gun.getPosition();
             gun.setInventory();
+            GameFactory.getInstance().moveGun(new Coordinate(((GameFactory.getInstance().getGameWindowWidth() / 2) - L / 4),GameFactory.getInstance().getGameWindowHeight() - L - 35),
+                    90,null);
         }
         return gun;
     }
-    public void setGun(Coordinate position, Projectile ammo) {    /// temporary
-        this.position = position;
-        this.angle = 90;
 
-        this.rightestPointOfTheGun = new Coordinate(position.getXCoordinate() + gunWidth, position.getYCoordinate());
-        this.leftistPointOfTheGUn = position;
-    }
 
     //methods
     public void shootGun(){
-
-        Velocity projectileVelocity = new Velocity(getAngle(), 10);  //TODO: velocity
-        ammo.setVelocity(projectileVelocity);
-        ammo.setIsAmmo(false);
-        GameFactory.getInstance().insertProjectileFromGun(ammo);
-        ammo = null;
+        if(ammo != null){
+            Velocity projectileVelocity = new Velocity(getAngle(), L/30 * ammo.getSpeedMultiplier());  //TODO: velocity
+            ammo.setVelocity(projectileVelocity);
+            ammo.setIsAmmo(false);
+            GameFactory.getInstance().insertProjectileFromGun(ammo);
+            ammo = null;
+        }
     }
 
     public void moveGun(DirectionType direction){
         //gun position has problems need some calculations
         if(direction.equals(DirectionType.RIGHT)){
-            if(rightestPointOfTheGun.getXCoordinate() + gunWidth <= windowWidth){ // if can move right
-                position.setXCoordinate(position.getXCoordinate() + L);
-                rightestPointOfTheGun.setXCoordinate(rightestPointOfTheGun.getXCoordinate() + L);
-                leftistPointOfTheGUn.setXCoordinate(rightestPointOfTheGun.getXCoordinate() + L);
-                ammo.setXCoordinate(ammo.getXCoordinate()+ L);
+            if(getPosition().getXCoordinate() + gunWidth + L/30 <= windowWidth){ // if can move right
+                position.setXCoordinate(position.getXCoordinate() + L/30);
+                ammo.setXCoordinate(ammo.getXCoordinate() + L/30);
                 GameFactory.getInstance().moveGun(position, angle, ammo);
             }
 
@@ -77,13 +76,10 @@ public class GunFactory{
 
 
         else if(direction.equals(DirectionType.LEFT)){
-            if(leftistPointOfTheGUn.getXCoordinate() >= L){ // if can move left
-                position.setXCoordinate(position.getXCoordinate() - L);
-                rightestPointOfTheGun.setXCoordinate(rightestPointOfTheGun.getXCoordinate() - L);
-                leftistPointOfTheGUn.setXCoordinate(rightestPointOfTheGun.getXCoordinate() - L);
-
-                    ammo.setXCoordinate(ammo.getXCoordinate()- L);
-                    GameFactory.getInstance().moveGun(position, angle, ammo);
+            if(getPosition().getXCoordinate() >= L/30){ // if can move left
+                position.setXCoordinate(position.getXCoordinate() - L/30);
+                ammo.setXCoordinate(ammo.getXCoordinate()- L/30);
+                GameFactory.getInstance().moveGun(position, angle, ammo);
             }
         }
 
@@ -91,7 +87,7 @@ public class GunFactory{
     }
 
     public void rotateGun(DirectionType direction){
-
+        int angleChange = 10;
 
         if(direction.equals(DirectionType.CLOCKWISE)){
             if(angle >= 10){ // if can rotate
@@ -104,7 +100,11 @@ public class GunFactory{
             if(angle <= 170) { // if can rotate
                 angle += 10;
 
+//                ammo.setXCoordinate(ammo.getXCoordinate() + 2*L*Math.sin(Math.toRadians(-angleChange/2))*Math.sin(Math.toRadians(angle + angleChange/2)));
+//                ammo.setYCoordinate(ammo.getYCoordinate() + 2*L*Math.sin(Math.toRadians(-angleChange/2))*Math.cos(Math.toRadians(angle + angleChange/2)));
                 GameFactory.getInstance().moveGun(position, angle, ammo);
+
+
             }
         }
 
@@ -112,7 +112,7 @@ public class GunFactory{
 
     public void loadGun(Projectile newAmmo){              // gets ammo type from atom selector     //TODO gets atom or powerup
 
-        double xCoord = getPosition().getXCoordinate() + L/10;    //TODO: position and angle calculations to line it up with the tip of the gun
+        double xCoord = getPosition().getXCoordinate() + 3*L/4;    //TODO: position and angle calculations to line it up with the tip of the gun
         double yCoord = getPosition().getYCoordinate() - L/10;
         int ammoAngle = getAngle();
         Coordinate ammoCoord = new Coordinate(xCoord, yCoord);                                                // creates projectile and sends it to game
@@ -125,8 +125,8 @@ public class GunFactory{
         setAmmo(newAmmo);
         this.ammo.setCoordinate(ammoCoord);
         this.ammo.setVelocity(ammoVelocity);
-        this.ammo.setHeight(L/10);
-        this.ammo.setWidth(L/10);
+        this.ammo.setHeight((int)(L/10));
+        this.ammo.setWidth((int)(L/10));
         GameFactory.getInstance().setAmmo(this.ammo);
     }
 
@@ -189,4 +189,8 @@ public class GunFactory{
     public Coordinate getLeftistPointOfTheGUn() { return leftistPointOfTheGUn; }
 
     public void setLeftistPointOfTheGUn(Coordinate leftistPointOfTheGUn) { this.leftistPointOfTheGUn = leftistPointOfTheGUn; }
+
+    public int getL() {
+        return this.L;
+    }
 }

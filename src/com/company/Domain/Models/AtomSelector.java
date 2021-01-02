@@ -3,13 +3,15 @@ package com.company.Domain.Models;
 import com.company.Domain.Utility.Coordinate;
 import com.company.Domain.Utility.Velocity;
 import com.company.Enums.AtomType;
+import com.company.UI.Objects.GameWindowFactory;
 
-import static com.company.UI.Objects.GameWindowFactory.L;
+
 
 public class AtomSelector {
+
     Inventory inventory = Inventory.getInstance();
     GunFactory gun = GunFactory.getInstance();
-
+    private double L = gun.getL();
 
     public AtomSelector() {}
 
@@ -31,16 +33,16 @@ public class AtomSelector {
                 gun.loadGun(inventory.getShieldedAtom(randomNumber));
             }else if(randomNumber < ALPHA_amount + shielded_amount){
                 inventory.removeAtom(AtomType.ALPHA);
-                gun.loadGun(atomFactory.getInstance(new Coordinate(0,0), new Velocity(0,0), AtomType.ALPHA, true,L/10,L/10));
+                gun.loadGun(atomFactory.getInstance(new Coordinate(0,0), new Velocity(0,0), AtomType.ALPHA, true,(int)(L/10),(int)(L/10)));
             }else if(randomNumber < ALPHA_amount + BETA_amount + shielded_amount) {
                 inventory.removeAtom(AtomType.BETA);
-                gun.loadGun(atomFactory.getInstance(new Coordinate(0,0), new Velocity(0,0), AtomType.BETA, true,L/10,L/10));
+                gun.loadGun(atomFactory.getInstance(new Coordinate(0,0), new Velocity(0,0), AtomType.BETA, true,(int)(L/10),(int)(L/10)));
             }else if(randomNumber < ALPHA_amount + BETA_amount + GAMMA_amount + shielded_amount) {
                 inventory.removeAtom(AtomType.GAMMA);
-                gun.loadGun(atomFactory.getInstance(new Coordinate(0,0), new Velocity(0,0), AtomType.GAMMA, true,L/10,L/10));
+                gun.loadGun(atomFactory.getInstance(new Coordinate(0,0), new Velocity(0,0), AtomType.GAMMA, true,(int)(L/10),(int)(L/10)));
             }else {
                 inventory.removeAtom(AtomType.SIGMA);
-                gun.loadGun(atomFactory.getInstance(new Coordinate(0,0), new Velocity(0,0), AtomType.SIGMA, true,L/10,L/10));
+                gun.loadGun(atomFactory.getInstance(new Coordinate(0,0), new Velocity(0,0), AtomType.SIGMA, true,(int)(L/10),(int)(L/10)));
             }
         } else System.err.println("There are no legal Atoms to use."); }
 

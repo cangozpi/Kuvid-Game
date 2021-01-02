@@ -5,17 +5,18 @@ import com.company.Domain.Utility.Coordinate;
 import javax.swing.*;
 import java.awt.*;
 
-import static com.company.UI.Objects.GameWindowFactory.L;
+
 
 public class GunObject extends GameObject {
+    private double L = GameWindowFactory.getL();
     private int gunWidth;
     private int gunHeight;
     private int angle;
     public GunObject(Coordinate coordinate, int angle) {
         super(coordinate, "shooter.png");
         this.angle = angle;
-        this.gunWidth = (L / 2);
-        this.gunHeight = L;
+        this.gunWidth = (int)(L / 2);
+        this.gunHeight = (int)L;
     }
 
     @Override

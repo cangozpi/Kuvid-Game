@@ -22,9 +22,9 @@ public class GameWindowFactory extends JFrame implements IGameListener,  ActionL
 /*
     Main UI Frame, uses Singleton Pattern
  */
-    public static int windowWidth = 852;
-    public static int windowHeight = 480;
-    public static int L = windowHeight / 10;
+    public static int windowWidth;
+    public static int windowHeight;
+    private static double L;
 
     GameObject gunObj; //reference to gunObject that is drawn
 
@@ -256,4 +256,30 @@ public class GameWindowFactory extends JFrame implements IGameListener,  ActionL
     public void setObjectList(ArrayList<GameObject> objectList) {
         this.objectList = objectList;
     }
+
+    public static int getWindowWidth() {
+        return windowWidth;
+    }
+
+    public static void setWindowWidth(int windowWidth) {
+        GameWindowFactory.windowWidth = windowWidth;
+    }
+
+    public static int getWindowHeight() {
+        return windowHeight;
+    }
+
+    public static void setWindowHeight(int windowHeight) {
+        GameWindowFactory.windowHeight = windowHeight;
+    }
+
+    public static double getL() {
+        return L;
+    }
+
+    public static void setL(double L_ratio) {
+        L = getWindowHeight() * L_ratio;
+    }
+
+
 }

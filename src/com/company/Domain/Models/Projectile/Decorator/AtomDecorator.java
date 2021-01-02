@@ -6,6 +6,9 @@ import com.company.Domain.Utility.Coordinate;
 import com.company.Domain.Utility.Velocity;
 import com.company.Enums.AtomType;
 import com.company.Enums.IProjectileType;
+import com.company.Enums.ShieldType;
+
+import java.util.HashMap;
 
 public abstract class AtomDecorator extends Atom {
 
@@ -28,7 +31,14 @@ public abstract class AtomDecorator extends Atom {
 
 
 
-    //Atom class specific methods delegate to component reference
+    //Atom class specific methods delegate to component reference}
+    public void addShield(ShieldType shieldType){ atomReference.addShield(shieldType); }
+
+    public HashMap<ShieldType,Integer> getShieldMap(){
+        return atomReference.getShieldMap();
+
+    }
+
     public AtomType getAtomType() { return atomReference.getAtomType(); }
 
     public void setAtomType(AtomType atomType) { atomReference.setAtomType(atomType); }

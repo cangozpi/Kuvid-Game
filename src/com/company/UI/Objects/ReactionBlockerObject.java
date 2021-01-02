@@ -6,9 +6,10 @@ import com.company.Enums.ReactionBlockerType;
 import javax.swing.*;
 import java.awt.*;
 
-import static com.company.UI.Objects.GameWindowFactory.L;
+
 
 public class ReactionBlockerObject extends GameObject{
+    private double L = GameWindowFactory.getL();
     private int angle;
     private String imageSource = "beta-b.png";
 
@@ -35,13 +36,13 @@ public class ReactionBlockerObject extends GameObject{
     @Override
     public void draw() {
         ImageIcon gun = new ImageIcon(getClass().getResource("Assets/blockers/"+imageSource));
-        Image scaledGun = gun.getImage().getScaledInstance(5*L/4, 5*L/4, java.awt.Image.SCALE_SMOOTH); // scales the image
+        Image scaledGun = gun.getImage().getScaledInstance((int)(L/4), (int)(L/4), java.awt.Image.SCALE_SMOOTH); // scales the image
         ImageIcon gunIcon = new ImageIcon(scaledGun);
         JLabel gunLabel = new JLabel(gunIcon);
         //add to the JFrame
         this.add(gunLabel);
         GameWindowFactory.getInstance().getContentPane().add(this); // JFrame.add(JPanel)
-        this.setBounds((int)coordinate.getXCoordinate(), (int)coordinate.getYCoordinate(), 5*L/4, 5*L/4);
+        this.setBounds((int)coordinate.getXCoordinate(), (int)coordinate.getYCoordinate(), (int)(2*L/4), (int)(2*L/4));
         this.setOpaque(false);
     }
 

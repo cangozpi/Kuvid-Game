@@ -11,6 +11,7 @@ import com.company.UI.Objects.GameWindowFactory;
 import java.util.*;
 
 public class GoodAlienFactory {
+
     //Singleton Pattern
     private static GoodAlienFactory instance;
     Random random = new Random();
@@ -52,7 +53,7 @@ public class GoodAlienFactory {
             Coordinate position = new Coordinate(random.nextInt(GameWindowFactory.windowWidth),0);
 
             moleculeAmounts.put(type, moleculeAmounts.get(type) - 1);
-            return moleculeFactory.getInstance(position, new Velocity(270,gameFactory.getFallSpeed()), false, type , 30, 30);
+            return moleculeFactory.getInstance(position, new Velocity(270,gameFactory.getFallSpeed()), false, type , gameFactory.getL() /4, gameFactory.getL()/4);
         }
         return null;
     }

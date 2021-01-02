@@ -6,9 +6,10 @@ import com.company.Enums.MoleculeType;
 import javax.swing.*;
 import java.awt.*;
 
-import static com.company.UI.Objects.GameWindowFactory.L;
+
 
 public class MoleculeObject extends GameObject{
+        private double L = GameWindowFactory.getL();
         private int angle;
         private String imageSource = "alpha-1.png";
         private int width;
@@ -19,33 +20,33 @@ public class MoleculeObject extends GameObject{
             this.angle = angle;
             switch (moleculeType){
                 case ALPHA:
-                    width = 5*L/4;
-                    height = 5*L/4;
+                    width = (int)(L/4);
+                    height = (int)(L/4);
                     imageSource = "alpha-1.png";
                     break;
                 case BETA:
-                    width = 5*L/4;
-                    height = 5*L/4;
+                    width = (int)(L/4);
+                    height = (int)(L/4);
                     imageSource = "beta-1.png";
                     break;
                 case ALPHA_L:
-                    width = 5*L/3;
-                    height = 5*L/6;
+                    width = (int)(L/3);
+                    height = (int)(L/6);
                     imageSource = "alpha-2.png";
                     break;
                 case BETA_L:
-                    width = 5*L/3;
-                    height = 5*L/6;
+                    width = (int)(L/3);
+                    height = (int)(L/6);
                     imageSource = "beta-2.png";
                     break;
                 case GAMMA:
-                    width = 5*L/4;
-                    height = 5*L/4;
+                    width = (int)(L/4);
+                    height = (int)(L/4);
                     imageSource = "gamma-.png";
                     break;
                 case SIGMA:
-                    width = 5*L/4;
-                    height = 5*L/4;
+                    width = (int)(L/4);
+                    height = (int)(L/4);
                     imageSource = "sigma-.png";
                     break;
 

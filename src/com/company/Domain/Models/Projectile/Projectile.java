@@ -16,6 +16,7 @@ public abstract class Projectile {
     int width;
     int height;
     IProjectileType projectileType;
+    double speedMultiplier;
 
 
     public Projectile(Coordinate coordinate, Velocity velocity, boolean isAmmo,int height,int width,IProjectileType projectileType){
@@ -25,6 +26,7 @@ public abstract class Projectile {
         this.height = height;
         this.width = width;
         this.projectileType = projectileType;
+        this.speedMultiplier = 1;
     }
     public Projectile(Coordinate coordinate, Velocity velocity, boolean isAmmo,int height,int width){
         this.coordinate = coordinate;
@@ -32,9 +34,13 @@ public abstract class Projectile {
         this.isAmmo = isAmmo;
         this.height = height;
         this.width = width;
+        this.speedMultiplier = 1;
 
     }
 
+    public double getSpeedMultiplier() { return speedMultiplier; }
+
+    public void setSpeedMultiplier(double speedMultiplier) { this.speedMultiplier = speedMultiplier; }
 
     public IProjectileType getProjectileType(){return projectileType; }
 

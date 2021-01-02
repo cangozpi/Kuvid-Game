@@ -15,7 +15,7 @@ public class ZigZagStrategy implements IMovementStrategy{
         int angle = oldPath.getVelocity().getAngle();
         Coordinate oldPosition = oldPath.getCoordinate();
         int new_count = oldPath.getCount();
-        if( new_count == 60){
+        if( new_count == 30){
             new_count = 0;
             if(angle == 225)
                 angle = 315;

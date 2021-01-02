@@ -25,8 +25,8 @@ public class BuildWindowFactory extends JFrame {
 
     //window variables
     private Builder builder = new Builder();
-    public static int windowWidth = 720;
-    public static int windowHeight = 360;
+    public static int windowWidth = 1440;
+    public static int windowHeight = 980;
 
     //attained variables from user
     int difficultyLevel;
@@ -160,12 +160,16 @@ public class BuildWindowFactory extends JFrame {
                 }
 
                 //pass extracted variables and call controller class
-                builderHandler.buildGame(windowWidth, windowHeight, difficultyLevel, atomAmount, moleculeAmount, powerUpAmount, reactionBlockerAmount, isLinear);
+                builderHandler.buildGame(windowWidth, windowHeight, difficultyLevel, atomAmount, moleculeAmount, powerUpAmount, reactionBlockerAmount, isLinear, (LRatioSlider.getValue()* 5)/100.0);
                 BuildWindowFactory.getInstance().getDefaultCloseOperation();
                 BuildWindowFactory.getInstance().setVisible(false);
                 BuildWindowFactory.getInstance().dispose();
 
                 final GameWindowFactory gamePanel = GameWindowFactory.getInstance();
+
+                gamePanel.setWindowHeight(windowHeight);
+                gamePanel.setWindowWidth(windowWidth);
+                gamePanel.setL((LRatioSlider.getValue() * 5)/100.0);
                 gamePanel.render();
             }
 

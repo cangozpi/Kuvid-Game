@@ -1,11 +1,8 @@
 package com.company.Domain.Models;
 
-import com.company.Domain.Models.Projectile.Molecule;
-import com.company.Domain.Models.Projectile.PowerUp;
-import com.company.Domain.Models.Projectile.Projectile;
-import com.company.Domain.Models.Projectile.ReactionBlocker;
+import com.company.Domain.Models.Projectile.*;
 import com.company.Domain.Utility.Coordinate;
-import com.company.UI.Objects.GameWindowFactory;
+
 import com.company.UI.Observer.GameObserver;
 
 import javax.swing.*;
@@ -24,14 +21,14 @@ public class GameFactory extends GameObserver  {
 
 
     private Coordinate gunPosition;
-    private int gunAngle;
+    private int gunAngle = 0;
     private ArrayList<Projectile> projectileFromGunList = new ArrayList<>();
 
     private ArrayList<PowerUp> powerUpList = new ArrayList<>();
     private ArrayList<ReactionBlocker> reactionBlockerList = new ArrayList<>();
     private ArrayList<Molecule> moleculeList = new ArrayList<>();
     private Projectile ammo;
-    private GameWindowFactory factory;
+
     private int fallSpeed;
 
 
@@ -58,10 +55,6 @@ public class GameFactory extends GameObserver  {
 
 
     public void startGame(){
-        L = gameWindowHeight / 10;
-        setGunPosition(new Coordinate(((gameWindowWidth/2) - L / 4),
-                gameWindowHeight +  L));
-        setGunAngle(90);
         gameLoop();
     }
 
@@ -97,7 +90,7 @@ public class GameFactory extends GameObserver  {
     });
 
     //16.68ms for 60FPS
-    Timer gameClock =  new Timer(16, new ActionListener() { // checks for cat icons collusion
+    Timer gameClock =  new Timer(33, new ActionListener() { // checks for cat icons collusion
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -169,13 +162,43 @@ public class GameFactory extends GameObserver  {
         //
 
     }
+    public boolean hasCollided(Projectile projectile1, Projectile projectile2){
+        if ( (projectile1.getYCoordinate() <= projectile2.getYCoordinate() + projectile2.getHeight() &
+                projectile2.getYCoordinate() + projectile2.getHeight() <= projectile1.getYCoordinate() + projectile1.getHeight()) |
+                (projectile1.getYCoordinate() <= projectile2.getYCoordinate() &
+                        projectile2.getYCoordinate() <= projectile1.getYCoordinate() + projectile1.getHeight())){             // gun in explosion radius
+            if ((projectile1.getXCoordinate() <= projectile2.getXCoordinate() + projectile2.getWidth() &
+                    projectile2.getXCoordinate() + projectile2.getWidth() <= projectile1.getXCoordinate() + projectile1.getWidth()) |
+                    (projectile1.getXCoordinate() <= projectile2.getXCoordinate() &
+                            projectile2.getXCoordinate() <= projectile1.getXCoordinate() + projectile1.getWidth())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasCollidedReactionBlocker(Coordinate coord1,  int width1,  int height1, Coordinate coord2, int width2, int height2){
+        if ( (coord1.getYCoordinate() <= coord2.getYCoordinate() + height2 &
+                coord2.getYCoordinate() + height2 <= coord1.getYCoordinate() + height1) |
+                (coord1.getYCoordinate() <= coord2.getYCoordinate() &
+                        coord2.getYCoordinate() <= coord1.getYCoordinate() + height1)){             // gun in explosion radius
+            if ((coord1.getXCoordinate() <= coord2.getXCoordinate() + width2 &
+                    coord2.getXCoordinate() + width2 <= coord1.getXCoordinate() + width1) |
+                    (coord1.getXCoordinate() <= coord2.getXCoordinate() &
+                            coord2.getXCoordinate() <= coord1.getXCoordinate() + width1)){
+                return true;
+            }
+
+        }
+        return false;
+    }
 
 
     public void moveGun(Coordinate coord, int angle, Projectile ammo){
 
         setAmmo(ammo);
-        this.gunPosition = coord;
-        this.gunAngle = angle;
+        setGunPosition(coord);
+        setGunAngle(angle);
     }
 
     //getter setters
@@ -292,5 +315,9 @@ public class GameFactory extends GameObserver  {
 
     public void setMoleculeList(ArrayList<Molecule> moleculeList) {
         this.moleculeList = moleculeList;
+    }
+
+    public void setL(double L_ratio){
+        L = (int) (L_ratio * gameWindowHeight);
     }
 }

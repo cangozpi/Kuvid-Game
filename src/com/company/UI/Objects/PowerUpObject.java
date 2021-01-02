@@ -6,11 +6,11 @@ import com.company.Enums.PowerUpType;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.IllegalPathStateException;
 
-import static com.company.UI.Objects.GameWindowFactory.L;
+
 
 public class PowerUpObject extends GameObject{
+        private double L = GameWindowFactory.getL();
         private int angle;
         private String imageSource = "alpha-b.png";
 
@@ -43,7 +43,7 @@ public class PowerUpObject extends GameObject{
             //add to the JFrame
             this.add(powerUpLabel);
             GameWindowFactory.getInstance().getContentPane().add(this); // JFrame.add(JPanel)
-            this.setBounds((int)coordinate.getXCoordinate(), (int)coordinate.getYCoordinate(), 5*L/4, 5*L/4);
+            this.setBounds((int)coordinate.getXCoordinate(), (int)coordinate.getYCoordinate(), (int)(2*L/4), (int)(2*L/4));
             this.setOpaque(false);
         }
 
