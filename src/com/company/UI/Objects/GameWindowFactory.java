@@ -23,6 +23,7 @@ public class GameWindowFactory extends JFrame implements IGameListener,  ActionL
     Main UI Frame, uses Singleton Pattern
  */
     public static int windowWidth = 852;
+    public static int windowWidthExtended = 1100;
     public static int windowHeight = 480;
     public static int L = windowHeight / 10;
 
@@ -50,11 +51,15 @@ public class GameWindowFactory extends JFrame implements IGameListener,  ActionL
         //setup main JFrame
         factoryInstance.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         factoryInstance.setResizable(false);
-        factoryInstance.setSize(windowWidth, windowHeight);
+        factoryInstance.setSize(windowWidthExtended , windowHeight);
         factoryInstance.setTitle("Karel Kuvid");
         factoryInstance.setLayout(null);
         CenterWindow.centerWindow(this);
 
+        JPanel StatBoard = new JPanel();
+        StatBoard.setBackground(Color.BLACK);
+        StatBoard.setOpaque(false);
+        StatBoard.setBounds(windowWidth,0,windowWidthExtended,windowHeight);
 
         //Dark mode for aesthetic purposes
         factoryInstance.getContentPane().setBackground(Color.DARK_GRAY);
@@ -247,5 +252,13 @@ public class GameWindowFactory extends JFrame implements IGameListener,  ActionL
     @Override
     public void paintComponents(Graphics graphics) {
         super.paintComponents(graphics);
+    }
+
+    public ArrayList<GameObject> getObjectList() {
+        return objectList;
+    }
+
+    public void setObjectList(ArrayList<GameObject> objectList) {
+        this.objectList = objectList;
     }
 }

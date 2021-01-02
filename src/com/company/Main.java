@@ -7,8 +7,8 @@ public class Main {
     public static void main(String[] args) {
 
          //Builder Mode initialization
-         BuildWindowFactory buildWindow = BuildWindowFactory.getInstance();
-         buildWindow.render();
+         MainMenuWindowFactory mainmenuWindowFactory  = MainMenuWindowFactory.getInstance();
+         mainmenuWindowFactory.render();
 
 
 

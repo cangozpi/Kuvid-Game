@@ -20,6 +20,8 @@ import com.company.repository.MongoDB;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -106,10 +108,16 @@ public class MenuWindowFactory extends JFrame implements KeyListener {
                 inputPanel.add(panelHolder[m][n]);
             }
         }
-        panelHolder[0][0].add(new JLabel("Game Paused"));
+
+        panelHolder[0][3].add(new JLabel("Game Paused"));
+        panelHolder[1][3].add(new JLabel("Press S to SAVE GAME"));
+        panelHolder[2][3].add(new JLabel("Press R to RESUME GAME"));
+        panelHolder[3][3].add(new JLabel("Press L to LOAD GAME"));
+
         this.getContentPane().removeAll();
         this.getContentPane().add(inputPanel);
         this.setVisible(true);
+
 
         //add keyListener to the JFrame
         this.addKeyListener(this);
