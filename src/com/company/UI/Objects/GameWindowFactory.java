@@ -56,6 +56,7 @@ public class GameWindowFactory extends JFrame implements IGameListener,  ActionL
         CenterWindow.centerWindow(this);
 
 
+
         //Dark mode for aesthetic purposes
         factoryInstance.getContentPane().setBackground(Color.DARK_GRAY);
 
@@ -89,15 +90,15 @@ public class GameWindowFactory extends JFrame implements IGameListener,  ActionL
        // addKeyListener(selectPowerUpListener);
 
         //shoot listener
-
-
-
-
         GameObserver gameObserver = GameFactory.getInstance();
         gameObserver.addListener(this);
 
 
         draw();
+
+        //add Background to JFrame
+        GameObject bgObject = new BackgroundObject(new Coordinate(0, -10));
+        this.addToObjectList(bgObject);
 
         factoryInstance.setVisible(true);
     }
@@ -105,13 +106,22 @@ public class GameWindowFactory extends JFrame implements IGameListener,  ActionL
     public synchronized void draw(){
 
         this.getContentPane().removeAll();
+
+        //add stats Menu
+        StatsMenu statMenuPanel = new StatsMenu();
+        statMenuPanel.draw();
+        this.getContentPane().add(statMenuPanel);
+
         GameObject bgObject = new BackgroundObject(new Coordinate(0, -10));
         this.addToObjectList(bgObject);
 
         //draw JPanel elements from list
                 for(GameObject element: objectList){
                     element.draw();
+
                 }
+
+
 
             this.revalidate();
             this.repaint();

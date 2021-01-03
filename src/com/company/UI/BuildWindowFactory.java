@@ -26,8 +26,8 @@ public class BuildWindowFactory extends JFrame {
 
     //window variables
     private Builder builder = new Builder();
-    public static int windowWidth = 1440;
-    public static int windowHeight = 980;
+    public static int windowWidth = 1280;
+    public static int windowHeight = 720;
 
     //attained variables from user
     int difficultyLevel;
