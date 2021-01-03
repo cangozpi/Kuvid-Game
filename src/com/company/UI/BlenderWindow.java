@@ -1,6 +1,7 @@
 package com.company.UI;
 
 import com.company.Domain.Controller.BlenderHandler;
+import com.company.Domain.Models.GameFactory;
 import com.company.Domain.Models.Inventory;
 import com.company.Enums.AtomType;
 import com.company.Utils.CenterWindow;
@@ -9,26 +10,32 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class BlenderWindowFactory extends JFrame {
+public class BlenderWindow extends JFrame implements KeyListener {
     public static int windowWidth = 720;
     public static int windowHeight = 360;
-    private static BlenderWindowFactory factoryInstance;
     JLabel alphaAmountLable;
     JLabel betaAmountLable;
     JLabel gammaAmountLable;
     JLabel sigmaAmountLable;
-    private BlenderHandler blenderHandler;
-    private Inventory inventory;
+    private final BlenderHandler blenderHandler;
+    private final Inventory inventory;
     private JPanel[][] panelHolder;
 
-    public BlenderWindowFactory() {
+    public BlenderWindow() {
         inventory = Inventory.getInstance();
         blenderHandler = new BlenderHandler();
+
     }
+
+
 
     public void render() {
         //factoryInstance.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        this.setUndecorated(true);
         this.setResizable(false);
         this.setSize(windowWidth, windowHeight);
         this.setTitle("KUVid Blender");
@@ -210,6 +217,9 @@ public class BlenderWindowFactory extends JFrame {
 
         this.getContentPane().add(inputPanel);
         this.setVisible(true);
+        addKeyListener(this);
+        setFocusable(true);
+        setFocusTraversalKeysEnabled(false);
     }
 
     void update(){
@@ -218,5 +228,30 @@ public class BlenderWindowFactory extends JFrame {
         gammaAmountLable.setText(String.valueOf(inventory.getAtomAmount(AtomType.GAMMA)));
         sigmaAmountLable.setText(String.valueOf(inventory.getAtomAmount(AtomType.SIGMA)));
     }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+
+        if(e.getKeyCode() == 66){ //B
+
+            GameFactory.getInstance().resumeGame();
+            this.dispose();
+
+
+        }
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
+
 
 }

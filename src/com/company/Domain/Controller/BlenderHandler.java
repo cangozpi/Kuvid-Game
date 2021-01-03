@@ -1,8 +1,9 @@
 package com.company.Domain.Controller;
 
 import com.company.Domain.Models.Blender;
+import com.company.Domain.Models.GameFactory;
 import com.company.Enums.AtomType;
-import com.company.UI.BlenderWindowFactory;
+import com.company.UI.BlenderWindow;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -27,8 +28,10 @@ public class BlenderHandler implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == 66){ //B
-            BlenderWindowFactory blenderFactory = new BlenderWindowFactory();
+            BlenderWindow blenderFactory = new BlenderWindow();
+            GameFactory.getInstance().pauseGame();
             blenderFactory.render();
+
         }
     }
 
