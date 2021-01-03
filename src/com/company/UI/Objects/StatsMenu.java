@@ -15,7 +15,7 @@ public class StatsMenu {
     private GameFactory gameFactory;
     private Inventory inventory;
     public StatsMenu() {
-
+//s
     }
 
     {
