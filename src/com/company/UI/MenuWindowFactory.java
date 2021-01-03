@@ -1,34 +1,18 @@
 package com.company.UI;
 
-import com.company.Domain.Controller.BlenderHandler;
 import com.company.Domain.Controller.MenuHandler;
-import com.company.Domain.Models.BadAlienFactory;
 import com.company.Domain.Models.GameFactory;
-import com.company.Domain.Models.GoodAlienFactory;
 import com.company.Domain.Models.Inventory;
-import com.company.Domain.Models.Projectile.Molecule;
-import com.company.Domain.Utility.Coordinate;
-import com.company.Enums.AtomType;
-import com.company.Enums.MoleculeType;
-import com.company.Enums.PowerUpType;
-import com.company.Enums.ReactionBlockerType;
-import com.company.UI.Objects.BackgroundObject;
-import com.company.UI.Objects.GameObject;
-import com.company.UI.Objects.GameWindowFactory;
-import com.company.UI.Objects.GunObject;
+import com.company.Domain.Models.Repository.DataTransfer;
+
 import com.company.Utils.CenterWindow;
-import com.company.repository.DatabaseAdapter;
-import com.company.repository.LocalDB;
-import com.company.repository.MongoDB;
+
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
 
 public class MenuWindowFactory extends JFrame implements KeyListener {
 
@@ -38,43 +22,15 @@ public class MenuWindowFactory extends JFrame implements KeyListener {
     private MenuHandler menuHandler;
     private Inventory inventory;
     private JPanel[][] panelHolder;
+    private DataTransfer dataTransfer;
 
-    //Save Game parameters
-    private HashMap<AtomType,Integer> atomMap;
-    private HashMap<PowerUpType,Integer> powerUpMap;
-    private HashMap<MoleculeType,Integer> moleculeMap;
-    private Map<ReactionBlockerType, Integer> reactionBlockerAmount;
-    private int score;
-    private boolean isLinear;
-    private int time;
-    HashMap<PowerUpType, Integer> goodAlienPowerUpMap;
-    private DatabaseAdapter databaseAdapter;
 
 
     //singleton instance
     private static MenuWindowFactory instance;
 
     private MenuWindowFactory() {
-        menuHandler = new MenuHandler();
-        //databaseAdapter = new DatabaseAdapter(new LocalDB());
-        databaseAdapter = new DatabaseAdapter(new MongoDB());
-        //saveGame parameters
-        Inventory inventoryInstance = Inventory.getInstance();
-        GameFactory gameFactory = GameFactory.getInstance();
-        atomMap = inventoryInstance.getAtomMap();
-        powerUpMap = inventoryInstance.getPowerUpMap();
-
-        GoodAlienFactory goodAlienInstance = GoodAlienFactory.getInstance();
-        goodAlienPowerUpMap = goodAlienInstance.getPowerUpAmounts();
-        moleculeMap = goodAlienInstance.getMoleculeAmounts();
-
-        BadAlienFactory badAlienInstance = BadAlienFactory.getInstance();
-        reactionBlockerAmount = badAlienInstance.getReactionBlockerAmount();
-
-        score = gameFactory.getScore();
-        time = gameFactory.getTime();
-
-        isLinear = gameFactory.isLinear();
+        dataTransfer = new DataTransfer();
     }
 
     public static MenuWindowFactory getInstance(){
@@ -131,11 +87,11 @@ public class MenuWindowFactory extends JFrame implements KeyListener {
         }
 
         else if(e.getKeyCode() == 83){ //S
-            databaseAdapter.saveGame("Karel",atomMap, goodAlienPowerUpMap, powerUpMap, moleculeMap, reactionBlockerAmount, score, isLinear, time);
+            dataTransfer.saveGame();
         }
 
         else if(e.getKeyCode() == 76){ //L
-            databaseAdapter.loadGame();
+            dataTransfer.loadGame();
             getInstance().dispose();
             GameFactory.getInstance().resumeGame();
             //reset game UI

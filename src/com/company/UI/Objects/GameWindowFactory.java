@@ -107,10 +107,11 @@ public class GameWindowFactory extends JFrame implements IGameListener,  ActionL
 
         this.getContentPane().removeAll();
 
-        //add stats Menu
+        //TODO: uncomment the following
+        /*//add stats Menu
         StatsMenu statMenuPanel = new StatsMenu();
         statMenuPanel.draw();
-        this.getContentPane().add(statMenuPanel);
+        this.getContentPane().add(statMenuPanel);*/
 
         GameObject bgObject = new BackgroundObject(new Coordinate(0, -10));
         this.addToObjectList(bgObject);
