@@ -19,9 +19,9 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class GameWindowFactory extends JFrame implements IGameListener,  ActionListener {
-/*
-    Main UI Frame, uses Singleton Pattern
- */
+    /*
+        Main UI Frame, uses Singleton Pattern
+     */
     public static int windowWidth = 852;
     public static int windowWidthExtended = 1100;
     public static int windowHeight = 480;
@@ -56,10 +56,9 @@ public class GameWindowFactory extends JFrame implements IGameListener,  ActionL
         factoryInstance.setLayout(null);
         CenterWindow.centerWindow(this);
 
-        JPanel StatBoard = new JPanel();
-        StatBoard.setBackground(Color.BLACK);
-        StatBoard.setOpaque(false);
-        StatBoard.setBounds(windowWidth,0,windowWidthExtended,windowHeight);
+        JLabel StatBoard = new JLabel("Score : 0");
+        StatBoard.setBounds(windowWidthExtended-windowWidth+5,50,200,100);
+        StatBoard.setVisible(true);
 
         //Dark mode for aesthetic purposes
         factoryInstance.getContentPane().setBackground(Color.DARK_GRAY);
@@ -90,8 +89,8 @@ public class GameWindowFactory extends JFrame implements IGameListener,  ActionL
 
 
         //select powerUp listener     mouse listener
-       // KeyListener selectPowerUpListener  = new SelectPowerUpHandler();
-       // addKeyListener(selectPowerUpListener);
+        // KeyListener selectPowerUpListener  = new SelectPowerUpHandler();
+        // addKeyListener(selectPowerUpListener);
 
         //shoot listener
 
@@ -114,12 +113,12 @@ public class GameWindowFactory extends JFrame implements IGameListener,  ActionL
         this.addToObjectList(bgObject);
 
         //draw JPanel elements from list
-                for(GameObject element: objectList){
-                    element.draw();
-                }
+        for(GameObject element: objectList){
+            element.draw();
+        }
 
-            this.revalidate();
-            this.repaint();
+        this.revalidate();
+        this.repaint();
     }
 
     public void addToObjectList(GameObject object){
@@ -219,22 +218,22 @@ public class GameWindowFactory extends JFrame implements IGameListener,  ActionL
 
 
 
-            //re add the gunObj to its new position
-            gunObj = new GunObject(gunPosition, gunAngle);
-            addToObjectList(gunObj);
-            GameObject currentObject;
+        //re add the gunObj to its new position
+        gunObj = new GunObject(gunPosition, gunAngle);
+        addToObjectList(gunObj);
+        GameObject currentObject;
 
-            if(Pattern.matches(".*atom$", ammo.getProjectileType().toString())) {
+        if(Pattern.matches(".*atom$", ammo.getProjectileType().toString())) {
 
-                //instantiate corresponding atom object
-                currentObject = new AtomObject(ammo.getCoordinate(), 0, ammo.getProjectileType());
+            //instantiate corresponding atom object
+            currentObject = new AtomObject(ammo.getCoordinate(), 0, ammo.getProjectileType());
 
-            }else{
+        }else{
 
-                //instantiate corresponding powerup object
+            //instantiate corresponding powerup object
 
-                currentObject = new PowerUpObject(ammo.getCoordinate(),0,ammo.getProjectileType());
-            }
+            currentObject = new PowerUpObject(ammo.getCoordinate(),0,ammo.getProjectileType());
+        }
         addToObjectList(currentObject);
         this.draw();
 
@@ -246,7 +245,7 @@ public class GameWindowFactory extends JFrame implements IGameListener,  ActionL
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-       
+
     }
 
     @Override

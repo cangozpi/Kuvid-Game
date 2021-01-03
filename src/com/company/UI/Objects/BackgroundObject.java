@@ -1,5 +1,6 @@
 package com.company.UI.Objects;
 
+import com.company.Domain.Models.GameFactory;
 import com.company.Domain.Utility.Coordinate;
 
 import javax.swing.*;
@@ -8,7 +9,7 @@ import java.awt.*;
 import static com.company.UI.Objects.GameWindowFactory.*;
 
 public class BackgroundObject extends GameObject{
-
+    private GameWindowFactory gameWindowFactory;
 
     public BackgroundObject(Coordinate coordinate) {
         super(coordinate, "kuvid_bc.png");
@@ -25,6 +26,7 @@ public class BackgroundObject extends GameObject{
         getInstance().getContentPane().add(this); // JFrame.add(JPanel)
         this.setBounds((int)coordinate.getXCoordinate(), (int)coordinate.getYCoordinate(), windowWidthExtended , windowHeight);
         this.setOpaque(false);
+
     }
 
     @Override
