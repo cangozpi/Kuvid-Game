@@ -17,13 +17,13 @@ public class BackgroundObject extends GameObject{
     @Override
     public void draw() {
         ImageIcon gun = new ImageIcon(getClass().getResource("Assets/"+imageSource));
-        Image scaledGun = gun.getImage().getScaledInstance(windowWidth, windowHeight, java.awt.Image.SCALE_SMOOTH); // scales the image
+        Image scaledGun = gun.getImage().getScaledInstance(GameWindowFactory.getExtendedWindowWidth(), GameWindowFactory.getWindowHeight(), java.awt.Image.SCALE_SMOOTH); // scales the image
         ImageIcon gunIcon = new ImageIcon(scaledGun);
         JLabel gunLabel = new JLabel(gunIcon);
         //add to the JFrame
         this.add(gunLabel);
         getInstance().getContentPane().add(this); // JFrame.add(JPanel)
-        this.setBounds((int)coordinate.getXCoordinate(), (int)coordinate.getYCoordinate(), windowWidth, windowHeight);
+        this.setBounds((int)coordinate.getXCoordinate(), (int)coordinate.getYCoordinate(), GameWindowFactory.getExtendedWindowWidth(),  GameWindowFactory.getWindowHeight());
         this.setOpaque(false);
     }
 

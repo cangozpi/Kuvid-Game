@@ -35,7 +35,7 @@ public class BadAlienFactory {
         if(!availableReactionBlockers.isEmpty()) {
             int reactionBlockerToShoot = random.nextInt(availableReactionBlockers.size());
             ReactionBlockerType type = availableReactionBlockers.get(reactionBlockerToShoot);
-            Coordinate position = new Coordinate(random.nextInt(GameWindowFactory.windowWidth), 0);
+            Coordinate position = new Coordinate(random.nextInt(gameFactory.getGameWindowWidth()), 0);
             reactionBlockerAmount.put(type, reactionBlockerAmount.get(type) - 1);
             return new ReactionBlocker(position, new Velocity(270, gameFactory.getFallSpeed()), false, type, 30, 30);
         }

@@ -37,7 +37,7 @@ public class GoodAlienFactory {
         if(!availablePowerUps.isEmpty()) {
             int powerUpToShoot = random.nextInt(availablePowerUps.size());
             PowerUpType type = availablePowerUps.get(powerUpToShoot);
-            Coordinate position = new Coordinate(random.nextInt(GameWindowFactory.windowWidth), 0);
+            Coordinate position = new Coordinate(random.nextInt(gameFactory.getGameWindowWidth()), 0);
 
             powerUpAmounts.put(type, powerUpAmounts.get(type) - 1);
             return new PowerUp(position, new Velocity(270, gameFactory.getFallSpeed()), type, false, 30, 30);
@@ -50,7 +50,7 @@ public class GoodAlienFactory {
         if(!availableMolecules.isEmpty()){
             int moleculeToShoot = random.nextInt(availableMolecules.size());
             MoleculeType type = availableMolecules.get(moleculeToShoot);
-            Coordinate position = new Coordinate(random.nextInt(GameWindowFactory.windowWidth),0);
+            Coordinate position = new Coordinate(random.nextInt(gameFactory.getGameWindowWidth()),0);
 
             moleculeAmounts.put(type, moleculeAmounts.get(type) - 1);
             return moleculeFactory.getInstance(position, new Velocity(270,gameFactory.getFallSpeed()), false, type , gameFactory.getL() /4, gameFactory.getL()/4);

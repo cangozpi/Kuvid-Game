@@ -41,7 +41,7 @@ public class StatsMenu extends JPanel {
 
 //powerups
         ImageIcon alphapowerup = new ImageIcon(getClass().getResource("Assets/powerups/+alpha-b.png"));
-        Image alphapow = alphapowerup.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
+        Image alphapow = alphapowerup.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 
         JLabel powalpha = new JLabel(new ImageIcon(alphapow));
         JLabel powAlphaAmountLabel = new JLabel("Amount");
@@ -52,7 +52,7 @@ public class StatsMenu extends JPanel {
         //panel.add(powAlphaAmountLabel);
 
         ImageIcon betapowerup = new ImageIcon(getClass().getResource("Assets/powerups/+beta-b.png"));
-        Image betapow = betapowerup.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
+        Image betapow = betapowerup.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         JLabel powbeta = new JLabel(new ImageIcon(betapow));
         JLabel powBetaAmountLabel = new JLabel("Amount");
 
@@ -62,7 +62,7 @@ public class StatsMenu extends JPanel {
         // panel.add(powAlphaAmountLabel);
 
         ImageIcon gammapowerup = new ImageIcon(getClass().getResource("Assets/powerups/+gamma-b.png"));
-        Image gammapow = gammapowerup.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
+        Image gammapow = gammapowerup.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         JLabel powgamma = new JLabel(new ImageIcon(gammapow));
         JLabel powGammaAmountLabel = new JLabel("Amount");
 
@@ -71,7 +71,7 @@ public class StatsMenu extends JPanel {
         // panel.add(powGammaAmountLabel );
 
         ImageIcon Sigmapowerup = new ImageIcon(getClass().getResource("Assets/powerups/+sigma-b.png"));
-        Image sigmapow = Sigmapowerup.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH);
+        Image sigmapow = Sigmapowerup.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         JLabel powsigma = new JLabel(new ImageIcon(sigmapow));
         JLabel powSigmaAmountLabel = new JLabel("Amount");
 
@@ -80,7 +80,7 @@ public class StatsMenu extends JPanel {
         // panel.add(powSigmaAmountLabel);
 //inventory atom amounts
         ImageIcon mixer = new ImageIcon(getClass().getResource("Assets/mixer.png"));
-        Image mixerImage = mixer.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        Image mixerImage = mixer.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         JLabel mixerLabel = new JLabel( new ImageIcon(mixerImage));
         mixerLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         //mixerLabel.setLocation(12,50);
@@ -88,22 +88,22 @@ public class StatsMenu extends JPanel {
 
 
         ImageIcon alpha = new ImageIcon(getClass().getResource("Assets/atoms/alpha.png"));
-        Image scaledAlpha = alpha.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH); // scales the image
+        Image scaledAlpha = alpha.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH); // scales the image
         JLabel alphaLabel = new JLabel(new ImageIcon(scaledAlpha));
 
         //alphaLabel.setLocation(14,0);
         ImageIcon beta = new ImageIcon(getClass().getResource("Assets/atoms/beta.png"));
-        Image scaledBeta = beta.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH); // scales the image
+        Image scaledBeta = beta.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH); // scales the image
         JLabel betaLabel = new JLabel(new ImageIcon(scaledBeta));
         // betaLabel.setLocation(16,0);
 
         ImageIcon gamma = new ImageIcon(getClass().getResource("Assets/atoms/gamma.png"));
-        Image scaledGamma = gamma.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH); // scales the image
+        Image scaledGamma = gamma.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH); // scales the image
         JLabel gammaLabel = new JLabel(new ImageIcon(scaledGamma));
         //gammaLabel.setLocation(18,0);
 
         ImageIcon sigma = new ImageIcon(getClass().getResource("Assets/atoms/sigma.png"));
-        Image scaledSigma = sigma.getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH); // scales the image
+        Image scaledSigma = sigma.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH); // scales the image
         JLabel sigmaLabel = new JLabel(new ImageIcon(scaledSigma));
         //sigmaLabel.setLocation(20,0);
 
@@ -167,10 +167,9 @@ public class StatsMenu extends JPanel {
 
     public void draw() {
         drawScore();
-        this.setBackground(Color.BLACK);
-        this.setBounds(100,100,400,400);
-        this.setOpaque(false);
-        this.setBackground(new Color(0.5f,0.5f,0.5f,0.5f));
+        this.setBounds(GameWindowFactory.getGameWindowWidth(),0,400,GameWindowFactory.getWindowHeight() - 35);
+        this.setOpaque(true);
+        this.setBackground(new Color(102, 102, 102, 123));
         this.setFocusable(false);
     }
 }

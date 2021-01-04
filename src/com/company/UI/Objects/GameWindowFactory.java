@@ -22,8 +22,9 @@ public class GameWindowFactory extends JFrame implements IGameListener,  ActionL
 /*
     Main UI Frame, uses Singleton Pattern
  */
-    public static int windowWidth;
-    public static int windowHeight;
+    private static int gameWindowWidth;
+    private static int windowHeight;
+    private static int extendedWindowWidth;
     private static double L;
 
     GameObject gunObj; //reference to gunObject that is drawn
@@ -50,7 +51,7 @@ public class GameWindowFactory extends JFrame implements IGameListener,  ActionL
         //setup main JFrame
         factoryInstance.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         factoryInstance.setResizable(false);
-        factoryInstance.setSize(windowWidth, windowHeight);
+        factoryInstance.setSize(extendedWindowWidth, windowHeight);
         factoryInstance.setTitle("Karel Kuvid");
         factoryInstance.setLayout(null);
         CenterWindow.centerWindow(this);
@@ -108,10 +109,13 @@ public class GameWindowFactory extends JFrame implements IGameListener,  ActionL
         this.getContentPane().removeAll();
 
         //TODO: uncomment the following
-        /*//add stats Menu
+        //add stats Menu
         StatsMenu statMenuPanel = new StatsMenu();
         statMenuPanel.draw();
-        this.getContentPane().add(statMenuPanel);*/
+        this.getContentPane().add(statMenuPanel);
+        //To fix not responding event listeners
+        this.setFocusable(true);
+        this.requestFocusInWindow();
 
         GameObject bgObject = new BackgroundObject(new Coordinate(0, -10));
         this.addToObjectList(bgObject);
@@ -268,12 +272,21 @@ public class GameWindowFactory extends JFrame implements IGameListener,  ActionL
         this.objectList = objectList;
     }
 
-    public static int getWindowWidth() {
-        return windowWidth;
+    public static int getExtendedWindowWidth() {
+        return extendedWindowWidth;
     }
 
-    public static void setWindowWidth(int windowWidth) {
-        GameWindowFactory.windowWidth = windowWidth;
+    public static void setExtendedWindowWidth(int windowWidth) {
+        GameWindowFactory.getInstance().extendedWindowWidth = windowWidth;
+    }
+
+    public static int getGameWindowWidth() {
+        return gameWindowWidth;
+    }
+
+    public static void setGameWindowWidth(int gameWindowWidth) {
+        GameWindowFactory.gameWindowWidth = gameWindowWidth;
+        setExtendedWindowWidth(gameWindowWidth + 300);
     }
 
     public static int getWindowHeight() {

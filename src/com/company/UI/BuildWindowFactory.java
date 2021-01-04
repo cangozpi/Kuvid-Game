@@ -26,8 +26,8 @@ public class BuildWindowFactory extends JFrame {
 
     //window variables
     private Builder builder = new Builder();
-    public static int windowWidth = 1280;
-    public static int windowHeight = 720;
+    private static int windowWidth = 1180;
+    private static int windowHeight = 720;
 
     //attained variables from user
     int difficultyLevel;
@@ -174,7 +174,7 @@ public class BuildWindowFactory extends JFrame {
                 final GameWindowFactory gamePanel = GameWindowFactory.getInstance();
 
                 gamePanel.setWindowHeight(windowHeight);
-                gamePanel.setWindowWidth(windowWidth);
+                gamePanel.setGameWindowWidth(windowWidth);
                 gamePanel.setL((LRatioSlider.getValue() * 5)/100.0);
                 gamePanel.render();
             }

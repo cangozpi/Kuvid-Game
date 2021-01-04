@@ -30,8 +30,8 @@ public class DataTransfer {
 
     public DataTransfer(){
 
-        databaseAdapter = new DatabaseAdapter(new LocalDB());
-        //databaseAdapter = new DatabaseAdapter(new MongoDB());
+        //databaseAdapter = new DatabaseAdapter(new LocalDB());
+        databaseAdapter = new DatabaseAdapter(new MongoDB());
         //saveGame parameters
         Inventory inventoryInstance = Inventory.getInstance();
         GameFactory gameFactory = GameFactory.getInstance();

@@ -65,7 +65,7 @@ public class GunFactory{
     public void moveGun(DirectionType direction){
         //gun position has problems need some calculations
         if(direction.equals(DirectionType.RIGHT)){
-            if(getPosition().getXCoordinate() + gunWidth + L/30 <= windowWidth){ // if can move right
+            if(getPosition().getXCoordinate() + gunWidth + L/30 + L <= GameFactory.getInstance().getGameWindowWidth()){ // if can move right
                 position.setXCoordinate(position.getXCoordinate() + L/30);
                 ammo.setXCoordinate(ammo.getXCoordinate() + L/30);
                 GameFactory.getInstance().moveGun(position, angle, ammo);

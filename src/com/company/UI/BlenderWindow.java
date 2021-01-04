@@ -41,6 +41,10 @@ public class BlenderWindow extends JFrame implements KeyListener {
         this.setTitle("KUVid Blender");
         this.setLayout(new FlowLayout());
         this.setBackground(Color.DARK_GRAY);
+        this.setFocusTraversalKeysEnabled(false);
+        //To fix not responding event listeners
+        this.setFocusable(true);
+        this.requestFocusInWindow();
         CenterWindow.centerWindow(this);
         JPanel inputPanel = new JPanel();
         int rows = 7;
@@ -237,13 +241,9 @@ public class BlenderWindow extends JFrame implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
 
-
         if(e.getKeyCode() == 66){ //B
-
             GameFactory.getInstance().resumeGame();
             this.dispose();
-
-
         }
 
     }
