@@ -23,7 +23,7 @@ public class PowerUpSelector {
         if(!legalPowerUpList.isEmpty()) {
             PowerUpType selectedPowerUp = legalPowerUpList.get((int) (Math.random() * (legalPowerUpList.size())));
             inventory.removePowerUp(selectedPowerUp);
-            gun.loadGun(new PowerUp(new Coordinate(0,0),new Velocity(0,0),selectedPowerUp,true,0,0));
+            gun.loadGun(new PowerUp(new Coordinate(0,0), new Velocity(0,0),selectedPowerUp,true,0,0));
         }else System.err.println("There are no legal PowerUps to use.");
     }
 

@@ -197,7 +197,7 @@ public class GameFactory extends GameObserver  {
                         (powerUp.getXCoordinate() <= gunPosition.getXCoordinate() &
                                 gunPosition.getXCoordinate() <= powerUp.getXCoordinate() + powerUp.getWidth())){
                     powerUpRemovalList.add(powerUp);
-                    Inventory.getInstance().addAmmo(powerUp);
+                    Inventory.getInstance().addPowerUp(powerUp.getProjectileType());
                 }
             }
 

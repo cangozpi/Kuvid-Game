@@ -150,23 +150,23 @@ public class Inventory {
                 atomMap.merge(AtomType.SIGMA,n,Integer::sum);
         }
     }
-    public void addPowerUp(PowerUpType powerUpType){
+    public void addPowerUp(IProjectileType powerUpType){
         if(powerUpMap==null) {
             System.err.println("PowerUp Map is not initialized.");
             return;
         }
-        switch (powerUpType){
-            case ALPHA:
-                powerUpMap.merge(powerUpType.ALPHA,1,Integer::sum);
+        switch (powerUpType.toString()){
+            case PowerUpType.ALPHA_powerUp:
+                powerUpMap.merge(PowerUpType.ALPHA,1,Integer::sum);
                 break;
-            case BETA:
-                powerUpMap.merge(powerUpType.BETA,1,Integer::sum);
+            case  PowerUpType.BETA_powerUp:
+                powerUpMap.merge(PowerUpType.BETA,1,Integer::sum);
                 break;
-            case GAMMA:
-               powerUpMap.merge(powerUpType.GAMMA,1,Integer::sum);
+            case PowerUpType.GAMMA_powerUp:
+               powerUpMap.merge(PowerUpType.GAMMA,1,Integer::sum);
                 break;
-            case SIGMA:
-                powerUpMap.merge(powerUpType.SIGMA,1,Integer::sum);
+            case PowerUpType.SIGMA_powerUp:
+                powerUpMap.merge(PowerUpType.SIGMA,1,Integer::sum);
         }
     }
     public void addPowerUp(PowerUpType powerUpType, int n){
@@ -174,18 +174,18 @@ public class Inventory {
             System.err.println("PowerUp Map is not initialized.");
             return;
         }
-        switch (powerUpType){
-            case ALPHA:
-                powerUpMap.merge(powerUpType.ALPHA,n,Integer::sum);
+        switch (powerUpType.toString()){
+            case PowerUpType.ALPHA_powerUp:
+                powerUpMap.merge(PowerUpType.ALPHA,n,Integer::sum);
                 break;
-            case BETA:
-                powerUpMap.merge(powerUpType.BETA,n,Integer::sum);
+            case  PowerUpType.BETA_powerUp:
+                powerUpMap.merge(PowerUpType.BETA,n,Integer::sum);
                 break;
-            case GAMMA:
-                powerUpMap.merge(powerUpType.GAMMA,n,Integer::sum);
+            case PowerUpType.GAMMA_powerUp:
+                powerUpMap.merge(PowerUpType.GAMMA,n,Integer::sum);
                 break;
-            case SIGMA:
-                powerUpMap.merge(powerUpType.SIGMA,n,Integer::sum);
+            case PowerUpType.SIGMA_powerUp:
+                powerUpMap.merge(PowerUpType.SIGMA,n,Integer::sum);
         }
     }
     public boolean removeAtom(AtomType atomType){
