@@ -64,13 +64,13 @@ public class Inventory {
         }
         switch (powerUpType){
             case ALPHA:
-                return atomMap.get(AtomType.ALPHA);
+                return powerUpMap.get(powerUpType.ALPHA);
             case BETA:
-                return atomMap.get(AtomType.BETA);
+                return powerUpMap.get(powerUpType.BETA);
             case GAMMA:
-                return atomMap.get(AtomType.GAMMA);
+                return powerUpMap.get(powerUpType.GAMMA);
             case SIGMA:
-                return atomMap.get(AtomType.SIGMA);
+                return powerUpMap.get(powerUpType.SIGMA);
         }
         return -1;
     }
@@ -157,16 +157,16 @@ public class Inventory {
         }
         switch (powerUpType){
             case ALPHA:
-                atomMap.merge(AtomType.ALPHA,1,Integer::sum);
+                powerUpMap.merge(powerUpType.ALPHA,1,Integer::sum);
                 break;
             case BETA:
-                atomMap.merge(AtomType.BETA,1,Integer::sum);
+                powerUpMap.merge(powerUpType.BETA,1,Integer::sum);
                 break;
             case GAMMA:
-                atomMap.merge(AtomType.GAMMA,1,Integer::sum);
+               powerUpMap.merge(powerUpType.GAMMA,1,Integer::sum);
                 break;
             case SIGMA:
-                atomMap.merge(AtomType.SIGMA,1,Integer::sum);
+                powerUpMap.merge(powerUpType.SIGMA,1,Integer::sum);
         }
     }
     public void addPowerUp(PowerUpType powerUpType, int n){
@@ -176,16 +176,16 @@ public class Inventory {
         }
         switch (powerUpType){
             case ALPHA:
-                atomMap.merge(AtomType.ALPHA,n,Integer::sum);
+                powerUpMap.merge(powerUpType.ALPHA,n,Integer::sum);
                 break;
             case BETA:
-                atomMap.merge(AtomType.BETA,n,Integer::sum);
+                powerUpMap.merge(powerUpType.BETA,n,Integer::sum);
                 break;
             case GAMMA:
-                atomMap.merge(AtomType.GAMMA,n,Integer::sum);
+                powerUpMap.merge(powerUpType.GAMMA,n,Integer::sum);
                 break;
             case SIGMA:
-                atomMap.merge(AtomType.SIGMA,n,Integer::sum);
+                powerUpMap.merge(powerUpType.SIGMA,n,Integer::sum);
         }
     }
     public boolean removeAtom(AtomType atomType){
@@ -230,7 +230,7 @@ public class Inventory {
         }
         return true;
     }
-    public boolean removePowerUp(IProjectileType powerUpType){
+    public boolean removePowerUp(PowerUpType powerUpType){
         if(powerUpMap==null) {
             System.err.println("PowerUp Map is not initialized.");
             return false;
@@ -238,16 +238,16 @@ public class Inventory {
         if(powerUpMap.get(powerUpType)-1 < 0)return false;
         switch (powerUpType.toString()){
             case PowerUpType.ALPHA_powerUp:
-                atomMap.merge(AtomType.ALPHA,-1,Integer::sum);
+                powerUpMap.merge(powerUpType.ALPHA,-1,Integer::sum);
                 break;
             case PowerUpType.BETA_powerUp:
-               atomMap.merge(AtomType.BETA,-1,Integer::sum);
+                powerUpMap.merge(powerUpType.BETA,-1,Integer::sum);
                 break;
             case PowerUpType.GAMMA_powerUp:
-                atomMap.merge(AtomType.GAMMA,-1,Integer::sum);
+                powerUpMap.merge(powerUpType.GAMMA,-1,Integer::sum);
                 break;
             case PowerUpType.SIGMA_powerUp:
-                atomMap.merge(AtomType.SIGMA,-1,Integer::sum);
+                powerUpMap.merge(powerUpType.SIGMA,-1,Integer::sum);
         }
         return true;
     }

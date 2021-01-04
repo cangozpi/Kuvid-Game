@@ -479,7 +479,7 @@ public class GameFactory extends GameObserver  {
     }
 
     public int getTime() {
-        return time;
+        return time *33 / 100;
     }
 
     public void setTime(int time) {

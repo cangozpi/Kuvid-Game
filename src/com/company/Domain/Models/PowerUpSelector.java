@@ -21,7 +21,7 @@ public class PowerUpSelector {
             if(inventory.getPowerUpAmount(powerUpType)>0)legalPowerUpList.add(powerUpType);
         }
         if(!legalPowerUpList.isEmpty()) {
-            IProjectileType selectedPowerUp = legalPowerUpList.get((int) (Math.random() * (legalPowerUpList.size())));
+            PowerUpType selectedPowerUp = legalPowerUpList.get((int) (Math.random() * (legalPowerUpList.size())));
             inventory.removePowerUp(selectedPowerUp);
             gun.loadGun(new PowerUp(new Coordinate(0,0),new Velocity(0,0),selectedPowerUp,true,0,0));
         }else System.err.println("There are no legal PowerUps to use.");
