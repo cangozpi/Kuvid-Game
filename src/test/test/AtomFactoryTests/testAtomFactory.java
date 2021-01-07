@@ -4,10 +4,7 @@ package AtomFactoryTests;
 import com.company.Domain.Models.AtomFactory;
 import com.company.Domain.Models.GameFactory;
 import com.company.Domain.Models.Projectile.Atom;
-import com.company.Domain.Models.Projectile.Decorator.AlphaDecorator;
-import com.company.Domain.Models.Projectile.Decorator.BetaDecorator;
-import com.company.Domain.Models.Projectile.Decorator.GammaDecorator;
-import com.company.Domain.Models.Projectile.Decorator.SigmaDecorator;
+import com.company.Domain.Models.Projectile.Decorator.*;
 import com.company.Domain.Utility.Coordinate;
 import com.company.Domain.Utility.Velocity;
 import com.company.Enums.AtomType;
@@ -23,6 +20,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
@@ -79,7 +77,8 @@ public class testAtomFactory {
         boolean[] isAmmos = {true, false, true, false};
         int[] heights = {1, 2, 3, 4};
         int[] widths = {4,3,2,1};
-        int a = 5;
+
+        //do the checks on parameters
         for(int i = 0; i < 4; i++){
             Atom testInstance = new AtomFactory().getInstance(coordinates[i], velocitys[i], projectileTypes[i], isAmmos[i], heights[i], widths[i]);
             //add to list to check whether it stays as valid at the end of the test call
@@ -100,6 +99,32 @@ public class testAtomFactory {
         }
 
 
+    }
+
+    //Returned atom should be an instance of the passed in atomType’s corresponding concrete AtomDecorator class.
+    // (i.e if passed in atomType is Alpha_atom then, AlphaDecorator instance should be returned).
+    @Test
+    public void correspondingAtomDecoratorGivenAtomType(){
+       Arrays.stream(AtomType.values()).forEach((x) -> {
+           Atom testInstance = new AtomFactory().getInstance(new Coordinate(0,0), new Velocity(10, 1)
+           , x, true, 1, 1);
+
+           //check for the correct atomType's corresponding AtomDecorator class
+           switch (x){
+               case ALPHA:
+                   assertTrue(testInstance instanceof AlphaDecorator);
+                   break;
+               case BETA:
+                   assertTrue(testInstance instanceof BetaDecorator);
+                   break;
+               case SIGMA:
+                   assertTrue(testInstance instanceof SigmaDecorator);
+                   break;
+               case GAMMA:
+                   assertTrue(testInstance instanceof GammaDecorator);
+                   break;
+           }
+       });
     }
 
   /*  @Test
