@@ -17,7 +17,8 @@ public class AtomFactory {
     }
 
     public Atom getInstance(Coordinate coordinate, Velocity velocity, IProjectileType atomType, boolean isAmmo, int height, int width){
-        // EFFECTS: returns an Atom instance corresponding to the passed in atomType.
+        // EFFECTS: returns an Atom instance instantiated with the given parameters and decorated with the AtomDecorator that corresponds
+        // to the given atomType. i.e,
         // If atomType is Alpha_atom then, a new Atom which represents alpha atom instance is returned,
         // else,atomType is BETA_atom then, a new Atom which represents a beta atom instance is returned,
         // else,atomType is GAMMA_atom then, a new Atom which represents a gamma atom instance is returned,
