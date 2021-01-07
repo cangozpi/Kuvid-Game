@@ -17,6 +17,13 @@ public class AtomFactory {
     }
 
     public Atom getInstance(Coordinate coordinate, Velocity velocity, IProjectileType atomType, boolean isAmmo, int height, int width){
+        // EFFECTS: returns an Atom instance corresponding to the passed in atomType.
+        // If atomType is Alpha_atom then, a new Atom which represents alpha atom instance is returned,
+        // else,atomType is BETA_atom then, a new Atom which represents a beta atom instance is returned,
+        // else,atomType is GAMMA_atom then, a new Atom which represents a gamma atom instance is returned,
+        // else, a new Atom which represents a sigma atom is returned as default.
+        //all of the returned instances are Atom's which are decorated with their corresponding atomType's AtomDecorator.
+
         Atom referenceAtom;
         switch (atomType.toString()){
             case AtomType.ALPHA_atom:
