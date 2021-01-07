@@ -33,14 +33,6 @@ public class testAtomFactory {
     //variable to hold Atom instances that are generated on each test call
     ArrayList<Atom> initializedAtomInstances = new ArrayList<>();
 
-    //denotes that the annotated method will be executed before each test method
-
-
-    @BeforeEach
-    void init() {
-
-    }
-
     //after each test getInstance() should return an instance of Atom class if no Exception is raised
     @After
     public void tearDown() throws Exception {
@@ -124,6 +116,9 @@ public class testAtomFactory {
                    assertTrue(testInstance instanceof GammaDecorator);
                    break;
            }
+
+           //add testInstance for @After check
+           initializedAtomInstances.add(testInstance);
        });
     }
 
