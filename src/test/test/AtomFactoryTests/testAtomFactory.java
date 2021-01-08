@@ -227,6 +227,40 @@ public class testAtomFactory {
         instances.stream().forEach((x) -> initializedAtomInstances.add(x));
     }
 
+    //check SigmaDecorator's aspects
+    @Test
+    public void sigmaDecoratorTest(){
+        AtomFactory factoryInstance = new AtomFactory();
+        //initialize for 10 instances to check randomness
+        ArrayList<AtomDecorator> instances = new ArrayList<>();
+        for(int i = 0; i < 1; i++){
+            instances.add((AtomDecorator) factoryInstance.getInstance(new Coordinate(0,0), new Velocity(10, 1)
+                    , AtomType.SIGMA, true, 1, 1));
+        }
+
+        //check parameters of each instance instantiated
+        instances.stream().forEach((x) -> {
+            //extract parameters from instance
+            double stabilityConstant = x.getStabilityConstant();
+            double protons = x.getProtons();
+            double neutrons = x.getNeutrons();
+            double efficiency = x.getEfficiency();
+
+            //stability Constant should be 0.7
+            assertEquals(0.7 ,stabilityConstant,0);
+            //protons should be 64
+            assertEquals(64, protons, 0);
+            //neutrons should be either 29 | 32 | 33
+            assertThat(protons, anyOf(is(63.0), is(64.0), is(67.0)));
+            //efficiency should be (1 + stabilityConstant) / 2 + ((neutrons – protons) / protons)
+            assertEquals((1 + stabilityConstant) / 2 + ((neutrons - protons) / protons), efficiency, 0);
+        });
+
+
+        //add testInstance for @After check
+        instances.stream().forEach((x) -> initializedAtomInstances.add(x));
+    }
+
 
 
   /*  @Test
