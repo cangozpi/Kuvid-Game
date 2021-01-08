@@ -14,8 +14,8 @@ public class BuilderHandler {
     private Builder builder;
     private GameFactory game;
 
-    public BuilderHandler(Builder builder) {
-        this.builder = builder;
+    public BuilderHandler() {
+        builder = new Builder();
 
     }
 
