@@ -5,10 +5,10 @@ import com.company.Domain.Models.AtomFactory;
 import com.company.Domain.Models.GameFactory;
 import com.company.Domain.Models.Projectile.Atom;
 import com.company.Domain.Models.Projectile.Decorator.*;
+import com.company.Domain.Models.Projectile.ReactionBlocker;
 import com.company.Domain.Utility.Coordinate;
 import com.company.Domain.Utility.Velocity;
-import com.company.Enums.AtomType;
-import com.company.Enums.IProjectileType;
+import com.company.Enums.*;
 import org.junit.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -270,15 +270,28 @@ public class testAtomFactory {
     @Test
     public void AtomTypeEdgeCase(){
         //pass SIGMA_atom
-      //  Atom instance1 =
+        Atom instance1 = factoryInstance.getInstance(new Coordinate(0,0), new Velocity(10, 1)
+                , AtomType.SIGMA, true, 1, 1);
+        assertEquals(AtomType.SIGMA, instance1.getAtomType());
 
-        //pass another enum
+        //pass another enum than AtomType
+        Atom instance2 = factoryInstance.getInstance(new Coordinate(0,0), new Velocity(10, 1)
+                , PowerUpType.ALPHA, true, 1, 1);
+        assertEquals(AtomType.SIGMA, instance1.getAtomType());
 
+        Atom instance3 = factoryInstance.getInstance(new Coordinate(0,0), new Velocity(10, 1)
+                , ReactionBlockerType.SIGMA_B, true, 1, 1);
+        assertEquals(AtomType.SIGMA, instance1.getAtomType());
 
-        //pass non-mathing string with atomType
+        Atom instance4 = factoryInstance.getInstance(new Coordinate(0,0), new Velocity(10, 1)
+                , MoleculeType.ALPHA, true, 1, 1);
+        assertEquals(AtomType.SIGMA, instance1.getAtomType());
 
-
-        //pass null
+        //add testInstance for @After check
+        initializedAtomInstances.add(instance1);
+        initializedAtomInstances.add(instance2);
+        initializedAtomInstances.add(instance3);
+        initializedAtomInstances.add(instance4);
     }
 
 
