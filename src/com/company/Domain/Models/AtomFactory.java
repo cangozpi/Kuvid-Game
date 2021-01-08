@@ -25,6 +25,8 @@ public class AtomFactory {
          else, a new Atom which represents a sigma atom is returned as default.
         all of the returned instances are Atom's which are decorated with their corresponding atomType's AtomDecorator.*/
 
+        // REQUIRES: atomType parameter should not be null and should be of type AtomType enum.
+
         Atom referenceAtom;
         switch (atomType.toString()){
             case AtomType.ALPHA_atom:
