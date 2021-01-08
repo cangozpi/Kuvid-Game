@@ -22,6 +22,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static org.hamcrest.CoreMatchers.anyOf;
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
@@ -122,7 +124,7 @@ public class testAtomFactory {
        });
     }
 
-    //check AlphaDecorator
+    //check AlphaDecorator's aspects
     @Test
     public void AlphaDecoratorTest(){
         AtomFactory factoryInstance = new AtomFactory();
@@ -155,6 +157,42 @@ public class testAtomFactory {
         //add testInstance for @After check
         instances.stream().forEach((x) -> initializedAtomInstances.add(x));
     }
+
+    //check BetaDecorator's aspects
+    @Test
+    public void BetaDecoratorTest(){
+        AtomFactory factoryInstance = new AtomFactory();
+        //initialize for 10 instances to check randomness
+        ArrayList<AtomDecorator> instances = new ArrayList<>();
+        for(int i = 0; i < 1; i++){
+            instances.add((AtomDecorator) factoryInstance.getInstance(new Coordinate(0,0), new Velocity(10, 1)
+                    , AtomType.BETA, true, 1, 1));
+        }
+
+        //check parameters of each instance instantiated
+        instances.stream().forEach((x) -> {
+            //extract parameters from instance
+            double stabilityConstant = x.getStabilityConstant();
+            double protons = x.getProtons();
+            double neutrons = x.getNeutrons();
+            double efficiency = x.getEfficiency();
+
+            //stability Constant should be 0.9
+            assertEquals(0.9 ,stabilityConstant,0);
+            //protons should be 16
+            assertEquals(16, protons, 0);
+            //neutrons should be either 15 | 16 | 17 | 18 | 21
+            assertThat(protons, anyOf(is(15.0), is(16.0), is(17.0), is(18.0), is(21.0)));
+            //efficiency should be stabilityConstant – ((0.5 * (neutrons  - protons)) / protons)
+            assertEquals(stabilityConstant - ((0.5 * (neutrons  - protons)) / protons), efficiency, 0);
+        });
+
+
+        //add testInstance for @After check
+        instances.stream().forEach((x) -> initializedAtomInstances.add(x));
+    }
+
+    
 
   /*  @Test
     @DisplayName("A special test case")
