@@ -2,19 +2,12 @@ package AtomFactoryTests;
 
 
 import com.company.Domain.Models.AtomFactory;
-import com.company.Domain.Models.GameFactory;
 import com.company.Domain.Models.Projectile.Atom;
 import com.company.Domain.Models.Projectile.Decorator.*;
-import com.company.Domain.Models.Projectile.ReactionBlocker;
 import com.company.Domain.Utility.Coordinate;
 import com.company.Domain.Utility.Velocity;
 import com.company.Enums.*;
 import org.junit.*;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,12 +15,12 @@ import java.util.Arrays;
 import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
-import static org.junit.jupiter.api.Assumptions.assumeFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class testAtomFactory {
     //NOTE: if tests do not work when you run the program then you have to do File->ProjectStructure->Modules
-    // and then change junit.api and j4test to compile to fix the issue. and use java 1.8
+    // and then change junit.api and j4test and vintage to compile from test to fix the issue. and use java 1.8
 
     //variable to hold Atom instances that are generated on each test call
     ArrayList<Atom> initializedAtomInstances = new ArrayList<>();
@@ -50,6 +43,7 @@ public class testAtomFactory {
                     assertEquals(x.getClass(), GammaDecorator.class);
                     break;
             }
+            assertNotNull(x);
         });
 
         //clear the list for saving resources
@@ -268,13 +262,13 @@ public class testAtomFactory {
     //Passing atomType anything other than, ALPHA_atom, BETA_atom or GAMMA_atom should always proceed as
     // if SIGMA_atom was passed in as a parameter.(i.e should return an instance of SigmaDecorator class)
     @Test
-    public void AtomTypeEdgeCase(){
+    public void atomTypeEdgeCase(){
         //pass SIGMA_atom
         Atom instance1 = factoryInstance.getInstance(new Coordinate(0,0), new Velocity(10, 1)
                 , AtomType.SIGMA, true, 1, 1);
         assertEquals(AtomType.SIGMA, instance1.getAtomType());
 
-        //pass another enum than AtomType
+        //pass another enum that implements IProjectileType other than AtomType
         Atom instance2 = factoryInstance.getInstance(new Coordinate(0,0), new Velocity(10, 1)
                 , PowerUpType.ALPHA, true, 1, 1);
         assertEquals(AtomType.SIGMA, instance1.getAtomType());
@@ -287,6 +281,7 @@ public class testAtomFactory {
                 , MoleculeType.ALPHA, true, 1, 1);
         assertEquals(AtomType.SIGMA, instance1.getAtomType());
 
+
         //add testInstance for @After check
         initializedAtomInstances.add(instance1);
         initializedAtomInstances.add(instance2);
@@ -295,15 +290,53 @@ public class testAtomFactory {
     }
 
 
+    //check on crucial implementation specific Exceptions that can be raised
+    @Test
+    public void exceptionChecks(){
+        //passing null should raise null pointer exception due to switch implementation
+        assertThrows(NullPointerException.class, () -> {
+            factoryInstance.getInstance(new Coordinate(0,0), new Velocity(10, 1)
+                    , null, true, 1, 1);
+        });
+    }
 
-  /*  @Test
-    @DisplayName("A special test case")
-    @ParameterizedTest
-    @ValueSource(strings = { "racecar", "radar", "able was I ere I saw elba" })
-    public void name(String candidate) {
-        *//*assertEquals(GameFactory.class, GameFactory.getInstance().getClass());
-        assumeFalse(5 < 1);*//*
 
-    }*/
+    //Check that neutrons of the returned Atom instances vary randomly.
+    @Test
+    public void neutronRandomnessTest(){
+        //idea is to generate two arrays of size many instances and check their neutron numbers in the same order
+        // as they are initialize assume randomness if not all of the corresponding two has the same neutrons
+        int size = 20;
+        ArrayList<AtomDecorator> list1 = new ArrayList<>();
+        ArrayList<AtomDecorator> list2 = new ArrayList<>();
+
+        //initialize the first list
+        for(int i = 0; i < size; i++){
+            AtomDecorator instance = (AtomDecorator) factoryInstance.getInstance(new Coordinate(0,0), new Velocity(10, 1)
+                    , AtomType.SIGMA, true, 1, 1);
+            list1.add(instance);
+        }
+
+        //initialize the second list with a new instance of AtomFactory
+        AtomFactory newInstance = new AtomFactory();
+        for(int i = 0; i < size; i++){
+            AtomDecorator instance = (AtomDecorator) newInstance.getInstance(new Coordinate(0,0), new Velocity(10, 1)
+                    , AtomType.SIGMA, true, 1, 1);
+            list2.add(instance);
+        }
+
+        //compare the corresponding array elements neutron numbers wrt their initialization order
+        int sameCount = 0; //keeps count of same corresponding pairs btw two lists
+        for(int i = 0; i < size ; i++){
+            sameCount += (list1.get(i).getNeutrons() == list2.get(i).getNeutrons()) ? 1 : 0;//increment sameCount if two pairs neutrons match
+        }
+
+        //not all of the corresponding pairs neutrons should be equal for randomness
+        assertFalse(sameCount == size);
+
+    }
+
+
+
 
 }
