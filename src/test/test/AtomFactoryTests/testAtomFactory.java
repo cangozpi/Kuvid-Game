@@ -9,10 +9,7 @@ import com.company.Domain.Utility.Coordinate;
 import com.company.Domain.Utility.Velocity;
 import com.company.Enums.AtomType;
 import com.company.Enums.IProjectileType;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -59,6 +56,16 @@ public class testAtomFactory {
         initializedAtomInstances.clear();
     }
 
+
+    // global variable
+    AtomFactory factoryInstance;
+
+    //initialize common parameters before Each test
+    @Before
+    public void init() {
+        factoryInstance = new AtomFactory();
+    }
+
     //returned atom should be initialized correctly with the supplied parameters
     // (i.e Atom should have the same coordinate, velocity, projectileType, isAmmo, height, width).
     @Test
@@ -74,7 +81,7 @@ public class testAtomFactory {
 
         //do the checks on parameters
         for(int i = 0; i < 4; i++){
-            Atom testInstance = new AtomFactory().getInstance(coordinates[i], velocitys[i], projectileTypes[i], isAmmos[i], heights[i], widths[i]);
+            Atom testInstance = factoryInstance.getInstance(coordinates[i], velocitys[i], projectileTypes[i], isAmmos[i], heights[i], widths[i]);
             //add to list to check whether it stays as valid at the end of the test call
             initializedAtomInstances.add(testInstance);
 
@@ -100,7 +107,7 @@ public class testAtomFactory {
     @Test
     public void correspondingAtomDecoratorGivenAtomType(){
        Arrays.stream(AtomType.values()).forEach((x) -> {
-           Atom testInstance = new AtomFactory().getInstance(new Coordinate(0,0), new Velocity(10, 1)
+           Atom testInstance = factoryInstance.getInstance(new Coordinate(0,0), new Velocity(10, 1)
            , x, true, 1, 1);
 
            //check for the correct atomType's corresponding AtomDecorator class
@@ -127,7 +134,6 @@ public class testAtomFactory {
     //check AlphaDecorator's aspects
     @Test
     public void alphaDecoratorTest(){
-        AtomFactory factoryInstance = new AtomFactory();
         //initialize for 10 instances to check randomness
         ArrayList<AtomDecorator> instances = new ArrayList<>();
         for(int i = 0; i < 1; i++){
@@ -161,7 +167,6 @@ public class testAtomFactory {
     //check BetaDecorator's aspects
     @Test
     public void betaDecoratorTest(){
-        AtomFactory factoryInstance = new AtomFactory();
         //initialize for 10 instances to check randomness
         ArrayList<AtomDecorator> instances = new ArrayList<>();
         for(int i = 0; i < 1; i++){
@@ -196,7 +201,6 @@ public class testAtomFactory {
     //check GammaDecorator's aspects
     @Test
     public void gammaDecoratorTest(){
-        AtomFactory factoryInstance = new AtomFactory();
         //initialize for 10 instances to check randomness
         ArrayList<AtomDecorator> instances = new ArrayList<>();
         for(int i = 0; i < 1; i++){
@@ -230,7 +234,6 @@ public class testAtomFactory {
     //check SigmaDecorator's aspects
     @Test
     public void sigmaDecoratorTest(){
-        AtomFactory factoryInstance = new AtomFactory();
         //initialize for 10 instances to check randomness
         ArrayList<AtomDecorator> instances = new ArrayList<>();
         for(int i = 0; i < 1; i++){
@@ -259,6 +262,23 @@ public class testAtomFactory {
 
         //add testInstance for @After check
         instances.stream().forEach((x) -> initializedAtomInstances.add(x));
+    }
+
+
+    //Passing atomType anything other than, ALPHA_atom, BETA_atom or GAMMA_atom should always proceed as
+    // if SIGMA_atom was passed in as a parameter.(i.e should return an instance of SigmaDecorator class)
+    @Test
+    public void AtomTypeEdgeCase(){
+        //pass SIGMA_atom
+      //  Atom instance1 =
+
+        //pass another enum
+
+
+        //pass non-mathing string with atomType
+
+
+        //pass null
     }
 
 
