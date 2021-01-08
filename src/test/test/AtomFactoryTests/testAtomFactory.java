@@ -122,6 +122,40 @@ public class testAtomFactory {
        });
     }
 
+    //check AlphaDecorator
+    @Test
+    public void AlphaDecoratorTest(){
+        AtomFactory factoryInstance = new AtomFactory();
+        //initialize for 10 instances to check randomness
+        ArrayList<AtomDecorator> instances = new ArrayList<>();
+        for(int i = 0; i < 1; i++){
+            instances.add((AtomDecorator) factoryInstance.getInstance(new Coordinate(0,0), new Velocity(10, 1)
+                    , AtomType.ALPHA, true, 1, 1));
+        }
+
+        //check parameters of each instance instantiated
+        instances.stream().forEach((x) -> {
+            //extract parameters from instance
+            double stabilityConstant = x.getStabilityConstant();
+            double protons = x.getProtons();
+            double neutrons = x.getNeutrons();
+            double efficiency = x.getEfficiency();
+
+            //stability Constant should be 0.5
+            assertEquals(0.85 ,stabilityConstant,0);
+            //protons should be 8
+            assertEquals(8, protons, 0);
+            //neutrons should be either 7 | 8 | 9
+            assertEquals(8, neutrons, 1);
+            //efficiency should be (1 – ((neutrons – protons) / protons) * stabilityConstant)
+            assertEquals((1 - ((neutrons - protons) / protons) * stabilityConstant), efficiency, 0);
+        });
+
+
+        //add testInstance for @After check
+        instances.stream().forEach((x) -> initializedAtomInstances.add(x));
+    }
+
   /*  @Test
     @DisplayName("A special test case")
     @ParameterizedTest
