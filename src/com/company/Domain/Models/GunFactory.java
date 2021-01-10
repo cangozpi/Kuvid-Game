@@ -63,11 +63,14 @@ public class GunFactory{
     }
 
     public void moveGun(DirectionType direction){
-        //gun position has problems need some calculations
+        // Requires gun to be initialized
+        // Modifes this.position, this.ammo.position, gameFactory.gunPosition and gameFactory.ammo.position by + L/30 for the right direction and - L/30 for the left direction
         if(direction.equals(DirectionType.RIGHT)){
             if(getPosition().getXCoordinate() + gunWidth + L/30 + L <= GameFactory.getInstance().getGameWindowWidth()){ // if can move right
                 position.setXCoordinate(position.getXCoordinate() + L/30);
-                ammo.setXCoordinate(ammo.getXCoordinate() + L/30);
+                if( ammo != null){
+                    ammo.setXCoordinate(ammo.getXCoordinate() + L/30);
+                }
                 GameFactory.getInstance().moveGun(position, angle, ammo);
             }
 
@@ -78,7 +81,9 @@ public class GunFactory{
         else if(direction.equals(DirectionType.LEFT)){
             if(getPosition().getXCoordinate() >= L/30){ // if can move left
                 position.setXCoordinate(position.getXCoordinate() - L/30);
-                ammo.setXCoordinate(ammo.getXCoordinate()- L/30);
+                if( ammo != null){
+                    ammo.setXCoordinate(ammo.getXCoordinate() - L/30);
+                }
                 GameFactory.getInstance().moveGun(position, angle, ammo);
             }
         }

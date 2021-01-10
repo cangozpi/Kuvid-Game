@@ -62,6 +62,13 @@
             <version>5.6.2</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.opentest4j/opentest4j -->
+        <dependency>
+            <groupId>org.opentest4j</groupId>
+            <artifactId>opentest4j</artifactId>
+            <version>1.0.0-M1</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 
@@ -71,5 +78,5 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
-    
+
 </project>

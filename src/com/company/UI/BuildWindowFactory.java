@@ -1,7 +1,7 @@
 package com.company.UI;
 
 import com.company.Domain.Controller.BuilderHandler;
-import com.company.Domain.Models.Builder;
+
 import com.company.Domain.Models.GameFactory;
 import com.company.Domain.Utility.Coordinate;
 import com.company.Enums.AtomType;
@@ -25,7 +25,7 @@ public class BuildWindowFactory extends JFrame {
     private static BuildWindowFactory factoryInstance;
 
     //window variables
-    private Builder builder = new Builder();
+
     private static int windowWidth = 1180;
     private static int windowHeight = 720;
 
@@ -123,7 +123,7 @@ public class BuildWindowFactory extends JFrame {
         submitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                BuilderHandler builderHandler = new BuilderHandler(builder);
+                BuilderHandler builderHandler = new BuilderHandler();
 
 
                 //extract information fr

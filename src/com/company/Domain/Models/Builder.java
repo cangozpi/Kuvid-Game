@@ -15,6 +15,7 @@ public class Builder {
     private GameFactory game;
 
     public Builder() {
+
     }
 
     public void buildGame(int gameWindowHeight, int gameWindowWidth, int difficulty, HashMap<AtomType, Integer> inventoryContents, boolean isLinear, double L_ratio) {
