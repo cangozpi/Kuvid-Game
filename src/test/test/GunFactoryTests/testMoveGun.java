@@ -124,7 +124,7 @@ public class testMoveGun {
 
     @Test
     public void delegatedToGameTest(){
-
+        //  for some reason this test fails on the first run but works after that.
         int L = gun.getL();
 
         gun.moveGun(DirectionType.RIGHT);
