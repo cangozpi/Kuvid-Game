@@ -25,36 +25,7 @@ import static org.junit.Assert.*;
 
 
 public class testMoveGun {
-    //NOTE: if tests do not work when you run the program then you have to do File->ProjectStructure->Modules
-    // and then change junit.api and j4test and vintage to compile from test to fix the issue. and use java 1.8
 
-    //variable to hold Atom instances that are generated on each test call
-    ArrayList<Atom> initializedAtomInstances = new ArrayList<>();
-
-    //after each test getInstance() should return an instance of Atom class if no Exception is raised
-    @After
-    public void tearDown() throws Exception {
-        initializedAtomInstances.stream().forEach((x) -> {
-            switch(x.getAtomType()){
-                case ALPHA:
-                    assertEquals(x.getClass(), AlphaDecorator.class);
-                    break;
-                case BETA:
-                    assertEquals(x.getClass(), BetaDecorator.class);
-                    break;
-                case SIGMA:
-                    assertEquals(x.getClass(), SigmaDecorator.class);
-                    break;
-                case GAMMA:
-                    assertEquals(x.getClass(), GammaDecorator.class);
-                    break;
-            }
-            assertNotNull(x);
-        });
-
-        //clear the list for saving resources
-        initializedAtomInstances.clear();
-    }
 
 
     GunFactory gun;
@@ -77,19 +48,16 @@ public class testMoveGun {
 
     }
 
-    //returned atom should be initialized correctly with the supplied parameters
-    // (i.e Atom should have the same coordinate, velocity, projectileType, isAmmo, height, width).
+
     @Test
     public void rightEdgeTest(){
-        //check btw the passed in parameters and the returned instance's variables
-        //valid parameters to initialize Atoms below
+
         int L = gun.getL();
         int gameWindowWidth = game.getGameWindowWidth();
         double gunWidth = gun.getGunWidth();
         Coordinate oldPosition = new Coordinate(gameWindowWidth - gun.getGunWidth(), 300);
         gun.setPosition(oldPosition);
-       // double xCoord = gun.getPosition().getXCoordinate() + 3*L/4;   // setting ammo position according to the gun position as well
-       // gun.getAmmo().setXCoordinate(xCoord);
+
         gun.moveGun(DirectionType.RIGHT);
 
 
@@ -100,18 +68,15 @@ public class testMoveGun {
 
     }
 
-    //Returned atom should be an instance of the passed in atomType’s corresponding concrete AtomDecorator class.
-    // (i.e if passed in atomType is Alpha_atom then, AlphaDecorator instance should be returned).
+
     @Test
     public void leftEdgeTest(){
-        //check btw the passed in parameters and the returned instance's variables
-        //valid parameters to initialize Atoms below
+
         int L = gun.getL();
         double gunWidth = gun.getGunWidth();
         Coordinate oldPosition = new Coordinate(0, 300);
         gun.setPosition(oldPosition);
-        // double xCoord = gun.getPosition().getXCoordinate() + 3*L/4;   // setting ammo position according to the gun position as well
-        // gun.getAmmo().setXCoordinate(xCoord);
+
         gun.moveGun(DirectionType.LEFT);
         //coordinate check shouldn't move
         assertEquals(gun.getPosition(), oldPosition);

@@ -63,7 +63,8 @@ public class GunFactory{
     }
 
     public void moveGun(DirectionType direction){
-
+        // Requires gun to be initialized
+        // Modifes this.position, this.ammo.position, gameFactory.gunPosition and gameFactory.ammo.position by + L/30 for the right direction and - L/30 for the left direction
         if(direction.equals(DirectionType.RIGHT)){
             if(getPosition().getXCoordinate() + gunWidth + L/30 + L <= GameFactory.getInstance().getGameWindowWidth()){ // if can move right
                 position.setXCoordinate(position.getXCoordinate() + L/30);
