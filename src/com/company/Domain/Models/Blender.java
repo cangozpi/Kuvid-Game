@@ -14,6 +14,12 @@ public class Blender {
         if (blender == null) blender = new Blender();
         return blender;
     }
+    //REQUIRES: (source AtomType and product AtomType are not equal it returns true but does not blend)
+    //MODIFIES: - not input but inventory instance
+    //EFFECTS: returns true after removing the source’s atom amount in the
+    //inventory by sourceAmount and adding the blender’s indicated amount for the desired source product exchange
+    // to the product type’s atom amount in the inventory and turns false if sourceAmount is bigger than
+    // the atom amount of the source in the inventory. Source Atom type must be a lower type than product atom.
     public boolean blendAtoms(AtomType source, AtomType product, int sourceAmount){
 
         for (AtomType atomType: AtomType.values()){
