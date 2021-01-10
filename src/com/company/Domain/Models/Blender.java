@@ -66,7 +66,12 @@ public class Blender {
         }
         return true;
     }
-
+    /*
+        @REQUIRES:Inventory instance/ atomType source:Beta,Gamma,Sigma / atomType product:Atom, Beta,Gamma / sourceAmount<0
+        @MODIFIES:Inventory instance
+        @EFFECTS: Creates multiple smaller AtomType product from larger AtomType source given a source atom amount
+         and adds them to inventory.
+     */
     public boolean breakAtoms(AtomType source, AtomType product, int sourceAmount){
         for (AtomType atomType: AtomType.values()){
             if(atomType == source){

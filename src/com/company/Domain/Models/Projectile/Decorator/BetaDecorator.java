@@ -48,7 +48,7 @@ public class BetaDecorator extends AtomDecorator{
 
     @Override
     public double getStabilityConstant() {
-        return getStabilityConstant();
+        return stabilityConstant;
     }
 
     @Override

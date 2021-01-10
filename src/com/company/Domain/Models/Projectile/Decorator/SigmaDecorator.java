@@ -42,7 +42,7 @@ public class SigmaDecorator extends AtomDecorator{
 
     @Override
     public double getStabilityConstant() {
-        return getStabilityConstant();
+        return stabilityConstant;
     }
 
     @Override
