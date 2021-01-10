@@ -61,6 +61,15 @@ public class Atom extends Projectile{
     }
 
     public void addShield(ShieldType shieldType){
+
+        //@REQUIRES: The argument shieldType must of type shieldType.
+
+        //@MODIFIES: modifies the shield map of the atom and speed multiplier of the atom.
+
+        /*@EFFECTS: atom speed is multiplied with the shield type's multiplier, in the atom's shield map corresponding
+        type of shield's amount is incremented by 1.
+         */
+
         if(shieldMap == null){
             shieldMap = new HashMap<>();
             shieldMap.put(ShieldType.ETA,0);
