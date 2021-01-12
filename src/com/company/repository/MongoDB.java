@@ -50,7 +50,7 @@ public class MongoDB implements Database{
     public void saveGame(String username, HashMap<AtomType, Integer> atomMap,
                          HashMap<PowerUpType, Integer> powerUpMap, HashMap<PowerUpType,
             Integer> userPowerUpMap, HashMap<MoleculeType, Integer> moleculeMap, Map<ReactionBlockerType,
-            Integer> reactionBlockerAmount, int score, boolean isLinear, int time) {
+            Integer> reactionBlockerAmount, double score, boolean isLinear, int time) {
 
         Document gameDb = new Document("username", username)
                 .append("atomMap", atomMap.toString())
@@ -74,7 +74,7 @@ public class MongoDB implements Database{
         String userPowerUpMapRaw = (String) savedGame.get("userPowerUpMap");
         String moleculeMapRaw = (String) savedGame.get("moleculeMap");
         String reactionBlockerAmountRaw = (String) savedGame.get("reactionBlockerAmount");
-        int score = (int) savedGame.get("score");
+        double score = (double)savedGame.get("score");
         boolean isLinear = (boolean) savedGame.get("isLinear");
         int time = (int) savedGame.get("time");
 

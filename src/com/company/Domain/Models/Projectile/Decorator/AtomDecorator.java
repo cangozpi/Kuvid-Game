@@ -15,6 +15,7 @@ public abstract class AtomDecorator extends Atom {
     //reference to decorator's Component
     private Atom atomReference;
 
+
     public AtomDecorator(Coordinate coordinate, Velocity velocity, IProjectileType atomType, boolean isAmmo, int height, int width, Atom atom) {
         super(coordinate, velocity, atomType, isAmmo, height, width);
         this.atomReference = atom;
@@ -27,17 +28,12 @@ public abstract class AtomDecorator extends Atom {
     public abstract double getProtons();
     public abstract double getNeutrons();
 
+
     //methods to delegate to the component reference
 
 
 
     //Atom class specific methods delegate to component reference}
-    public void addShield(ShieldType shieldType){ atomReference.addShield(shieldType); }
-
-    public HashMap<ShieldType,Integer> getShieldMap(){
-        return atomReference.getShieldMap();
-
-    }
 
     public AtomType getAtomType() { return atomReference.getAtomType(); }
 
@@ -80,4 +76,8 @@ public abstract class AtomDecorator extends Atom {
     public void setVelocity(Velocity velocity) {
         atomReference.setVelocity(velocity);
     }
+
+    public abstract void addShield(ShieldType eta);
+
+    public abstract HashMap<ShieldType,Integer> getShieldMap();
 }

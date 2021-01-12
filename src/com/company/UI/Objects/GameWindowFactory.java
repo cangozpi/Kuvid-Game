@@ -27,6 +27,7 @@ public class GameWindowFactory extends JFrame implements IGameListener,  ActionL
     private static int extendedWindowWidth;
     private static double L;
 
+
     GameObject gunObj; //reference to gunObject that is drawn
 
     //list holding JPanel's to be drawn
@@ -143,7 +144,9 @@ public class GameWindowFactory extends JFrame implements IGameListener,  ActionL
     @Override
     public void positionChanged(ArrayList<Molecule> moleculeList, ArrayList<Projectile> projectileFromGunList,
                                 ArrayList<ReactionBlocker> reactionBlockerList,
-                                ArrayList<PowerUp> powerUpList, Coordinate gunPosition, int gunAngle, Projectile ammo ) {
+                                ArrayList<PowerUp> powerUpList, Coordinate gunPosition, int gunAngle, Projectile ammo
+
+    ) {
         //empty objectList before re-adding GameObjects from zero
         clearObjectList();
 
@@ -304,6 +307,5 @@ public class GameWindowFactory extends JFrame implements IGameListener,  ActionL
     public static void setL(double L_ratio) {
         L = getWindowHeight() * L_ratio;
     }
-
 
 }

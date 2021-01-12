@@ -1,10 +1,7 @@
 package com.company.Domain.Models;
 
 import com.company.Domain.Models.Projectile.Atom;
-import com.company.Domain.Models.Projectile.Decorator.AlphaDecorator;
-import com.company.Domain.Models.Projectile.Decorator.BetaDecorator;
-import com.company.Domain.Models.Projectile.Decorator.GammaDecorator;
-import com.company.Domain.Models.Projectile.Decorator.SigmaDecorator;
+import com.company.Domain.Models.Projectile.Decorator.*;
 import com.company.Domain.Utility.Coordinate;
 import com.company.Domain.Utility.Velocity;
 import com.company.Enums.AtomType;
@@ -16,7 +13,7 @@ public class AtomFactory {
 
     }
 
-    public Atom getInstance(Coordinate coordinate, Velocity velocity, IProjectileType atomType, boolean isAmmo, int height, int width){
+    public AtomDecorator getInstance(Coordinate coordinate, Velocity velocity, IProjectileType atomType, boolean isAmmo, int height, int width){
         /* EFFECTS: returns an Atom instance instantiated with the given parameters and decorated with the AtomDecorator that corresponds
          to the given atomType. i.e,
          If atomType is Alpha_atom then, a new Atom which represents alpha atom instance is returned,

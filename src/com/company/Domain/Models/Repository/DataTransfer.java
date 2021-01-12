@@ -22,7 +22,7 @@ public class DataTransfer {
     private HashMap<PowerUpType,Integer> powerUpMap;
     private HashMap<MoleculeType,Integer> moleculeMap;
     private Map<ReactionBlockerType, Integer> reactionBlockerAmount;
-    private int score;
+    private double score;
     private boolean isLinear;
     private int time;
     HashMap<PowerUpType, Integer> goodAlienPowerUpMap;

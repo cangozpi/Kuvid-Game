@@ -1,6 +1,7 @@
 package com.company.Domain.Models;
 
 import com.company.Domain.Models.Projectile.*;
+import com.company.Domain.Models.Projectile.Decorator.AtomDecorator;
 import com.company.Domain.Utility.Coordinate;
 
 import com.company.UI.Observer.GameObserver;
@@ -33,13 +34,13 @@ public class GameFactory extends GameObserver  {
 
 
     private boolean isLinear;
-    private int score;
+    private double score;
     private int time;
 
     private GameFactory(){
         super(); //necessary for initializing Observer
         time = 0;
-        score = 0; //TODO: implement score on collision and such
+        score = 0;
 
     }
 
@@ -225,7 +226,7 @@ public class GameFactory extends GameObserver  {
                     if(projectile instanceof Atom){
                         explosionList.add(reactionBlocker);
                         projectileRemovalList.add(projectile);
-                    } else {                                                      //TODO powerup shot from gun interacts differently with reaction blocker
+                    } else {
                         reactionBlockerRemovalList.add(reactionBlocker);
                         projectileRemovalList.add(projectile);
                     }
@@ -256,10 +257,12 @@ public class GameFactory extends GameObserver  {
 //        Gun.setAmmo(null);
 //        AtomSelector.selectAtom();
 
-        for (ReactionBlocker reactionBlocker : explosionList){          // TODO explosion
+        for (ReactionBlocker reactionBlocker : explosionList){
             reactionBlockerList.remove(reactionBlocker);
 
             if (hasCollidedReactionBlocker(reactionBlocker.getCoordinate(), 2*L, 2*L, getGunPosition(), L/2, L)){   // collision explosion radius
+
+
                 //TODO lose health
             }
             for(PowerUp powerUp : powerUpList){
@@ -316,6 +319,8 @@ public class GameFactory extends GameObserver  {
                   if(hasCollided(molecule,projectile)){
                       moleculeRemovalList.add(molecule);
                       projectileRemovalList.add(projectile);
+                      AtomDecorator atom = (AtomDecorator)projectile;
+                      this.score += atom.getEfficiency();
                    }
                 }
             }
@@ -470,11 +475,11 @@ public class GameFactory extends GameObserver  {
         isLinear = linear;
     }
 
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(double score) {
         this.score = score;
     }
 

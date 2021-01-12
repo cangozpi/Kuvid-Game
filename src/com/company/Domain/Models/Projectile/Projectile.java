@@ -16,7 +16,9 @@ public abstract class Projectile {
     int width;
     int height;
     IProjectileType projectileType;
-    double speedMultiplier;
+    private double speedMultiplier;
+
+
 
 
     public Projectile(Coordinate coordinate, Velocity velocity, boolean isAmmo,int height,int width,IProjectileType projectileType){
@@ -90,4 +92,8 @@ public abstract class Projectile {
     public void setAmmo(boolean ammo) {
         isAmmo = ammo;
     }
+
+
+
+
 }

@@ -11,6 +11,7 @@ import java.awt.*;
 public class StatsMenu extends JPanel {
 
     public void drawScore(){
+        GameWindowFactory gameWindow = GameWindowFactory.getInstance();
         this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 
         JLabel score = new JLabel("Score: " +  String.valueOf(GameFactory.getInstance().getScore()));

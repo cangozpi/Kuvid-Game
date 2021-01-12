@@ -21,7 +21,8 @@ public class GameObserver {
 
     public void positionUpdateEvent(ArrayList<Molecule> moleculeList, ArrayList<Projectile> projectileFromGunList,
                                     ArrayList<ReactionBlocker> reactionBlockerList, ArrayList<PowerUp> powerUpList,
-                                    Coordinate gunPosition, int gunAngle, Projectile ammo){ // use to fire action performed method of all the subscribers
+                                    Coordinate gunPosition, int gunAngle, Projectile ammo
+    ){ // use to fire action performed method of all the subscribers
         for(IGameListener listener : subscribers){
             listener.positionChanged(moleculeList, projectileFromGunList,reactionBlockerList, powerUpList, gunPosition, gunAngle, ammo);
         }

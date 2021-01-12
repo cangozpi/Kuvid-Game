@@ -18,7 +18,7 @@ public interface Database {
     void saveGame(String username, HashMap<AtomType,Integer> atomMap, HashMap<PowerUpType,Integer> powerUpMap,
                   HashMap<PowerUpType,Integer> userPowerUpMap,
                   HashMap<MoleculeType,Integer> moleculeMap, Map<ReactionBlockerType,
-                    Integer> reactionBlockerAmount, int score, boolean isLinear, int time);
+                    Integer> reactionBlockerAmount, double score, boolean isLinear, int time);
     void loadGame();
 
 }

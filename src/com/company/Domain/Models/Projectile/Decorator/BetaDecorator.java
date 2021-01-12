@@ -4,7 +4,9 @@ import com.company.Domain.Models.Projectile.Atom;
 import com.company.Domain.Utility.Coordinate;
 import com.company.Domain.Utility.Velocity;
 import com.company.Enums.AtomType;
+import com.company.Enums.ShieldType;
 
+import java.util.HashMap;
 import java.util.Random;
 
 public class BetaDecorator extends AtomDecorator{
@@ -14,6 +16,9 @@ public class BetaDecorator extends AtomDecorator{
     private double protons;
     private double efficiency;
     private double neutrons;
+    private HashMap<ShieldType,Integer> shieldMap;
+
+
 
     public BetaDecorator(Coordinate coordinate, Velocity velocity, AtomType atomType, boolean isAmmo, int height, int width, Atom atom) {
         super(coordinate, velocity, atomType, isAmmo, height, width, atom);
@@ -44,6 +49,51 @@ public class BetaDecorator extends AtomDecorator{
         //Efficiency = Beta stability constant - ( 0.5 * | # of neutrons - # of protons | /  # of protons)
         efficiency = stabilityConstant - ((0.5 * (neutrons - protons)) / protons) ;
 
+    }
+    @Override
+    public HashMap<ShieldType,Integer> getShieldMap(){
+        return shieldMap;
+    }
+
+    @Override
+    public void addShield(ShieldType shieldType){
+
+        //@REQUIRES: The argument shieldType must of type shieldType.
+
+        //@MODIFIES: modifies the shield map of the atom and speed multiplier of the atom.
+
+        /*@EFFECTS: atom speed is multiplied with the shield type's multiplier, in the atom's shield map corresponding
+        type of shield's amount is incremented by 1.
+         */
+
+        if(shieldMap == null){
+            shieldMap = new HashMap<>();
+            shieldMap.put(ShieldType.ETA,0);
+            shieldMap.put(ShieldType.LOTA,0);
+            shieldMap.put(ShieldType.THETA,0);
+            shieldMap.put(ShieldType.ZETA,0);
+        }
+
+        shieldMap.replace(shieldType,shieldMap.get(shieldType)+1);
+
+        double newMultiplier = 1;
+
+        switch (shieldType){
+
+            case ETA:
+                newMultiplier = 0.95;
+                break;
+            case LOTA:
+                newMultiplier = 0.93;
+                break;
+            case THETA:
+                newMultiplier = 0.91;
+                break;
+            case ZETA:
+                newMultiplier = 0.89;
+                break;
+        }
+        setSpeedMultiplier(getSpeedMultiplier() * newMultiplier);
     }
 
     @Override

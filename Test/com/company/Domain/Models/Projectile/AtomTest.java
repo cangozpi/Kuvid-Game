@@ -1,6 +1,8 @@
 package com.company.Domain.Models.Projectile;
 
+import com.company.Domain.Models.AtomFactory;
 import com.company.Domain.Models.GameFactory;
+import com.company.Domain.Models.Projectile.Decorator.AtomDecorator;
 import com.company.Domain.Utility.Coordinate;
 import com.company.Domain.Utility.Velocity;
 import com.company.Enums.AtomType;
@@ -26,7 +28,8 @@ public class AtomTest {
 
     @Test
     public void initializedAtomShieldMapNullTest() {
-        Atom atom1 = new Atom(new Coordinate(0,0), new Velocity(0,0), AtomType.ALPHA, true,(int)(L/10),(int)(L/10));
+        AtomFactory atomFactory = new AtomFactory();
+        AtomDecorator atom1 =  atomFactory.getInstance(new Coordinate(0,0), new Velocity(0,0), AtomType.ALPHA, true,(int)(L/10),(int)(L/10));
         assertNull(atom1.getShieldMap());
         atom1.addShield(ShieldType.THETA);
         assertNotNull(atom1.getShieldMap());
@@ -34,7 +37,8 @@ public class AtomTest {
 
     @Test
     public void firstTimeAddingShieldTest() {
-        Atom atom = new Atom(new Coordinate(0,0), new Velocity(0,0), AtomType.ALPHA, true,(int)(L/10),(int)(L/10));
+        AtomFactory atomFactory = new AtomFactory();
+        AtomDecorator atom = atomFactory.getInstance(new Coordinate(0,0), new Velocity(0,0), AtomType.ALPHA, true,(int)(L/10),(int)(L/10));
 
         HashMap<ShieldType,Integer> shieldMap = new HashMap();
         shieldMap.put(ShieldType.ETA,1);
@@ -48,7 +52,8 @@ public class AtomTest {
 
     @Test
     public void shieldAmountTest() {
-        Atom atom = new Atom(new Coordinate(0,0), new Velocity(0,0), AtomType.ALPHA, true,(int)(L/10),(int)(L/10));
+        AtomFactory atomFactory = new AtomFactory();
+        AtomDecorator atom = atomFactory.getInstance(new Coordinate(0,0), new Velocity(0,0), AtomType.ALPHA, true,(int)(L/10),(int)(L/10));
         HashMap<ShieldType,Integer> shieldMap = new HashMap();
 
         Integer[] ShieldMapNumbers = {1,4,3,2};
@@ -70,10 +75,12 @@ public class AtomTest {
 
     @Test
     public void reduceSpeedEffectTest() {
-        Atom atom1 = new Atom(new Coordinate(0,0), new Velocity(0,0), AtomType.ALPHA, true,(int)(L/10),(int)(L/10));
-        Atom atom2 = new Atom(new Coordinate(0,0), new Velocity(0,0), AtomType.ALPHA, true,(int)(L/10),(int)(L/10));
-        Atom atom3 = new Atom(new Coordinate(0,0), new Velocity(0,0), AtomType.ALPHA, true,(int)(L/10),(int)(L/10));
-        Atom atom4 = new Atom(new Coordinate(0,0), new Velocity(0,0), AtomType.ALPHA, true,(int)(L/10),(int)(L/10));
+        AtomFactory atomFactory = new AtomFactory();
+
+        AtomDecorator atom1 = atomFactory.getInstance(new Coordinate(0,0), new Velocity(0,0), AtomType.ALPHA, true,(int)(L/10),(int)(L/10));
+        AtomDecorator atom2 = atomFactory.getInstance(new Coordinate(0,0), new Velocity(0,0), AtomType.ALPHA, true,(int)(L/10),(int)(L/10));
+        AtomDecorator atom3 = atomFactory.getInstance(new Coordinate(0,0), new Velocity(0,0), AtomType.ALPHA, true,(int)(L/10),(int)(L/10));
+        AtomDecorator atom4 = atomFactory.getInstance(new Coordinate(0,0), new Velocity(0,0), AtomType.ALPHA, true,(int)(L/10),(int)(L/10));
 
         atom1.addShield(ShieldType.ETA);
         assertTrue(atom1.getSpeedMultiplier()==0.95);
@@ -91,10 +98,11 @@ public class AtomTest {
 
     @Test
     public void combineSpeedEffectTest() {
-        Atom atom1 = new Atom(new Coordinate(0,0), new Velocity(0,0), AtomType.ALPHA, true,(int)(L/10),(int)(L/10));
-        Atom atom2 = new Atom(new Coordinate(0,0), new Velocity(0,0), AtomType.ALPHA, true,(int)(L/10),(int)(L/10));
-        Atom atom3 = new Atom(new Coordinate(0,0), new Velocity(0,0), AtomType.ALPHA, true,(int)(L/10),(int)(L/10));
-        Atom atom4 = new Atom(new Coordinate(0,0), new Velocity(0,0), AtomType.ALPHA, true,(int)(L/10),(int)(L/10));
+        AtomFactory atomFactory = new AtomFactory();
+        AtomDecorator atom1 = atomFactory.getInstance(new Coordinate(0,0), new Velocity(0,0), AtomType.ALPHA, true,(int)(L/10),(int)(L/10));
+        AtomDecorator atom2 = atomFactory.getInstance(new Coordinate(0,0), new Velocity(0,0), AtomType.ALPHA, true,(int)(L/10),(int)(L/10));
+        AtomDecorator atom3 = atomFactory.getInstance(new Coordinate(0,0), new Velocity(0,0), AtomType.ALPHA, true,(int)(L/10),(int)(L/10));
+        AtomDecorator atom4 = atomFactory.getInstance(new Coordinate(0,0), new Velocity(0,0), AtomType.ALPHA, true,(int)(L/10),(int)(L/10));
         HashMap<ShieldType,Integer> shieldMap = new HashMap();
 
         atom1.addShield(ShieldType.LOTA);
