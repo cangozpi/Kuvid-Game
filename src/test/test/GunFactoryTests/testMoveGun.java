@@ -1,4 +1,4 @@
-package GunFactoryTests;
+package test.GunFactoryTests;
 
 
 import com.company.Domain.Controller.BuilderHandler;
@@ -26,7 +26,7 @@ import static org.junit.Assert.*;
 
 public class testMoveGun {
 
-
+    // BATU HELVACIOĞLU TESTS
 
     GunFactory gun;
     GameFactory game;

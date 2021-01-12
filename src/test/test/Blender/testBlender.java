@@ -1,4 +1,4 @@
-package test.test.Blender;
+package test.Blender;
 
 
 import com.company.Domain.Models.GameFactory;
@@ -17,6 +17,7 @@ import static org.junit.Assert.*;
 
 
 public class testBlender {
+    //ÖYKÜM SAKIZ TESTS
     private int A = 0;
     Blender blender;
     Inventory inventory;

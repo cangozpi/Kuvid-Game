@@ -14,6 +14,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class rotateGunTest {
+    // CAN YÜKSELOĞLU TESTS
+
     GunFactory gunInstance;
     //Requirements game set up and a loaded atom.
     //Modifies guns angle

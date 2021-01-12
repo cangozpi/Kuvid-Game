@@ -1,4 +1,4 @@
-package BlenderBreakTests;
+package test.BlenderBreakTests;
 
 
 import com.company.Domain.Models.Blender;
@@ -20,7 +20,7 @@ import static org.junit.Assert.*;
 
 
 public class testBreak {
-
+    //BERKUT GÖKMEN TESTS
     Inventory inventory;
     Blender blender;
 

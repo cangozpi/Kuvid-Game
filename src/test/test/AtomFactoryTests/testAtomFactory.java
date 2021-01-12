@@ -1,4 +1,4 @@
-package AtomFactoryTests;
+package test.AtomFactoryTests;
 
 
 import com.company.Domain.Models.AtomFactory;
@@ -19,6 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class testAtomFactory {
+    //CAN GÖZPINAR TESTS
+
     //NOTE: if tests do not work when you run the program then you have to do File->ProjectStructure->Modules
     // and then change junit.api and j4test and vintage to compile from test to fix the issue. and use java 1.8
 
