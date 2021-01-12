@@ -1,9 +1,6 @@
 package com.company.Domain.Models;
 
-import com.company.Enums.AtomType;
-import com.company.Enums.MoleculeType;
-import com.company.Enums.PowerUpType;
-import com.company.Enums.ReactionBlockerType;
+import com.company.Enums.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +15,7 @@ public class Builder {
 
     }
 
-    public void buildGame(int gameWindowHeight, int gameWindowWidth, int difficulty, HashMap<AtomType, Integer> inventoryContents, boolean isLinear, double L_ratio) {
+    public void buildGame(int gameWindowHeight, int gameWindowWidth, int difficulty, HashMap<AtomType, Integer> inventoryContents, HashMap<ShieldType, Integer> shieldAmount, boolean isLinear, double L_ratio) {
         badAlien = BadAlienFactory.getInstance();
         goodAlien = GoodAlienFactory.getInstance();
 
@@ -26,6 +23,7 @@ public class Builder {
 
         GameFactory game = GameFactory.getInstance();
         Inventory.getInstance().setAtomMap(inventoryContents);
+        Inventory.getInstance().setShieldMap(shieldAmount);
         game.setDifficulty(difficulty);
         game.setFallSpeed(difficulty);
         game.setGameWindowHeight(gameWindowHeight);
