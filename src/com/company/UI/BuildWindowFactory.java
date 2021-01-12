@@ -35,6 +35,7 @@ public class BuildWindowFactory extends JFrame {
     HashMap<PowerUpType, Integer> powerUpAmount = new HashMap<>();
     HashMap<ReactionBlockerType, Integer> reactionBlockerAmount = new HashMap<>();
     HashMap<MoleculeType, Integer> moleculeAmount = new HashMap<>();
+
     boolean isLinear;
 
     private BuildWindowFactory(){
@@ -77,7 +78,7 @@ public class BuildWindowFactory extends JFrame {
         JLabel moleculeAmountLabel = new JLabel("Molecule Amount:");
         JLabel blockerAmountLabel = new JLabel("Reaction Blocker Amount:");
         JLabel powerUpAmountLabel = new JLabel("Powerup Amount:");
-
+        JLabel shieldLabel = new JLabel("Shield Amount:");
         JLabel difficultyLabel = new JLabel("Select Difficulty");
         JLabel variableAmounts = new JLabel("Select Variable Amounts");
         JLabel moleculeStructureLabel = new JLabel("Select Molecule Structure");
@@ -98,7 +99,7 @@ public class BuildWindowFactory extends JFrame {
         panelHolder[2][0].add(moleculeAmountLabel);
         panelHolder[3][0].add(blockerAmountLabel);
         panelHolder[4][0].add(powerUpAmountLabel);
-
+        panelHolder[5][0].add(shieldLabel);
         panelHolder[0][1].add(difficultyLabel);
         panelHolder[1][1].add(easySliderLabel);
         panelHolder[1][1].add(difficultySlider);

@@ -1,12 +1,17 @@
 package com.company.UI.Objects;
 
+import com.company.Domain.Controller.ShieldHandler;
 import com.company.Domain.Models.GameFactory;
 import com.company.Domain.Models.Inventory;
 import com.company.Enums.AtomType;
 import com.company.Enums.PowerUpType;
+import com.company.Enums.ShieldType;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 public class StatsMenu extends JPanel {
 
@@ -18,19 +23,42 @@ public class StatsMenu extends JPanel {
         JLabel time = new JLabel("Time: " + String.valueOf(GameFactory.getInstance().getTime()));
         JLabel health = new JLabel("Health: " + "health.toString");
 
-
+        ShieldHandler   shieldHandler = new ShieldHandler();
         score.setForeground(Color.black);
 
         JButton eta=new JButton("Eta Shield");
         eta.setForeground(Color.BLUE);
+        eta.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                shieldHandler.addShield(ShieldType.ETA);
+
+            }
+        });
         JButton lota=new JButton("Lota Shield");
         lota.setForeground(Color.BLUE);
-
+        lota.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                    shieldHandler.addShield(ShieldType.LOTA);
+            }
+        });
         JButton theta = new JButton("Theta Shield");
         theta.setForeground(Color.BLUE);
+        theta.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                shieldHandler.addShield(ShieldType.THETA);
+            }
+        });
         JButton zeta = new JButton("Zeta Shield");
         zeta.setForeground(Color.BLUE);
-
+        zeta.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                shieldHandler.addShield(ShieldType.ZETA);
+            }
+        });
 
 
 // health
@@ -40,8 +68,14 @@ public class StatsMenu extends JPanel {
         ImageIcon alphapowerup = new ImageIcon(getClass().getResource("Assets/powerups/+alpha-b.png"));
         Image alphapow = alphapowerup.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
 
-        JLabel powalpha = new JLabel(new ImageIcon(alphapow));
-
+        JButton powalpha = new JButton();;
+        powalpha.setIcon(new ImageIcon(alphapow));
+        powalpha.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                powalpha.setIcon(getGray(new ImageIcon(alphapow)));
+            }
+        });
 
         JLabel powAlphaAmountLabel = new JLabel(String.valueOf(Inventory.getInstance().getPowerUpAmount(PowerUpType.ALPHA)));
         powAlphaAmountLabel.setLocation(6,2);
@@ -144,6 +178,20 @@ public class StatsMenu extends JPanel {
         this.add(lota);
         this.add(theta);
         this.add(zeta);
+    }
+
+    private Icon getGray(Icon icon) {
+        final int w = icon.getIconWidth();
+        final int h = icon.getIconHeight();
+        GraphicsEnvironment ge =
+                GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice gd = ge.getDefaultScreenDevice();
+        GraphicsConfiguration gc = gd.getDefaultConfiguration();
+        BufferedImage image = gc.createCompatibleImage(w, h);
+        Graphics2D g2d = image.createGraphics();
+        icon.paintIcon(null, g2d, 0, 0);
+        Image gray = GrayFilter.createDisabledImage(image);
+        return new ImageIcon(gray);
     }
 
     @Override
