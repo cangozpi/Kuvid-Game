@@ -4,10 +4,7 @@ import com.company.Domain.Controller.BuilderHandler;
 
 import com.company.Domain.Models.GameFactory;
 import com.company.Domain.Utility.Coordinate;
-import com.company.Enums.AtomType;
-import com.company.Enums.MoleculeType;
-import com.company.Enums.PowerUpType;
-import com.company.Enums.ReactionBlockerType;
+import com.company.Enums.*;
 import com.company.UI.Objects.BackgroundObject;
 import com.company.UI.Objects.GameObject;
 import com.company.UI.Objects.GameWindowFactory;
@@ -35,6 +32,7 @@ public class BuildWindowFactory extends JFrame {
     HashMap<PowerUpType, Integer> powerUpAmount = new HashMap<>();
     HashMap<ReactionBlockerType, Integer> reactionBlockerAmount = new HashMap<>();
     HashMap<MoleculeType, Integer> moleculeAmount = new HashMap<>();
+    HashMap<ShieldType,Integer> shieldAmount = new HashMap<>();
     boolean isLinear;
 
     private BuildWindowFactory(){
@@ -85,7 +83,7 @@ public class BuildWindowFactory extends JFrame {
         JLabel easySliderLabel = new JLabel("Easy");
         JLabel hardSliderLabel = new JLabel("Hard");
 
-
+        JLabel shieldLabel = new JLabel("Shield Amount:");
         JSlider difficultySlider = new JSlider(1,3);
 
                JLabel LRatioSliderLabel = new JLabel("L Ratio Slider");
@@ -98,6 +96,7 @@ public class BuildWindowFactory extends JFrame {
         panelHolder[2][0].add(moleculeAmountLabel);
         panelHolder[3][0].add(blockerAmountLabel);
         panelHolder[4][0].add(powerUpAmountLabel);
+        panelHolder[5][0].add(shieldLabel);
 
         panelHolder[0][1].add(difficultyLabel);
         panelHolder[1][1].add(easySliderLabel);
@@ -124,7 +123,12 @@ public class BuildWindowFactory extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 BuilderHandler builderHandler = new BuilderHandler();
-
+                for(ShieldType shieldType: ShieldType.values()){
+                    if(isStringInt(inputs[4].getText()))
+                        shieldAmount.put(shieldType, Integer.parseInt(inputs[4].getText()));
+                    else
+                        shieldAmount.put(shieldType, 100);
+                }
 
                 //extract information fr
                 difficultyLevel = difficultySlider.getValue();
@@ -166,7 +170,7 @@ public class BuildWindowFactory extends JFrame {
                 }
 
                 //pass extracted variables and call controller class
-                builderHandler.buildGame(windowWidth, windowHeight, difficultyLevel, atomAmount, moleculeAmount, powerUpAmount, reactionBlockerAmount, isLinear, (LRatioSlider.getValue()* 5)/100.0);
+                builderHandler.buildGame(windowWidth, windowHeight, difficultyLevel, atomAmount, moleculeAmount, powerUpAmount, reactionBlockerAmount,shieldAmount, isLinear, (LRatioSlider.getValue()* 5)/100.0);
                 BuildWindowFactory.getInstance().getDefaultCloseOperation();
                 BuildWindowFactory.getInstance().setVisible(false);
                 BuildWindowFactory.getInstance().dispose();

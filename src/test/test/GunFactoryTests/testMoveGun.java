@@ -41,7 +41,7 @@ public class testMoveGun {
         inventoryContents.put(AtomType.SIGMA,10);
 
         Builder builder = new Builder();
-        builder.buildGame(1180, 720, 1, inventoryContents, true,  0.20);
+        //builder.buildGame(1180, 720, 1, inventoryContents, shieldAmount, true,  0.20);
         game = GameFactory.getInstance();
         game.pauseGame();
         gun = GunFactory.getInstance();

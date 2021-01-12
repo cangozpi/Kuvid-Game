@@ -4,6 +4,7 @@ import com.company.Domain.Models.Projectile.Projectile;
 import com.company.Enums.AtomType;
 import com.company.Enums.IProjectileType;
 import com.company.Enums.PowerUpType;
+import com.company.Enums.ShieldType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,6 +16,7 @@ public class Inventory {
     HashMap<AtomType,Integer> atomMap;
     HashMap<PowerUpType,Integer> powerUpMap;
     ArrayList<Projectile> shieldedAtomList;
+    HashMap<ShieldType,Integer> shieldMap;
 
     private Inventory(){
         powerUpMap = new HashMap<>();
@@ -33,6 +35,7 @@ public class Inventory {
     }
 
     public void setPowerUpMap(HashMap<PowerUpType, Integer> powerUpMap) {this.powerUpMap = powerUpMap;}
+    public void setShieldMap(HashMap<ShieldType, Integer> shieldMap) {this.shieldMap = shieldMap;}
 
 
     public int getShieldedAtomAmount() {if(shieldedAtomList!=null) {return shieldedAtomList.size();}else return 0;}
