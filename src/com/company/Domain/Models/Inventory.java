@@ -1,10 +1,8 @@
 package com.company.Domain.Models;
 import com.company.Domain.Models.Projectile.Atom;
 import com.company.Domain.Models.Projectile.Projectile;
-import com.company.Enums.AtomType;
-import com.company.Enums.IProjectileType;
-import com.company.Enums.PowerUpType;
-import com.company.Enums.ShieldType;
+import com.company.Enums.*;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,7 +34,29 @@ public class Inventory {
 
     public void setPowerUpMap(HashMap<PowerUpType, Integer> powerUpMap) {this.powerUpMap = powerUpMap;}
     public void setShieldMap(HashMap<ShieldType, Integer> shieldMap) {this.shieldMap = shieldMap;}
+    public int getShieldAmount(ShieldType shieldType){return shieldMap.get(shieldType);}
 
+    public boolean removeShield(ShieldType shieldType){
+        if(shieldMap==null) {
+            System.err.println("Shield Map is not initialized.");
+            return false;
+        }
+        if(shieldMap.get(shieldType)-1 < 0)return false;
+        switch (shieldType){
+            case ETA:
+                shieldMap.merge(ShieldType.ETA,-1,Integer::sum);
+                break;
+            case LOTA:
+                shieldMap.merge(ShieldType.LOTA,-1,Integer::sum);
+                break;
+            case THETA:
+                shieldMap.merge(ShieldType.THETA,-1,Integer::sum);
+                break;
+            case ZETA:
+                shieldMap.merge(ShieldType.ZETA,-1,Integer::sum);
+        }
+        return true;
+    }
 
     public int getShieldedAtomAmount() {if(shieldedAtomList!=null) {return shieldedAtomList.size();}else return 0;}
 

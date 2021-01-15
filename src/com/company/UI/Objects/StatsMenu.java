@@ -17,26 +17,27 @@ public class StatsMenu extends JPanel {
 
     public void drawScore(){
         GameWindowFactory gameWindow = GameWindowFactory.getInstance();
-        this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+        this.setLayout(new GridLayout(13,1));
 
         JLabel score = new JLabel("Score: " +  String.valueOf(GameFactory.getInstance().getScore()));
         JLabel time = new JLabel("Time: " + String.valueOf(GameFactory.getInstance().getTime()));
         JLabel health = new JLabel("Health: " + "health.toString");
+
 
         ShieldHandler   shieldHandler = new ShieldHandler();
         score.setForeground(Color.black);
 
         JButton eta=new JButton("Eta Shield");
         eta.setForeground(Color.BLUE);
+        JLabel etaAmountLabel = new JLabel(String.valueOf(Inventory.getInstance().getShieldAmount(ShieldType.ETA)));
+
         eta.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e){
-                shieldHandler.addShield(ShieldType.ETA);
-
-            }
+            public void actionPerformed(ActionEvent e){shieldHandler.addShield(ShieldType.ETA);}
         });
         JButton lota=new JButton("Lota Shield");
         lota.setForeground(Color.BLUE);
+        JLabel lotaAmountLabel = new JLabel(String.valueOf(Inventory.getInstance().getShieldAmount(ShieldType.LOTA)));
         lota.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
@@ -45,6 +46,7 @@ public class StatsMenu extends JPanel {
         });
         JButton theta = new JButton("Theta Shield");
         theta.setForeground(Color.BLUE);
+        JLabel thetaAmountLabel = new JLabel(String.valueOf(Inventory.getInstance().getShieldAmount(ShieldType.THETA)));
         theta.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -53,6 +55,7 @@ public class StatsMenu extends JPanel {
         });
         JButton zeta = new JButton("Zeta Shield");
         zeta.setForeground(Color.BLUE);
+        JLabel zetaAmountLabel = new JLabel(String.valueOf(Inventory.getInstance().getShieldAmount(ShieldType.ZETA)));
         zeta.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -67,50 +70,63 @@ public class StatsMenu extends JPanel {
 //powerups
         ImageIcon alphapowerup = new ImageIcon(getClass().getResource("Assets/powerups/+alpha-b.png"));
         Image alphapow = alphapowerup.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-
         JButton powalpha = new JButton();;
         powalpha.setIcon(new ImageIcon(alphapow));
         powalpha.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 powalpha.setIcon(getGray(new ImageIcon(alphapow)));
+
             }
         });
 
         JLabel powAlphaAmountLabel = new JLabel(String.valueOf(Inventory.getInstance().getPowerUpAmount(PowerUpType.ALPHA)));
-        powAlphaAmountLabel.setLocation(6,2);
-        this.add(powAlphaAmountLabel);
+
 
         ImageIcon betapowerup = new ImageIcon(getClass().getResource("Assets/powerups/+beta-b.png"));
         Image betapow = betapowerup.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-        JLabel powbeta = new JLabel(new ImageIcon(betapow));
-
+        JButton powbeta = new JButton(new ImageIcon(betapow));
+        powalpha.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                powalpha.setIcon(getGray(new ImageIcon(betapow)));
+            }
+        });
 
         JLabel powBetaAmountLabel = new JLabel(String.valueOf(Inventory.getInstance().getPowerUpAmount(PowerUpType.BETA)));
-        powBetaAmountLabel.setLocation(8,2);
-        this.add(powBetaAmountLabel);
+
 
         ImageIcon gammapowerup = new ImageIcon(getClass().getResource("Assets/powerups/+gamma-b.png"));
         Image gammapow = gammapowerup.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-        JLabel powgamma = new JLabel(new ImageIcon(gammapow));
+        JButton powgamma = new JButton(new ImageIcon(gammapow));
+        powalpha.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                powalpha.setIcon(getGray(new ImageIcon(gammapow)));
+            }
+        });
 
         JLabel powGammaAmountLabel = new JLabel(String.valueOf(Inventory.getInstance().getPowerUpAmount(PowerUpType.GAMMA)));
-         powGammaAmountLabel.setLocation(10,2);
-         this.add(powGammaAmountLabel );
 
         ImageIcon sigmaPowerUp = new ImageIcon(getClass().getResource("Assets/powerups/+sigma-b.png"));
         Image sigmapow = sigmaPowerUp.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-        JLabel powsigma = new JLabel(new ImageIcon(sigmapow));
+        JButton powsigma = new JButton(new ImageIcon(sigmapow));
+        powalpha.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                powalpha.setIcon(getGray(new ImageIcon(sigmapow)));
+            }
+        });
+
 
         JLabel powSigmaAmountLabel = new JLabel(String.valueOf(Inventory.getInstance().getPowerUpAmount(PowerUpType.SIGMA)));
-        powSigmaAmountLabel.setLocation(10,2);
-        this.add(powSigmaAmountLabel);
+
 //inventory atom amounts
         ImageIcon mixer = new ImageIcon(getClass().getResource("Assets/mixer.png"));
         Image mixerImage = mixer.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         JLabel mixerLabel = new JLabel( new ImageIcon(mixerImage));
         mixerLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-        //mixerLabel.setLocation(12,50);
+
 
 
 
@@ -118,43 +134,40 @@ public class StatsMenu extends JPanel {
         Image scaledAlpha = alpha.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH); // scales the image
         JLabel alphaLabel = new JLabel(new ImageIcon(scaledAlpha));
 
-        //alphaLabel.setLocation(14,0);
+
         ImageIcon beta = new ImageIcon(getClass().getResource("Assets/atoms/beta.png"));
         Image scaledBeta = beta.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH); // scales the image
         JLabel betaLabel = new JLabel(new ImageIcon(scaledBeta));
-        // betaLabel.setLocation(16,0);
+
 
         ImageIcon gamma = new ImageIcon(getClass().getResource("Assets/atoms/gamma.png"));
         Image scaledGamma = gamma.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH); // scales the image
         JLabel gammaLabel = new JLabel(new ImageIcon(scaledGamma));
-        //gammaLabel.setLocation(18,0);
+
 
         ImageIcon sigma = new ImageIcon(getClass().getResource("Assets/atoms/sigma.png"));
         Image scaledSigma = sigma.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH); // scales the image
         JLabel sigmaLabel = new JLabel(new ImageIcon(scaledSigma));
-        //sigmaLabel.setLocation(20,0);
+
 
          JLabel alphaAmountLabel = new JLabel(String.valueOf(Inventory.getInstance().getAtomAmount(AtomType.ALPHA)));
-         alphaAmountLabel.setLocation(14,2);
-         this.add(alphaAmountLabel);
 
          JLabel betaAmountLabel = new JLabel(String.valueOf(Inventory.getInstance().getAtomAmount(AtomType.BETA)));
-         betaAmountLabel.setLocation(16,2);
-         this.add(betaAmountLabel);
 
          JLabel gammaAmountLabel = new JLabel(String.valueOf(Inventory.getInstance().getAtomAmount(AtomType.GAMMA)));
-         gammaAmountLabel.setLocation(18,2);
-         this.add(gammaAmountLabel);
 
         //JLabel sigmaAmountLabel = new JLabel("Amount");
         JLabel sigmaAmountLabel = new JLabel(String.valueOf(Inventory.getInstance().getAtomAmount(AtomType.SIGMA)));
-        sigmaAmountLabel.setLocation(20,2);
-        this.add(sigmaAmountLabel);
+        JLabel emp = new JLabel();
+
 //panel design
         this.add(score);
+        this.add(emp);
         this.add(time);
+        this.add(emp);
         this.add(health);
-        this.add(new JSeparator(SwingConstants.HORIZONTAL));
+        this.add(emp);
+      //  this.add(new JSeparator(SwingConstants.HORIZONTAL));
         this.add(powalpha);
         this.add(powAlphaAmountLabel);
         this.add(powbeta);
@@ -163,8 +176,9 @@ public class StatsMenu extends JPanel {
         this.add(powGammaAmountLabel);
         this.add(powsigma);
         this.add(powSigmaAmountLabel);
-        this.add(new JSeparator(SwingConstants.HORIZONTAL));
+      //  this.add(new JSeparator(SwingConstants.HORIZONTAL));
         this.add(mixerLabel);
+        this.add(emp);
         this.add(alphaLabel);
         this.add(alphaAmountLabel);
         this.add(betaLabel);
@@ -173,11 +187,16 @@ public class StatsMenu extends JPanel {
         this.add(gammaAmountLabel);
         this.add(sigmaLabel);
         this.add(sigmaAmountLabel);
-        this.add(new JSeparator(SwingConstants.HORIZONTAL));
+       // this.add(new JSeparator(SwingConstants.HORIZONTAL));
         this.add(eta);
+        this.add(etaAmountLabel);
         this.add(lota);
+        this.add(lotaAmountLabel);
         this.add(theta);
+        this.add(thetaAmountLabel);
         this.add(zeta);
+        this.add(zetaAmountLabel);
+
     }
 
     private Icon getGray(Icon icon) {
