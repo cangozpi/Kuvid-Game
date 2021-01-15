@@ -15,16 +15,14 @@ public class PowerUpSelector {
 
     public PowerUpSelector() {}
 
-    public void selectPowerUp(){
-        ArrayList<PowerUpType> legalPowerUpList = new ArrayList<>();
-        for (PowerUpType powerUpType: PowerUpType.values()){
-            if(inventory.getPowerUpAmount(powerUpType)>0)legalPowerUpList.add(powerUpType);
-        }
-        if(!legalPowerUpList.isEmpty()) {
-            PowerUpType selectedPowerUp = legalPowerUpList.get((int) (Math.random() * (legalPowerUpList.size())));
-            inventory.removePowerUp(selectedPowerUp);
-            gun.loadGun(new PowerUp(new Coordinate(0,0), new Velocity(0,0),selectedPowerUp,true,0,0));
-        }else System.err.println("There are no legal PowerUps to use.");
+    public void selectPowerUp(PowerUpType powerUp){
+
+           if( inventory.removePowerUp(powerUp)) {
+               gun.loadGun(new PowerUp(new Coordinate(0, 0), new Velocity(0, 0), powerUp, true, 0, 0));
+           }else  System.err.println("There are no " +powerUp + " to use.");
     }
 
+    public boolean hasPowerUp(PowerUpType powerUp){
+        return inventory.getPowerUpAmount(powerUp) > 0;
+    }
 }

@@ -1,5 +1,6 @@
 package com.company.UI.Objects;
 
+import com.company.Domain.Controller.SelectPowerUpHandler;
 import com.company.Domain.Controller.ShieldHandler;
 import com.company.Domain.Models.GameFactory;
 import com.company.Domain.Models.Inventory;
@@ -17,13 +18,14 @@ public class StatsMenu extends JPanel {
 
     public void drawScore(){
         GameWindowFactory gameWindow = GameWindowFactory.getInstance();
-        this.setLayout(new GridLayout(13,1));
+        GridLayout layout = new GridLayout(20,2);
+        this.setLayout(layout);
 
         JLabel score = new JLabel("Score: " +  String.valueOf(GameFactory.getInstance().getScore()));
         JLabel time = new JLabel("Time: " + String.valueOf(GameFactory.getInstance().getTime()));
         JLabel health = new JLabel("Health: " + "health.toString");
 
-
+        SelectPowerUpHandler selectPowerUpHandler = new SelectPowerUpHandler();
         ShieldHandler   shieldHandler = new ShieldHandler();
         score.setForeground(Color.black);
 
@@ -70,13 +72,14 @@ public class StatsMenu extends JPanel {
 //powerups
         ImageIcon alphapowerup = new ImageIcon(getClass().getResource("Assets/powerups/+alpha-b.png"));
         Image alphapow = alphapowerup.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
-        JButton powalpha = new JButton();;
-        powalpha.setIcon(new ImageIcon(alphapow));
+        JButton powalpha = new JButton(new ImageIcon(alphapow));
+        if(selectPowerUpHandler.hasPowerUp(PowerUpType.ALPHA)) {
+            powalpha.setIcon(new ImageIcon(alphapow));
+        }  else powalpha.setIcon(getGray(new ImageIcon(alphapow)));
         powalpha.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                powalpha.setIcon(getGray(new ImageIcon(alphapow)));
-
+                selectPowerUpHandler.selectPowerUp(PowerUpType.ALPHA);
             }
         });
 
@@ -86,23 +89,28 @@ public class StatsMenu extends JPanel {
         ImageIcon betapowerup = new ImageIcon(getClass().getResource("Assets/powerups/+beta-b.png"));
         Image betapow = betapowerup.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         JButton powbeta = new JButton(new ImageIcon(betapow));
-        powalpha.addActionListener(new ActionListener() {
+        if(selectPowerUpHandler.hasPowerUp(PowerUpType.BETA)) {
+            powbeta.setIcon(new ImageIcon(betapow));
+        } else powbeta.setIcon(getGray(new ImageIcon(betapow)));
+        powbeta.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                powalpha.setIcon(getGray(new ImageIcon(betapow)));
+                selectPowerUpHandler.selectPowerUp(PowerUpType.BETA);
             }
         });
-
         JLabel powBetaAmountLabel = new JLabel(String.valueOf(Inventory.getInstance().getPowerUpAmount(PowerUpType.BETA)));
 
 
         ImageIcon gammapowerup = new ImageIcon(getClass().getResource("Assets/powerups/+gamma-b.png"));
         Image gammapow = gammapowerup.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         JButton powgamma = new JButton(new ImageIcon(gammapow));
-        powalpha.addActionListener(new ActionListener() {
+        if(selectPowerUpHandler.hasPowerUp(PowerUpType.GAMMA)) {
+            powgamma.setIcon(new ImageIcon(gammapow));
+        } else powgamma.setIcon(getGray(new ImageIcon(gammapow)));
+        powgamma.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                powalpha.setIcon(getGray(new ImageIcon(gammapow)));
+                selectPowerUpHandler.selectPowerUp(PowerUpType.GAMMA);
             }
         });
 
@@ -111,10 +119,13 @@ public class StatsMenu extends JPanel {
         ImageIcon sigmaPowerUp = new ImageIcon(getClass().getResource("Assets/powerups/+sigma-b.png"));
         Image sigmapow = sigmaPowerUp.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         JButton powsigma = new JButton(new ImageIcon(sigmapow));
-        powalpha.addActionListener(new ActionListener() {
+        if(selectPowerUpHandler.hasPowerUp(PowerUpType.SIGMA)) {
+            powsigma.setIcon(new ImageIcon(sigmapow));
+        } else powsigma.setIcon(getGray(new ImageIcon(sigmapow)));
+        powsigma.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                powalpha.setIcon(getGray(new ImageIcon(sigmapow)));
+                selectPowerUpHandler.selectPowerUp(PowerUpType.SIGMA);
             }
         });
 
@@ -125,15 +136,10 @@ public class StatsMenu extends JPanel {
         ImageIcon mixer = new ImageIcon(getClass().getResource("Assets/mixer.png"));
         Image mixerImage = mixer.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         JLabel mixerLabel = new JLabel( new ImageIcon(mixerImage));
-        mixerLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-
-
-
 
         ImageIcon alpha = new ImageIcon(getClass().getResource("Assets/atoms/alpha.png"));
         Image scaledAlpha = alpha.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH); // scales the image
         JLabel alphaLabel = new JLabel(new ImageIcon(scaledAlpha));
-
 
         ImageIcon beta = new ImageIcon(getClass().getResource("Assets/atoms/beta.png"));
         Image scaledBeta = beta.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH); // scales the image
@@ -158,15 +164,16 @@ public class StatsMenu extends JPanel {
 
         //JLabel sigmaAmountLabel = new JLabel("Amount");
         JLabel sigmaAmountLabel = new JLabel(String.valueOf(Inventory.getInstance().getAtomAmount(AtomType.SIGMA)));
-        JLabel emp = new JLabel();
+
 
 //panel design
         this.add(score);
-        this.add(emp);
+        this.add(new JLabel(""));
+
         this.add(time);
-        this.add(emp);
+        this.add(new JLabel(""));
         this.add(health);
-        this.add(emp);
+        this.add(new JLabel(""));
       //  this.add(new JSeparator(SwingConstants.HORIZONTAL));
         this.add(powalpha);
         this.add(powAlphaAmountLabel);
@@ -178,7 +185,7 @@ public class StatsMenu extends JPanel {
         this.add(powSigmaAmountLabel);
       //  this.add(new JSeparator(SwingConstants.HORIZONTAL));
         this.add(mixerLabel);
-        this.add(emp);
+        this.add(new JLabel(""));
         this.add(alphaLabel);
         this.add(alphaAmountLabel);
         this.add(betaLabel);
@@ -220,7 +227,7 @@ public class StatsMenu extends JPanel {
 
     public void draw() {
         drawScore();
-        this.setBounds(GameWindowFactory.getGameWindowWidth(),0,400,GameWindowFactory.getWindowHeight() - 35);
+        this.setBounds(GameWindowFactory.getGameWindowWidth(),0,300,GameWindowFactory.getWindowHeight() - 35);
         this.setOpaque(true);
         this.setBackground(new Color(102, 102, 102, 123));
         this.setFocusable(false);
