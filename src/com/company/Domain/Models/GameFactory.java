@@ -4,6 +4,7 @@ import com.company.Domain.Models.Projectile.*;
 import com.company.Domain.Models.Projectile.Decorator.AtomDecorator;
 import com.company.Domain.Utility.Coordinate;
 
+import com.company.Domain.Utility.Velocity;
 import com.company.UI.Observer.GameObserver;
 
 import javax.swing.*;
@@ -320,7 +321,7 @@ public class GameFactory extends GameObserver  {
                       moleculeRemovalList.add(molecule);
                       projectileRemovalList.add(projectile);
                       AtomDecorator atom = (AtomDecorator)projectile;
-                      this.score += atom.getEfficiency();
+                      this.score += atom.getEfficiency(       );
                    }
                 }
             }
@@ -340,7 +341,14 @@ public class GameFactory extends GameObserver  {
         }
        reactionBlockerRemovalList.clear();
 
+        for (Projectile projectile : projectileFromGunList ){
+            if ( projectile.getXCoordinate() >= gameWindowWidth){
+                projectile.setVelocity(new Velocity(projectile.getVelocity().getAngle() + 90,projectile.getVelocity().getSpeed()));
+            }else if (projectile.getXCoordinate() <= 0){
+                projectile.setVelocity(new Velocity(projectile.getVelocity().getAngle() - 90,projectile.getVelocity().getSpeed()));
+            }
 
+        }
 
 
 

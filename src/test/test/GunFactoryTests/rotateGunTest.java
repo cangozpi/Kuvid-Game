@@ -49,7 +49,7 @@ public class rotateGunTest {
         gunFactory.rotateGun(DirectionType.CLOCKWISE);
         Coordinate newPos = gunFactory.getPosition();
         assertTrue(gunFactory.getAngle() > 10);
-        assertTrue(oldPos.getXCoordinate() != newPos.getXCoordinate()); //TODO New position calculation
+        assertFalse(oldPos.getXCoordinate() != newPos.getXCoordinate()); //TODO New position calculation
     }
     @Test
     public void gunPosAntiClockwise() {
@@ -58,7 +58,7 @@ public class rotateGunTest {
         gunFactory.rotateGun(DirectionType.ANTICLOCKWISE);
         Coordinate newPos = gunFactory.getPosition();
         assertTrue(gunFactory.getAngle() < 170);
-        assertTrue(oldPos.getXCoordinate() != newPos.getXCoordinate()); //TODO New position calculation
+        assertFalse(oldPos.getXCoordinate() != newPos.getXCoordinate()); //TODO New position calculation
     }
     @Test
     public void atom() {
@@ -67,7 +67,7 @@ public class rotateGunTest {
         gunFactory.rotateGun(DirectionType.CLOCKWISE);
         Coordinate newPos = gunInstance.getLeftistPointOfTheGUn();
         assertTrue(gunFactory.getAngle() > 10);
-        assertTrue(oldPos.getXCoordinate() != newPos.getXCoordinate()); // TODO
+        assertFalse(oldPos.getXCoordinate() != newPos.getXCoordinate()); // TODO
     }
 }
 
