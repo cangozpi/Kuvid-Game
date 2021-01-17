@@ -381,6 +381,7 @@ public class GameFactory extends GameObserver  {
 
         if(projectile1.getProjectileType().toString().contains("ALPHA")){
             if(projectile2.getProjectileType().toString().contains("ALPHA")){
+                System.out.println();
                 return true;
             }else return false;
         } else if(projectile1.getProjectileType().toString().contains("BETA")){
