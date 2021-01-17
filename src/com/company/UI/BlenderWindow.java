@@ -106,7 +106,7 @@ public class BlenderWindow extends JFrame implements KeyListener {
             }
 
         });
-
+        alphaToBeta.setFocusable(false);
         JButton alphaToGamma = new JButton("+1 Gamma (-3 Alpha)");
         panelHolder[2][1].add(alphaToGamma);
         alphaToGamma.addActionListener(new ActionListener() {
@@ -116,7 +116,7 @@ public class BlenderWindow extends JFrame implements KeyListener {
                 update();
             }
         });
-
+        alphaToGamma.setFocusable(false);
         JButton alphaToSigma = new JButton("+1 Sigma (-4 Alpha)");
         panelHolder[3][1].add(alphaToSigma);
         alphaToSigma.addActionListener(new ActionListener() {
@@ -126,7 +126,7 @@ public class BlenderWindow extends JFrame implements KeyListener {
                 update();
             }
         });
-
+        alphaToSigma.setFocusable(false);
         JButton betaToGamma = new JButton("+1 Gamma (-2 Beta)");
         panelHolder[4][1].add(betaToGamma);
         betaToGamma.addActionListener(new ActionListener() {
@@ -136,7 +136,7 @@ public class BlenderWindow extends JFrame implements KeyListener {
                 update();
             }
         });
-
+        betaToGamma.setFocusable(false);
         JButton betaToSigma = new JButton("+1 Sigma (-3 Beta)");
         panelHolder[5][1].add(betaToSigma);
         betaToSigma.addActionListener(new ActionListener() {
@@ -146,7 +146,7 @@ public class BlenderWindow extends JFrame implements KeyListener {
                 update();
             }
         });
-
+        betaToSigma.setFocusable(false);
         JButton gammaToSigma = new JButton("+1 Sigma (-2 Gamma)");
         panelHolder[6][1].add(gammaToSigma);
         gammaToSigma.addActionListener(new ActionListener() {
@@ -156,7 +156,7 @@ public class BlenderWindow extends JFrame implements KeyListener {
                 update();
             }
         });
-
+        gammaToSigma.setFocusable(false);
         panelHolder[0][2].add(new JLabel("Break Atoms!"));
 
         JButton betaToAlpha = new JButton("+2 Alpha (-1 Beta)");
@@ -168,7 +168,7 @@ public class BlenderWindow extends JFrame implements KeyListener {
                 update();
             }
         });
-
+        betaToAlpha.setFocusable(false);
         JButton gammaToAlpha = new JButton("+3 Alpha (-1 Gamma)");
         panelHolder[2][2].add(gammaToAlpha);
         gammaToAlpha.addActionListener(new ActionListener() {
@@ -178,7 +178,7 @@ public class BlenderWindow extends JFrame implements KeyListener {
                 update();
             }
         });
-
+        gammaToAlpha.setFocusable(false);
         JButton sigmaToAlpha = new JButton("+4 Alpha (-1 Sigma)");
         panelHolder[3][2].add(sigmaToAlpha);
         sigmaToAlpha.addActionListener(new ActionListener() {
@@ -188,7 +188,7 @@ public class BlenderWindow extends JFrame implements KeyListener {
                 update();
             }
         });
-
+        sigmaToAlpha.setFocusable(false);
         JButton gammaToBeta = new JButton("+2 Beta (-1 Gamma)");
         panelHolder[4][2].add(gammaToBeta);
         gammaToBeta.addActionListener(new ActionListener() {
@@ -198,7 +198,7 @@ public class BlenderWindow extends JFrame implements KeyListener {
                 update();
             }
         });
-
+        gammaToBeta.setFocusable(false);
         JButton sigmaToBeta = new JButton("+3 Beta (-1 Sigma)");
         panelHolder[5][2].add(sigmaToBeta);
         sigmaToBeta.addActionListener(new ActionListener() {
@@ -208,7 +208,7 @@ public class BlenderWindow extends JFrame implements KeyListener {
                 update();
             }
         });
-
+        sigmaToBeta.setFocusable(false);
         JButton sigmaToGamma = new JButton("+2 Gamma (-1 Sigma)");
         panelHolder[6][2].add(sigmaToGamma);
         sigmaToGamma.addActionListener(new ActionListener() {
@@ -218,12 +218,10 @@ public class BlenderWindow extends JFrame implements KeyListener {
                 update();
             }
         });
-
+        sigmaToGamma.setFocusable(false);
         this.getContentPane().add(inputPanel);
         this.setVisible(true);
         addKeyListener(this);
-        setFocusable(true);
-        setFocusTraversalKeysEnabled(false);
     }
 
     void update(){

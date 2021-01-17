@@ -209,19 +209,48 @@ public class GameFactory extends GameObserver  {
             if (powerUp.getYCoordinate() + powerUp.getHeight() > gameWindowHeight - 35 ){         // bottom edge check
                 powerUpRemovalList.add(powerUp);
             }
-            if ( (powerUp.getYCoordinate() <= gunPosition.getYCoordinate() + L &
-                    gunPosition.getYCoordinate() + L <= powerUp.getYCoordinate() + powerUp.getHeight()) |                      // gun collects powerUp
-                    (powerUp.getYCoordinate() <= gunPosition.getYCoordinate() &
-                            gunPosition.getYCoordinate() <= powerUp.getYCoordinate() + powerUp.getHeight())){
-                if ((powerUp.getXCoordinate() <= gunPosition.getXCoordinate() +L/2 &
-                        gunPosition.getXCoordinate() + L/2 <= powerUp.getXCoordinate() + powerUp.getWidth()) |
-                        (powerUp.getXCoordinate() <= gunPosition.getXCoordinate() &
-                                gunPosition.getXCoordinate() <= powerUp.getXCoordinate() + powerUp.getWidth())){
+            if( ammo.getXCoordinate() < gunPosition.getXCoordinate()){
+                //left diagonal
+                if (powerUp.getYCoordinate() + powerUp.getHeight() >= ammo.getYCoordinate()){
+                    if( powerUp.getXCoordinate() + powerUp.getWidth() > ammo.getXCoordinate() && powerUp.getXCoordinate() < gunPosition.getXCoordinate() + L/2){
                         powerUpRemovalList.add(powerUp);
                         Inventory.getInstance().addPowerUp(powerUp.getProjectileType());
+                    }
+                }
+            }else if(gunPosition.getXCoordinate() + L/2 < ammo.getXCoordinate() + ammo.getWidth() ){
+            //right diagonal
+            if (powerUp.getYCoordinate() + powerUp.getHeight() >= ammo.getYCoordinate()){
+                if( powerUp.getXCoordinate() + powerUp.getWidth() < ammo.getXCoordinate() + ammo.getWidth() && powerUp.getXCoordinate() > gunPosition.getXCoordinate()){
+                    powerUpRemovalList.add(powerUp);
+                    Inventory.getInstance().addPowerUp(powerUp.getProjectileType());
+                }
+            }
+            }else {
+                if ((powerUp.getYCoordinate() <= gunPosition.getYCoordinate() + L &&
+                        gunPosition.getYCoordinate() <= powerUp.getYCoordinate()) ||
+                        (powerUp.getYCoordinate() <= gunPosition.getYCoordinate() &&
+                                gunPosition.getYCoordinate() <= powerUp.getYCoordinate() + powerUp.getHeight())){
+
+                  if(((powerUp.getXCoordinate() <= gunPosition.getXCoordinate() + L/2 )&&
+                           ( gunPosition.getXCoordinate() <= powerUp.getXCoordinate())) ||
+                            ((powerUp.getXCoordinate() + powerUp.getWidth() >= gunPosition.getXCoordinate() )&&
+                                    (gunPosition.getXCoordinate() >= powerUp.getXCoordinate()))){
+                        powerUpRemovalList.add(powerUp);
+                        Inventory.getInstance().addPowerUp(powerUp.getProjectileType());
+                    }
+                }
+            }
+            /*
+            if (powerUp.getYCoordinate() <= gunPosition.getYCoordinate() + L &
+                    gunPosition.getYCoordinate() <= powerUp.getYCoordinate())  {                 // gun collects powerUp){
+                if (powerUp.getXCoordinate() <= gunPosition.getXCoordinate() + L/2 &
+                        gunPosition.getXCoordinate() <= powerUp.getXCoordinate()){
+
+
                 }
             }
 
+             */
         }
 
         for (PowerUp element : powerUpRemovalList){
@@ -339,7 +368,19 @@ public class GameFactory extends GameObserver  {
 
 
 
+    public boolean hasCollided(Projectile projectile1, Projectile projectile2){
+        if ((projectile1.getYCoordinate() <= projectile2.getYCoordinate() + projectile2.getHeight() &&
+                projectile2.getYCoordinate() <= projectile1.getYCoordinate()) ||
+                (projectile1.getYCoordinate() <= projectile2.getYCoordinate() &&
+                        projectile2.getYCoordinate() <= projectile1.getYCoordinate() + projectile1.getHeight())){
 
+            return (projectile1.getXCoordinate() <= projectile2.getXCoordinate() + projectile2.getWidth() &&
+                    projectile2.getXCoordinate() <= projectile1.getXCoordinate()) ||
+                    (projectile1.getXCoordinate() + projectile1.getWidth() >= projectile2.getXCoordinate() &&
+                            projectile2.getXCoordinate() >= projectile1.getXCoordinate());
+        }
+        return false;
+    }
 
 
 

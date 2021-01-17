@@ -23,7 +23,7 @@ public class StatsMenu extends JPanel {
 
         JLabel score = new JLabel("Score: " +  String.valueOf(GameFactory.getInstance().getScore()));
         JLabel time = new JLabel("Time: " + String.valueOf(GameFactory.getInstance().getTime()));
-        JLabel health = new JLabel("Health: " + "health.toString");
+        JLabel health = new JLabel("Health: " + String.valueOf(GameFactory.getInstance().getHealth()));
 
         SelectPowerUpHandler selectPowerUpHandler = new SelectPowerUpHandler();
         ShieldHandler   shieldHandler = new ShieldHandler();
