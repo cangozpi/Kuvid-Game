@@ -114,9 +114,13 @@ public class GunFactory {
                 if (ammo.getProjectileType().toString().contains("powerUp")) {
                     xCoord += L * Math.cos(Math.toRadians(angle));
                     yCoord += L - L * Math.sin(Math.toRadians(angle)) - L/4;
+                    ammo.setXCoordinate(xCoord);
+                    ammo.setYCoordinate(yCoord);
                 }else{
                 xCoord += L * Math.cos(Math.toRadians(angle)) + Math.sqrt(Math.pow(L/10,2)+ Math.pow(3*L/20,2));
                 yCoord += L - L * Math.sin(Math.toRadians(angle)) - ammo.getHeight();
+                    ammo.setXCoordinate(xCoord);
+                    ammo.setYCoordinate(yCoord);
                 }
             }
         } else {
@@ -125,16 +129,19 @@ public class GunFactory {
                 if (ammo.getProjectileType().toString().contains("powerUp")) {
                     xCoord += L * Math.cos(Math.toRadians(angle));
                     yCoord += L - L * Math.sin(Math.toRadians(angle)) - L/4;
+                    ammo.setXCoordinate(xCoord);
+                    ammo.setYCoordinate(yCoord);
                 }else{
                 xCoord += L * Math.cos(Math.toRadians(angle)) + Math.sqrt(Math.pow(L/10,2)+ Math.pow(3*L/20,2));
                 yCoord += L - L * Math.sin(Math.toRadians(angle)) - ammo.getHeight();
+                    ammo.setXCoordinate(xCoord);
+                    ammo.setYCoordinate(yCoord);
                 }
             }
         }
 
 
-        ammo.setXCoordinate(xCoord);
-        ammo.setYCoordinate(yCoord);
+
         GameFactory.getInstance().moveGun(position, angle, ammo);
     }
 
