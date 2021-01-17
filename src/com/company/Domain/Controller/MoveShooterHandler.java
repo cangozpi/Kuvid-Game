@@ -18,7 +18,7 @@ public class MoveShooterHandler implements KeyListener  {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println(e.getKeyCode());
+
         if(e.getKeyCode() == 37){moveGun(DirectionType.LEFT);}
         if(e.getKeyCode() == 39){moveGun(DirectionType.RIGHT);}
     }

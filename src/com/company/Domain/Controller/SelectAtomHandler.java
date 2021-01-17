@@ -23,7 +23,7 @@ public class SelectAtomHandler implements KeyListener  {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println(e.getKeyCode());
+
 
         if(e.getKeyCode() == 67){ //C
             selectAtom();

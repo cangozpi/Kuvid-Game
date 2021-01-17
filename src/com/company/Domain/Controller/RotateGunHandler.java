@@ -19,7 +19,7 @@ public class RotateGunHandler implements KeyListener{
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println(e.getKeyCode());
+
         if(e.getKeyCode() == 65){rotateGun(DirectionType.ANTICLOCKWISE);}//A
         if(e.getKeyCode() == 68){rotateGun(DirectionType.CLOCKWISE);}//D
         }

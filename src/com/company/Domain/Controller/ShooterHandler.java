@@ -33,7 +33,7 @@ public class ShooterHandler implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println(e.getKeyCode());
+
 
         if(e.getKeyCode() == 38){ //Up Arrow
             shootGun();

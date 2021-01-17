@@ -97,7 +97,7 @@ public class GameFactory extends GameObserver  {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if(health == 0){
+            if(health <= 0){
             pauseGame();
             }
             if(getTime()>300){
@@ -263,7 +263,7 @@ public class GameFactory extends GameObserver  {
         for (Projectile projectile : projectileFromGunList) {
             if (projectile.getYCoordinate() - projectile.getHeight() <= 0 ){         // top edge check
                 projectileRemovalList.add(projectile);
-            }else if ( projectile.getXCoordinate() >= gameWindowWidth){
+            }else if ( projectile.getXCoordinate() + projectile.getWidth() >= gameWindowWidth){
                 projectile.setVelocity(new Velocity(projectile.getVelocity().getAngle() + 90,projectile.getVelocity().getSpeed()));
             }else if (projectile.getXCoordinate() <= 0){
                 projectile.setVelocity(new Velocity(projectile.getVelocity().getAngle() - 90,projectile.getVelocity().getSpeed()));
