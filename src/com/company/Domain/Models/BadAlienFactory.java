@@ -17,11 +17,13 @@ public class BadAlienFactory {
     //Singleton Pattern
     private static BadAlienFactory instance;
     private GameFactory gameFactory;
+    private int L;
     //variables
     Map<ReactionBlockerType, Integer> reactionBlockerAmount;
     Random random = new Random();
     private BadAlienFactory(){
         gameFactory = GameFactory.getInstance();
+        L = gameFactory.getL();
     }
 
     public static BadAlienFactory getInstance(){
@@ -37,7 +39,7 @@ public class BadAlienFactory {
             ReactionBlockerType type = availableReactionBlockers.get(reactionBlockerToShoot);
             Coordinate position = new Coordinate(random.nextInt(gameFactory.getGameWindowWidth()), 0);
             reactionBlockerAmount.put(type, reactionBlockerAmount.get(type) - 1);
-            return new ReactionBlocker(position, new Velocity(270, gameFactory.getFallSpeed()), false, type, 30, 30);
+            return new ReactionBlocker(position, new Velocity(270, gameFactory.getFallSpeed()),  type,false, L/4, L/4);
         }
         return null;
     }

@@ -20,9 +20,11 @@ public class GoodAlienFactory {
     private HashMap<MoleculeType, Integer> moleculeAmounts;
     private GameFactory gameFactory;
     private MoleculeFactory moleculeFactory;
+    private int L;
 
     private GoodAlienFactory() {
         gameFactory = GameFactory.getInstance();
+        L = gameFactory.getL();
         moleculeFactory = new MoleculeFactory();
     }
 
@@ -40,7 +42,7 @@ public class GoodAlienFactory {
             Coordinate position = new Coordinate(random.nextInt(gameFactory.getGameWindowWidth()), 0);
 
             powerUpAmounts.put(type, powerUpAmounts.get(type) - 1);
-            return new PowerUp(position, new Velocity(270, gameFactory.getFallSpeed()), type, false, 30, 30);
+            return new PowerUp(position, new Velocity(270, gameFactory.getFallSpeed()), type, false, L/4, L/4);
         }
         return null;
     }
@@ -53,7 +55,7 @@ public class GoodAlienFactory {
             Coordinate position = new Coordinate(random.nextInt(gameFactory.getGameWindowWidth()),0);
 
             moleculeAmounts.put(type, moleculeAmounts.get(type) - 1);
-            return moleculeFactory.getInstance(position, new Velocity(270,gameFactory.getFallSpeed()), false, type , gameFactory.getL() /4, gameFactory.getL()/4);
+            return moleculeFactory.getInstance(position, new Velocity(270,gameFactory.getFallSpeed()), false, type , L /4, L/4);
         }
         return null;
     }

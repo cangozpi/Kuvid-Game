@@ -11,7 +11,7 @@ public class AtomSelector {
 
     Inventory inventory = Inventory.getInstance();
     GunFactory gun = GunFactory.getInstance();
-    private double L = gun.getL();
+    private final double L = gun.getL();
 
     public AtomSelector() {}
 

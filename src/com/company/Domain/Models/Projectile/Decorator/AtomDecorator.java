@@ -16,7 +16,7 @@ public abstract class AtomDecorator extends Atom {
     private Atom atomReference;
 
 
-    public AtomDecorator(Coordinate coordinate, Velocity velocity, IProjectileType atomType, boolean isAmmo, int height, int width, Atom atom) {
+    public AtomDecorator(Coordinate coordinate, Velocity velocity, AtomType atomType, boolean isAmmo, int height, int width, Atom atom) {
         super(coordinate, velocity, atomType, isAmmo, height, width);
         this.atomReference = atom;
     }

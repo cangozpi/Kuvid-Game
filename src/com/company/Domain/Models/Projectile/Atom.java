@@ -20,7 +20,7 @@ public class Atom extends Projectile{
     private double speedMultiplier = 1;
 
 
-    public Atom(Coordinate coordinate, Velocity velocity, IProjectileType atomType, boolean isAmmo, int height, int width) {
+    public Atom(Coordinate coordinate, Velocity velocity, AtomType atomType, boolean isAmmo, int height, int width) {
         super(coordinate, velocity, isAmmo, height, width, atomType);
         this.projectileType = atomType;
         this.isAmmo = isAmmo;

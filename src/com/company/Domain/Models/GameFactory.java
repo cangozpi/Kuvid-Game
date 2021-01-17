@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+
 public class GameFactory extends GameObserver  {
 
 
@@ -33,7 +34,7 @@ public class GameFactory extends GameObserver  {
 
     private int fallSpeed;
 
-
+    private int health;
     private boolean isLinear;
     private double score;
     private int time;
@@ -42,6 +43,7 @@ public class GameFactory extends GameObserver  {
         super(); //necessary for initializing Observer
         time = 0;
         score = 0;
+        health = 100;
 
     }
 
@@ -66,7 +68,7 @@ public class GameFactory extends GameObserver  {
         badAlienClock.start();
     }
 
-    Timer badAlienClock =  new Timer(5000, new ActionListener() {
+    Timer badAlienClock =  new Timer(7000, new ActionListener() {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -172,12 +174,14 @@ public class GameFactory extends GameObserver  {
             if (molecule.getYCoordinate() + molecule.getHeight() > gameWindowHeight - 35  ){         // bottom edge check
                 moleculeRemovalList.add(molecule);
             }
-            for(ReactionBlocker reactionBlocker : reactionBlockerList){
-                if(hasCollidedReactionBlocker(reactionBlocker.getCoordinate(), L/2, L/2, molecule.getCoordinate(), molecule.getWidth(), molecule.getHeight() )){
-                    explosionList.add(reactionBlocker);
-                    moleculeRemovalList.add(molecule);
-                }
+            for(ReactionBlocker reactionBlocker : reactionBlockerList){                              // reaction blocker check
 
+                if(isSameType(molecule,reactionBlocker)){
+                    if(hasCollidedReactionBlocker(reactionBlocker.getCoordinate(), reactionBlocker.getWidth(), reactionBlocker.getHeight(), L/2, molecule.getCoordinate(), molecule.getWidth(), molecule.getHeight())){
+                         reactionBlockerRemovalList.add(reactionBlocker);
+                         moleculeRemovalList.add(molecule);
+                    }
+                }
             }
         }
 
@@ -185,6 +189,10 @@ public class GameFactory extends GameObserver  {
             moleculeList.remove(element);
         }
         moleculeRemovalList.clear();
+        for (ReactionBlocker element :reactionBlockerRemovalList){
+            reactionBlockerList.remove(element);
+        }
+        reactionBlockerRemovalList.clear();
 
 
         //powerups
@@ -192,48 +200,44 @@ public class GameFactory extends GameObserver  {
             if (powerUp.getYCoordinate() + powerUp.getHeight() > gameWindowHeight - 35 ){         // bottom edge check
                 powerUpRemovalList.add(powerUp);
             }
-
-            if ( gunPosition.getYCoordinate() <= powerUp.getYCoordinate() + powerUp.getHeight()){             // gun collects powerUp
-                if ((powerUp.getXCoordinate() <= gunPosition.getXCoordinate() + L/2 &
+            if ( (powerUp.getYCoordinate() <= gunPosition.getYCoordinate() + L &
+                    gunPosition.getYCoordinate() + L <= powerUp.getYCoordinate() + powerUp.getHeight()) |                      // gun collects powerUp
+                    (powerUp.getYCoordinate() <= gunPosition.getYCoordinate() &
+                            gunPosition.getYCoordinate() <= powerUp.getYCoordinate() + powerUp.getHeight())){
+                if ((powerUp.getXCoordinate() <= gunPosition.getXCoordinate() +L/2 &
                         gunPosition.getXCoordinate() + L/2 <= powerUp.getXCoordinate() + powerUp.getWidth()) |
                         (powerUp.getXCoordinate() <= gunPosition.getXCoordinate() &
                                 gunPosition.getXCoordinate() <= powerUp.getXCoordinate() + powerUp.getWidth())){
-                    powerUpRemovalList.add(powerUp);
-                    Inventory.getInstance().addPowerUp(powerUp.getProjectileType());
+                        powerUpRemovalList.add(powerUp);
+                        Inventory.getInstance().addPowerUp(powerUp.getProjectileType());
                 }
             }
 
-            for(ReactionBlocker reactionBlocker : reactionBlockerList){
-                if(hasCollidedReactionBlocker(reactionBlocker.getCoordinate(), L/2, L/2, powerUp.getCoordinate(), powerUp.getWidth(), powerUp.getHeight() )){
-                    explosionList.add(reactionBlocker);
-                    powerUpRemovalList.add(powerUp);
-                }
-
-            }
         }
 
         for (PowerUp element : powerUpRemovalList){
             powerUpList.remove(element);
         }
-       powerUpRemovalList.clear();
+        powerUpRemovalList.clear();
 
-        // projectiles
+
+        // projectiles from gun
         for (Projectile projectile : projectileFromGunList) {
             if (projectile.getYCoordinate() - projectile.getHeight() <= 0 ){         // top edge check
                 projectileRemovalList.add(projectile);
+            }else if ( projectile.getXCoordinate() >= gameWindowWidth){
+                projectile.setVelocity(new Velocity(projectile.getVelocity().getAngle() + 90,projectile.getVelocity().getSpeed()));
+            }else if (projectile.getXCoordinate() <= 0){
+                projectile.setVelocity(new Velocity(projectile.getVelocity().getAngle() - 90,projectile.getVelocity().getSpeed()));
             }
+
             for(ReactionBlocker reactionBlocker : reactionBlockerList){
-                if(hasCollidedReactionBlocker(reactionBlocker.getCoordinate(), L/2, L/2, projectile.getCoordinate(), projectile.getWidth(), projectile.getHeight() )){
-                    if(projectile instanceof Atom){
-                        explosionList.add(reactionBlocker);
-                        projectileRemovalList.add(projectile);
-                    } else {
+                if(isSameType(projectile,reactionBlocker)){
+                    if(hasCollidedReactionBlocker(reactionBlocker.getCoordinate(), reactionBlocker.getWidth(), reactionBlocker.getHeight(), L/2, projectile.getCoordinate(), projectile.getWidth(), projectile.getHeight() )){
                         reactionBlockerRemovalList.add(reactionBlocker);
                         projectileRemovalList.add(projectile);
                     }
-
                 }
-
             }
         }
 
@@ -243,51 +247,44 @@ public class GameFactory extends GameObserver  {
         }
         projectileRemovalList.clear();
 
+        for (ReactionBlocker element :reactionBlockerRemovalList){
+            reactionBlockerList.remove(element);
+        }
+        reactionBlockerRemovalList.clear();
 
 
         // reaction blockers
         for (ReactionBlocker reactionBlocker : reactionBlockerList ) {
-            if(hasCollidedReactionBlocker(reactionBlocker.getCoordinate(),L/2,L/2,getGunPosition(), L/2,L)){   //gun check
+            if(hasCollidedReactionBlocker(reactionBlocker.getCoordinate(), reactionBlocker.getWidth(), reactionBlocker.getHeight(), L/2, getGunPosition(), L/2,L)){   //gun check
                 explosionList.add(reactionBlocker);
-            }else if (reactionBlocker.getYCoordinate() + 0.5 * L >= gameWindowHeight - 35 ){         // bottom edge check
+            }else if (reactionBlocker.getYCoordinate() + L/4 >= gameWindowHeight - 35 ){         // bottom edge check
                 explosionList.add(reactionBlocker);
             }
-
         }
-//        //Ammo Deletion (if required)
-//        Gun.setAmmo(null);
-//        AtomSelector.selectAtom();
+
+        //Ammo Deletion (if required)
+        // Gun.setAmmo(null);
+        //AtomSelector.selectAtom();
 
         for (ReactionBlocker reactionBlocker : explosionList){
             reactionBlockerList.remove(reactionBlocker);
-
-            if (hasCollidedReactionBlocker(reactionBlocker.getCoordinate(), 2*L, 2*L, getGunPosition(), L/2, L)){   // collision explosion radius
-
-
-                //TODO lose health
+            int distanceToGun = distanceBetween(gunPosition,reactionBlocker.getCoordinate());
+            if (distanceToGun < 2*L){   // collision explosion radius
+                health -= gameWindowHeight/distanceToGun;    //lose health
             }
-            for(PowerUp powerUp : powerUpList){
-                if (hasCollidedReactionBlocker(reactionBlocker.getCoordinate(), 2*L, 2*L, powerUp.getCoordinate(), powerUp.getWidth(), powerUp.getHeight())){
-                    powerUpRemovalList.add(powerUp);
-                }
-            }
+
             for(Molecule molecule : moleculeList){
-                if (hasCollidedReactionBlocker(reactionBlocker.getCoordinate(), 2*L, 2*L, molecule.getCoordinate(), molecule.getWidth(), molecule.getHeight())){
+                if (hasCollidedReactionBlocker(reactionBlocker.getCoordinate(), reactionBlocker.getWidth(), reactionBlocker.getHeight(), 2*L, molecule.getCoordinate(), molecule.getWidth(), molecule.getHeight())){
                     moleculeRemovalList.add(molecule);
                 }
             }
             for(Projectile projectile : projectileFromGunList){
-                if (hasCollidedReactionBlocker(reactionBlocker.getCoordinate(), 2*L, 2*L, projectile.getCoordinate(), projectile.getWidth(), projectile.getHeight())){
-                    projectileRemovalList.add(projectile);
+                if(projectile instanceof Atom){
+                    if (hasCollidedReactionBlocker(reactionBlocker.getCoordinate(), reactionBlocker.getWidth(), reactionBlocker.getHeight(), 2*L, projectile.getCoordinate(), projectile.getWidth(), projectile.getHeight())){
+                        projectileRemovalList.add(projectile);
+                    }
                 }
             }
-
-            for(ReactionBlocker blocker : reactionBlockerList){
-                if (hasCollidedReactionBlocker(reactionBlocker.getCoordinate(), 2*L, 2*L, blocker.getCoordinate(), L/2, L/2)){
-                    reactionBlockerRemovalList.add(blocker);
-                }
-            }
-
         }
         explosionList.clear();
 
@@ -301,30 +298,19 @@ public class GameFactory extends GameObserver  {
         }
         moleculeRemovalList.clear();
 
-        for (ReactionBlocker element :reactionBlockerRemovalList){
-            reactionBlockerList.remove(element);
-        }
-        reactionBlockerRemovalList.clear();
-
-        for (PowerUp element : powerUpRemovalList){
-            powerUpList.remove(element);
-        }
-        powerUpRemovalList.clear();
 
         for (Projectile projectile : projectileFromGunList) {
-            if (projectile.getYCoordinate() - projectile.getHeight() <= 0 ){         // top edge check
-                projectileRemovalList.add(projectile);
-            }
-            if(projectile instanceof Atom){
-                for(Molecule molecule : moleculeList){               //TODO atom collects molecule not powerup
-                  if(hasCollided(molecule,projectile)){
-                      moleculeRemovalList.add(molecule);
-                      projectileRemovalList.add(projectile);
-                      AtomDecorator atom = (AtomDecorator)projectile;
-                      this.score += atom.getEfficiency(       );
+            if(projectile.getProjectileType().toString().contains("atom"))
+                for(Molecule molecule : moleculeList){
+                    if(isSameType(projectile,molecule)){                     //collect molecule gain score
+                        if(hasCollided(molecule,projectile)){
+                            moleculeRemovalList.add(molecule);
+                            projectileRemovalList.add(projectile);
+                            AtomDecorator atom = (AtomDecorator)projectile;
+                            this.score += atom.getEfficiency();
                    }
                 }
-            }
+                }
         }
         for (Projectile element : projectileRemovalList){
             projectileFromGunList.remove(element);
@@ -336,18 +322,6 @@ public class GameFactory extends GameObserver  {
         }
         moleculeRemovalList.clear();
 
-        for (ReactionBlocker element :reactionBlockerRemovalList){
-            reactionBlockerList.remove(element);
-        }
-       reactionBlockerRemovalList.clear();
-
-        for (Projectile projectile : projectileFromGunList ){
-            if ( projectile.getXCoordinate() >= gameWindowWidth){
-                projectile.setVelocity(new Velocity(projectile.getVelocity().getAngle() + 90,projectile.getVelocity().getSpeed()));
-            }else if (projectile.getXCoordinate() <= 0){
-                projectile.setVelocity(new Velocity(projectile.getVelocity().getAngle() - 90,projectile.getVelocity().getSpeed()));
-            }
-
         }
 
 
@@ -356,12 +330,12 @@ public class GameFactory extends GameObserver  {
 
 
 
-    }
+
     public boolean hasCollided(Projectile projectile1, Projectile projectile2){
         if ( (projectile1.getYCoordinate() <= projectile2.getYCoordinate() + projectile2.getHeight() &
                 projectile2.getYCoordinate() + projectile2.getHeight() <= projectile1.getYCoordinate() + projectile1.getHeight()) |
                 (projectile1.getYCoordinate() <= projectile2.getYCoordinate() &
-                        projectile2.getYCoordinate() <= projectile1.getYCoordinate() + projectile1.getHeight())){             // gun in explosion radius
+                        projectile2.getYCoordinate() <= projectile1.getYCoordinate() + projectile1.getHeight())){
             if ((projectile1.getXCoordinate() <= projectile2.getXCoordinate() + projectile2.getWidth() &
                     projectile2.getXCoordinate() + projectile2.getWidth() <= projectile1.getXCoordinate() + projectile1.getWidth()) |
                     (projectile1.getXCoordinate() <= projectile2.getXCoordinate() &
@@ -372,11 +346,29 @@ public class GameFactory extends GameObserver  {
         return false;
     }
 
-    public boolean hasCollidedReactionBlocker(Coordinate coord1,  int width1,  int height1, Coordinate coord2, int width2, int height2){
+    public boolean hasCollidedReactionBlocker(Coordinate reactionBlockerPosition,  int blockerWidth,  int blockerHeight, int collisionRadius, Coordinate objectPosition, int objectWidth, int objectHeight){
+        double centerX = reactionBlockerPosition.getXCoordinate() + blockerWidth/2.0;
+        double centerY = reactionBlockerPosition.getYCoordinate() - blockerHeight/2.0;
+        Coordinate center = new Coordinate(centerX,centerY);                               //center of the reaction blocker
+        Coordinate topRightCorner = new Coordinate(objectPosition.getXCoordinate()+objectWidth, objectPosition.getY());
+        Coordinate bottomRightCorner = new Coordinate(objectPosition.getXCoordinate()+objectWidth, objectPosition.getY() + objectHeight);
+        Coordinate bottomLeftCorner = new Coordinate(objectPosition.getXCoordinate(), objectPosition.getY() + objectHeight);
+        if(distanceBetween(center,objectPosition)< collisionRadius){                                   // coord2 is the top left coordinate of the object
+            return true;
+        } else if(distanceBetween(center,topRightCorner)< collisionRadius){
+            return true;
+        } else if(distanceBetween(center, bottomLeftCorner)< collisionRadius){
+            return true;
+        } else if(distanceBetween(center,bottomRightCorner)< collisionRadius){
+            return true;
+        }
+        return false;
+
+        /*                                                                            //rectangular collision check
         if ( (coord1.getYCoordinate() <= coord2.getYCoordinate() + height2 &
                 coord2.getYCoordinate() + height2 <= coord1.getYCoordinate() + height1) |
                 (coord1.getYCoordinate() <= coord2.getYCoordinate() &
-                        coord2.getYCoordinate() <= coord1.getYCoordinate() + height1)){             // gun in explosion radius
+                        coord2.getYCoordinate() <= coord1.getYCoordinate() + height1)){
             if ((coord1.getXCoordinate() <= coord2.getXCoordinate() + width2 &
                     coord2.getXCoordinate() + width2 <= coord1.getXCoordinate() + width1) |
                     (coord1.getXCoordinate() <= coord2.getXCoordinate() &
@@ -384,10 +376,39 @@ public class GameFactory extends GameObserver  {
                 return true;
             }
 
+        }*/
+
+    }
+    public boolean isSameType(Projectile projectile1, Projectile projectile2){
+
+        if(projectile1.getProjectileType().toString().contains("ALPHA")){
+            if(projectile2.getProjectileType().toString().contains("ALPHA")){
+                return true;
+            }else return false;
+        } else if(projectile1.getProjectileType().toString().contains("BETA")){
+            if(projectile2.getProjectileType().toString().contains("BETA")){
+                return true;
+            }else return false;
+        } else if(projectile1.getProjectileType().toString().contains("GAMMA")){
+            if(projectile2.getProjectileType().toString().contains("GAMMA")){
+                return true;
+            }else return false;
+        } else if(projectile1.getProjectileType().toString().contains("SIGMA")){
+            if(projectile2.getProjectileType().toString().contains("SIGMA")){
+                return true;
+            }else return false;
         }
+
         return false;
     }
 
+    public int distanceBetween(Coordinate coord1, Coordinate coord2){
+        return (int) Math.round(Math.sqrt(
+                (coord1.getX() - coord2.getX()) * (coord1.getX() - coord2.getX()) +
+                        (coord1.getY() - coord2.getY()) * (coord1.getY() - coord2.getY())
+                )
+        );
+    }
 
     public void moveGun(Coordinate coord, int angle, Projectile ammo){
 
@@ -525,5 +546,13 @@ public class GameFactory extends GameObserver  {
         gunPosition = new Coordinate(((GameFactory.getInstance().getGameWindowWidth()/2) - GameFactory.getInstance().getL() / 4),
                 GameFactory.getInstance().getGameWindowHeight() +  GameFactory.getInstance().getL());
         gunAngle = 90;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
     }
 }

@@ -54,7 +54,7 @@ public class GunFactory{
     //methods
     public void shootGun(){
         if(ammo != null){
-            Velocity projectileVelocity = new Velocity(getAngle(), L/30 * ammo.getSpeedMultiplier());  //TODO: velocity
+            Velocity projectileVelocity = new Velocity(getAngle(), L/30 * ammo.getSpeedMultiplier());
             ammo.setVelocity(projectileVelocity);
             ammo.setIsAmmo(false);
             GameFactory.getInstance().insertProjectileFromGun(ammo);
@@ -119,12 +119,12 @@ public class GunFactory{
 
     }
 
-    public void loadGun(Projectile newAmmo){              // gets ammo type from atom selector     //TODO gets atom or powerup
+    public void loadGun(Projectile newAmmo){              // gets ammo from atom selector
 
-        double xCoord = getPosition().getXCoordinate() + 3*L/4;    //TODO: position and angle calculations to line it up with the tip of the gun
+        double xCoord = getPosition().getXCoordinate() + 3*L/4;    //TODO: position and angle calculations to line it up with the tip of the gun for powerUp
         double yCoord = getPosition().getYCoordinate() - L/10;
         int ammoAngle = getAngle();
-        Coordinate ammoCoord = new Coordinate(xCoord, yCoord);                                                // creates projectile and sends it to game
+        Coordinate ammoCoord = new Coordinate(xCoord, yCoord);                                    // corrects location and velocity, and sends it to game
         Velocity ammoVelocity = new Velocity(ammoAngle, 0);
 
         if(this.ammo != null) {
@@ -134,8 +134,8 @@ public class GunFactory{
         setAmmo(newAmmo);
         this.ammo.setCoordinate(ammoCoord);
         this.ammo.setVelocity(ammoVelocity);
-        this.ammo.setHeight((int)(L/10));
-        this.ammo.setWidth((int)(L/10));
+        this.ammo.setHeight(L/10);
+        this.ammo.setWidth(L/10);
         GameFactory.getInstance().setAmmo(this.ammo);
     }
 

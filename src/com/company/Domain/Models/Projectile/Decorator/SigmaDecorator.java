@@ -75,25 +75,25 @@ public class SigmaDecorator extends AtomDecorator{
             case ETA:
                 newMultiplier = 0.95;
                 if (getProtons() != getNeutrons()){
-                    this.efficiency *= (1 - this.efficiency) * Math.abs(getProtons() - getNeutrons()) / getProtons();
+                    this.efficiency += (1 - this.efficiency) * Math.abs(getProtons() - getNeutrons()) / getProtons();
                 }else{
-                    this.efficiency *= (1 - this.efficiency)* 0.05;  //eta efficieny boost
+                    this.efficiency += (1 - this.efficiency)* 0.05;  //eta efficieny boost
                 }
 
                 break;
             case LOTA:
                 newMultiplier = 0.93;
-                this.efficiency *= (1 - this.efficiency)* 0.1;     //lota efficieny boost
+                this.efficiency += (1 - this.efficiency)* 0.1;     //lota efficieny boost
                 break;
             case THETA:
                 newMultiplier = 0.91;
-                this.efficiency *= (1 - this.efficiency) * (rand.nextInt(10) + 5 )/10*.0;
+                this.efficiency += (1 - this.efficiency) * (rand.nextInt(10) + 5 )/10*.0;
 
                 break;
             case ZETA:
                 newMultiplier = 0.89;
                 if (getProtons() == getNeutrons()){
-                    this.efficiency *= (1 - this.efficiency) * 0.2;
+                    this.efficiency += (1 - this.efficiency) * 0.2;
                 }
                 break;
         }

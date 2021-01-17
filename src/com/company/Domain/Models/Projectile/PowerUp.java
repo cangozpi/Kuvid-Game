@@ -7,11 +7,14 @@ import com.company.Enums.AtomType;
 import com.company.Enums.IProjectileType;
 import com.company.Enums.PowerUpType;
 
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
+
 public class PowerUp extends Projectile{
     private IProjectileType projectileType;
     private PowerUpType powerUpType;
 
-    public PowerUp(Coordinate coordinate, Velocity velocity, IProjectileType powerUpType, boolean isAmmo, int height, int width) {
+    public PowerUp(Coordinate coordinate, Velocity velocity, PowerUpType powerUpType, boolean isAmmo, int height, int width) {
         super(coordinate, velocity, isAmmo, height, width, powerUpType);
         this.projectileType = powerUpType;
         initializePowerUpType(powerUpType);
@@ -46,7 +49,10 @@ public class PowerUp extends Projectile{
 
     @Override
     public void move() {
-        setCoordinate(new Coordinate(getXCoordinate(),getYCoordinate()+ GameFactory.getInstance().getFallSpeed()));
+        int angle = getVelocity().getAngle();
+        double speed = getVelocity().getSpeed();
+        setXCoordinate(getXCoordinate() - speed*cos(Math.toRadians(180-angle)));
+        setYCoordinate(getYCoordinate() - speed*sin(Math.toRadians(angle)));
     }
 
 }
