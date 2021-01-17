@@ -37,6 +37,7 @@ public abstract class AtomDecorator extends Atom {
 
     public AtomType getAtomType() { return atomReference.getAtomType(); }
 
+
     public void setAtomType(AtomType atomType) { atomReference.setAtomType(atomType); }
 
     public int getWidth() {return atomReference.getWidth(); }

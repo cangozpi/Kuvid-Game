@@ -28,8 +28,8 @@ public class GunObject extends GameObject {
         //add to the JFrame
         this.add(gunLabel);
         GameWindowFactory.getInstance().getContentPane().add(this); // JFrame.add(JPanel)
-        this.setBounds((int)(coordinate.getXCoordinate()- 2*L/3), (int)coordinate.getYCoordinate(), gunWidth*6, gunHeight);
-        this.setOpaque(false);
+        this.setBounds((int)(coordinate.getXCoordinate() - 1.25*L), (int)coordinate.getYCoordinate(), gunWidth*6, gunHeight);
+        this.setOpaque(false);//TODO: make this false!!!
 
     }
     public void rotation(Graphics g){

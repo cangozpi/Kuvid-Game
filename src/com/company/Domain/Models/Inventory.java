@@ -7,6 +7,7 @@ import com.company.Enums.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class Inventory {
@@ -283,5 +284,14 @@ public class Inventory {
 
     public HashMap<PowerUpType, Integer> getPowerUpMap() {
         return powerUpMap;
+    }
+
+    public boolean outOfAtoms(){
+        if(!shieldedAtomList.isEmpty()){
+            return false;
+        }
+        return atomMap.entrySet().stream().anyMatch((x) ->
+                     x.getValue() == 0
+                 );
     }
 }

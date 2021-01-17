@@ -118,8 +118,8 @@ public class GameWindowFactory extends JFrame implements IGameListener,  ActionL
         this.setFocusable(true);
         this.requestFocusInWindow();
 
-        GameObject bgObject = new BackgroundObject(new Coordinate(0, -10));
-        this.addToObjectList(bgObject);
+        //GameObject bgObject = new BackgroundObject(new Coordinate(0, -10));
+        //this.addToObjectList(bgObject);
 
         //draw JPanel elements from list
                 for(GameObject element: objectList){

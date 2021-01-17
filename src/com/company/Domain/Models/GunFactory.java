@@ -93,36 +93,52 @@ public class GunFactory{
 
     public void rotateGun(DirectionType direction){
         int angleChange = 10;
+        double xCoord = this.getPosition().getX();
+        double yCoord = this.getPosition().getY();
 
-        if(direction.equals(DirectionType.CLOCKWISE)){
-            if(angle >= 10){ // if can rotate
+        if (direction.equals(DirectionType.CLOCKWISE)) {
+            if(angle != 0){
                 angle -= 10;
-
-   //             ammo.setXCoordinate(ammo.getXCoordinate() + 2*L*Math.sin(Math.toRadians(angleChange/2)) * Math.sin(Math.toRadians(angle-angleChange/2)));
-   //             ammo.setYCoordinate(ammo.getYCoordinate() + 2*L*Math.sin(Math.toRadians(angleChange/2)) * Math.cos(Math.toRadians(angle-angleChange/2)));
-
-                GameFactory.getInstance().moveGun(position, angle, ammo);
+                if (ammo.getProjectileType().toString().contains("powerUp")) {
+                    xCoord += L * Math.cos(Math.toRadians(angle));
+                    yCoord += L - L * Math.sin(Math.toRadians(angle)) - L/4;
+                }else{
+                xCoord += L * Math.cos(Math.toRadians(angle)) + Math.sqrt(Math.pow(L/10,2)+ Math.pow(3*L/20,2));
+                yCoord += L - L * Math.sin(Math.toRadians(angle)) - ammo.getHeight();
+                }
             }
-
-
-        }else if(direction.equals(DirectionType.ANTICLOCKWISE)){
-            if(angle <= 170) { // if can rotate
+        } else {
+            if(angle != 180){
                 angle += 10;
-
-//                ammo.setXCoordinate(ammo.getXCoordinate() + 2*L*Math.sin(Math.toRadians(-angleChange/2))*Math.sin(Math.toRadians(angle + angleChange/2)));
-//                ammo.setYCoordinate(ammo.getYCoordinate() + 2*L*Math.sin(Math.toRadians(-angleChange/2))*Math.cos(Math.toRadians(angle + angleChange/2)));
-                GameFactory.getInstance().moveGun(position, angle, ammo);
-
-
+                if (ammo.getProjectileType().toString().contains("powerUp")) {
+                    xCoord += L * Math.cos(Math.toRadians(angle));
+                    yCoord += L - L * Math.sin(Math.toRadians(angle)) - L/4;
+                }else{
+                xCoord += L * Math.cos(Math.toRadians(angle)) + Math.sqrt(Math.pow(L/10,2)+ Math.pow(3*L/20,2));
+                yCoord += L - L * Math.sin(Math.toRadians(angle)) - ammo.getHeight();
+                }
             }
         }
 
+
+        ammo.setXCoordinate(xCoord);
+        ammo.setYCoordinate(yCoord);
+        GameFactory.getInstance().moveGun(position, angle, ammo);
     }
+
 
     public void loadGun(Projectile newAmmo){              // gets ammo from atom selector
 
-        double xCoord = getPosition().getXCoordinate() + 3*L/4;    //TODO: position and angle calculations to line it up with the tip of the gun for powerUp
-        double yCoord = getPosition().getYCoordinate() - L/10;
+        double xCoord = getPosition().getXCoordinate();   //TODO: position and angle calculations to line it up with the tip of the gun for powerUp
+        double yCoord = getPosition().getYCoordinate();
+
+        if (newAmmo.getProjectileType().toString().contains("powerUp")) {
+            xCoord += L * Math.cos(Math.toRadians(angle));
+            yCoord += L - L * Math.sin(Math.toRadians(angle)) - L/4;
+        }else{
+        xCoord += L * Math.cos(Math.toRadians(angle)) + Math.sqrt(Math.pow(L/10,2)+ Math.pow(3*L/20,2));
+        yCoord += L - L * Math.sin(Math.toRadians(angle)) - L/10;
+        }
         int ammoAngle = getAngle();
         Coordinate ammoCoord = new Coordinate(xCoord, yCoord);                                    // corrects location and velocity, and sends it to game
         Velocity ammoVelocity = new Velocity(ammoAngle, 0);

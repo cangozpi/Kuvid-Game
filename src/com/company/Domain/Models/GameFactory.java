@@ -97,6 +97,15 @@ public class GameFactory extends GameObserver  {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            if(health == 0){
+            pauseGame();
+            }
+            if(getTime()>300){
+            pauseGame();
+            }
+            if(Inventory.getInstance().outOfAtoms()){
+            pauseGame();
+            }
             time++;
             updatePositions();
         }
@@ -287,7 +296,7 @@ public class GameFactory extends GameObserver  {
             }
         }
         explosionList.clear();
-
+        /*
         for (Projectile element : projectileRemovalList){
             projectileFromGunList.remove(element);
         }
@@ -297,10 +306,10 @@ public class GameFactory extends GameObserver  {
             moleculeList.remove(element);
         }
         moleculeRemovalList.clear();
-
+        */
 
         for (Projectile projectile : projectileFromGunList) {
-            if(projectile.getProjectileType().toString().contains("atom"))
+            if(projectile.getProjectileType().toString().contains("atom")){
                 for(Molecule molecule : moleculeList){
                     if(isSameType(projectile,molecule)){                     //collect molecule gain score
                         if(hasCollided(molecule,projectile)){
@@ -311,6 +320,7 @@ public class GameFactory extends GameObserver  {
                    }
                 }
                 }
+            }
         }
         for (Projectile element : projectileRemovalList){
             projectileFromGunList.remove(element);
@@ -331,20 +341,7 @@ public class GameFactory extends GameObserver  {
 
 
 
-    public boolean hasCollided(Projectile projectile1, Projectile projectile2){
-        if ( (projectile1.getYCoordinate() <= projectile2.getYCoordinate() + projectile2.getHeight() &
-                projectile2.getYCoordinate() + projectile2.getHeight() <= projectile1.getYCoordinate() + projectile1.getHeight()) |
-                (projectile1.getYCoordinate() <= projectile2.getYCoordinate() &
-                        projectile2.getYCoordinate() <= projectile1.getYCoordinate() + projectile1.getHeight())){
-            if ((projectile1.getXCoordinate() <= projectile2.getXCoordinate() + projectile2.getWidth() &
-                    projectile2.getXCoordinate() + projectile2.getWidth() <= projectile1.getXCoordinate() + projectile1.getWidth()) |
-                    (projectile1.getXCoordinate() <= projectile2.getXCoordinate() &
-                            projectile2.getXCoordinate() <= projectile1.getXCoordinate() + projectile1.getWidth())){
-                return true;
-            }
-        }
-        return false;
-    }
+
 
     public boolean hasCollidedReactionBlocker(Coordinate reactionBlockerPosition,  int blockerWidth,  int blockerHeight, int collisionRadius, Coordinate objectPosition, int objectWidth, int objectHeight){
         double centerX = reactionBlockerPosition.getXCoordinate() + blockerWidth/2.0;
@@ -380,6 +377,7 @@ public class GameFactory extends GameObserver  {
 
     }
     public boolean isSameType(Projectile projectile1, Projectile projectile2){
+
 
         if(projectile1.getProjectileType().toString().contains("ALPHA")){
             if(projectile2.getProjectileType().toString().contains("ALPHA")){
@@ -513,7 +511,7 @@ public class GameFactory extends GameObserver  {
     }
 
     public int getTime() {
-        return time *33 / 100;
+        return time *33 / 1000;
     }
 
     public void setTime(int time) {
